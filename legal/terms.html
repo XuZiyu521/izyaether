@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>izyAether 用户协议</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#1d1d1f;--sub:#4b5563;--ter:#8a8f98;--line:#e5e7eb;--primary:#0a59f7}
+@media (prefers-color-scheme:dark){:root{--bg:#141518;--card:#1e2024;--ink:#eceef1;--sub:#b3b8c0;--ter:#80868f;--line:#2c2f35;--primary:#4d8bff}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:28px 16px 56px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+h1{font-size:24px;margin:0}.lang button{border:1px solid var(--line);background:var(--card);color:var(--sub);border-radius:16px;padding:4px 12px;font-size:13px;cursor:pointer}
+.lang button.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.meta{color:var(--ter);font-size:13px;margin:0 0 20px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px 22px 18px}
+h2{font-size:16px;margin:18px 0 6px}p{margin:4px 0;color:var(--sub)}a{color:var(--primary)}
+footer{margin-top:20px;font-size:13px;color:var(--ter);text-align:center}[hidden]{display:none}
+</style></head><body><div class="wrap">
+<header><h1 id="t">izyAether 用户协议</h1><div class="lang"><button id="bzh" class="on">中文</button> <button id="ben">English</button></div></header>
+<p class="meta" id="m">更新日期：2026-10-19 · 开发者：徐子裕</p>
+<div class="card"><div id="zh"><section><h2>一、协议的接受</h2><p>欢迎使用 izyAether（以下简称"本应用"）。本应用由徐子裕提供。你开始使用本应用即表示同意本协议；如不同意，请停止使用。</p></section>
+<section><h2>二、服务内容</h2><p>本应用提供 Prompt / Skill 管理、AI 模型 API 余额查询与记账、模型价格比较与成本估算等工具功能。本应用是独立的第三方工具，与所列出的任何 AI 厂商均无隶属、合作或代理关系。</p></section>
+<section><h2>三、价格与额度信息</h2><p>本应用展示的模型价格、订阅价格均整理自各厂商公开页面，仅供参考，可能存在延迟或误差，一切以厂商官网为准。余额、消耗、"约 N 天后用完"等数据来自厂商接口或你的手动记录及推算，不构成账单依据。因依赖上述信息作出决定造成的损失，本应用不承担责任。</p></section>
+<section><h2>四、你的义务</h2><p>1. 你应合法使用本应用，不得用于违反法律法规或侵犯他人权益的用途。</p><p>2. 你对自己添加的 API Key 和录入的内容负责，请妥善保管设备与密钥。</p><p>3. 使用各 AI 厂商的服务时，应同时遵守该厂商的服务条款。</p></section>
+<section><h2>五、知识产权</h2><p>本应用的界面、代码与原创内容归开发者所有。应用中出现的各厂商名称、商标与图标归其各自权利人所有，仅用于标识对应产品。内置的部分 Prompt 改编自公开的开源项目，已在卡片上注明来源。</p></section>
+<section><h2>六、免责声明</h2><p>本应用按"现状"提供。因厂商接口变更、网络故障、设备问题等导致的服务中断或数据异常，我们会尽力修复，但不承担由此产生的间接损失。请定期使用「完整备份」保存你的数据。</p></section>
+<section><h2>七、协议变更与联系方式</h2><p>我们可能根据功能变化更新本协议，更新后会在应用内提示。如有疑问，请联系：cap41176985@163.com。</p><p>更新日期：2026-10-19</p></section></div><div id="en" hidden><section><h2>Acceptance</h2><p>By using izyAether, provided by 徐子裕, you agree to these terms. If you do not agree, please stop using the app.</p></section>
+<section><h2>The service</h2><p>The app offers prompt management, API balance tracking and model price comparison. It is an independent tool with no affiliation with any AI vendor shown.</p></section>
+<section><h2>Prices and balances</h2><p>Prices are compiled from public vendor pages for reference only and may be outdated; the vendor’s official site prevails. Balances and estimates are not billing records.</p></section>
+<section><h2>Your responsibilities and IP</h2><p>Use the app lawfully, keep your device and keys safe, and follow each vendor’s terms. Vendor names, trademarks and logos belong to their owners and are used only to identify products.</p></section>
+<section><h2>Disclaimer and contact</h2><p>The app is provided "as is". Please back up your data regularly. Contact: cap41176985@163.com. Updated: 2026-10-19</p></section></div></div>
+<footer><a href="privacy.html" id="o">隐私政策</a></footer>
+</div><script>
+const T={zh:{t:'izyAether 用户协议',m:'更新日期：2026-10-19 · 开发者：徐子裕',o:'隐私政策'},en:{t:'izyAether Terms of Use',m:'Updated 2026-10-19 · Developer: 徐子裕',o:'Privacy Policy'}};
+function set(l){document.getElementById('zh').hidden=l!=='zh';document.getElementById('en').hidden=l!=='en';
+for(const k of ['t','m','o'])document.getElementById(k).textContent=T[l][k];document.documentElement.lang=l==='zh'?'zh-CN':'en';
+document.getElementById('bzh').className=l==='zh'?'on':'';document.getElementById('ben').className=l==='en'?'on':'';}
+document.getElementById('bzh').onclick=()=>set('zh');document.getElementById('ben').onclick=()=>set('en');
+if(location.hash==='#en'||!navigator.language.startsWith('zh'))set('en');
+</script></body></html>

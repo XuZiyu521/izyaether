@@ -1,0 +1,3527 @@
+{
+ "schema": 1,
+ "updatedAt": "2026-10-19",
+ "vendorOrder": [
+  {
+   "vendor": "DeepSeek",
+   "region": "cn"
+  },
+  {
+   "vendor": "Kimi",
+   "region": "cn"
+  },
+  {
+   "vendor": "GLM",
+   "region": "cn"
+  },
+  {
+   "vendor": "Qwen",
+   "region": "cn"
+  },
+  {
+   "vendor": "豆包",
+   "region": "cn"
+  },
+  {
+   "vendor": "混元",
+   "region": "cn"
+  },
+  {
+   "vendor": "ERNIE",
+   "region": "cn"
+  },
+  {
+   "vendor": "MiniMax",
+   "region": "cn"
+  },
+  {
+   "vendor": "星火",
+   "region": "cn"
+  },
+  {
+   "vendor": "MiMo",
+   "region": "cn"
+  },
+  {
+   "vendor": "商汤",
+   "region": "cn"
+  },
+  {
+   "vendor": "阶跃星辰",
+   "region": "cn"
+  },
+  {
+   "vendor": "百川",
+   "region": "cn"
+  },
+  {
+   "vendor": "GPT",
+   "region": "global"
+  },
+  {
+   "vendor": "Claude",
+   "region": "global"
+  },
+  {
+   "vendor": "Gemini",
+   "region": "global"
+  },
+  {
+   "vendor": "Grok",
+   "region": "global"
+  },
+  {
+   "vendor": "Muse",
+   "region": "global"
+  },
+  {
+   "vendor": "Mistral",
+   "region": "global"
+  },
+  {
+   "vendor": "Cohere",
+   "region": "global"
+  },
+  {
+   "vendor": "Amazon",
+   "region": "global"
+  },
+  {
+   "vendor": "NVIDIA",
+   "region": "global"
+  },
+  {
+   "vendor": "Perplexity",
+   "region": "global"
+  }
+ ],
+ "apiPrices": [
+  {
+   "id": "deepseek-flash",
+   "vendor": "DeepSeek",
+   "name": "DeepSeek V4.1 Flash",
+   "priceIn": 2,
+   "priceOut": 8,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.deepseek.com",
+   "note": "高峰 ¥2/¥8 · 低谷半价 ¥1/¥4 · 缓存命中高峰 ¥0.04 · 视觉可用 · 最大输出 384K · 搜索/抓取工具 ¥5/千次"
+  },
+  {
+   "id": "deepseek-v4-pro",
+   "vendor": "DeepSeek",
+   "name": "DeepSeek V4 Pro",
+   "priceIn": 9,
+   "priceOut": 27,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理",
+    "代码",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.deepseek.com",
+   "note": "旗舰 · 高峰 ¥9/¥27 · 低谷 ¥4.5/¥13.5 · 缓存命中高峰 ¥0.3 · 1M 上下文"
+  },
+  {
+   "id": "kimi-k3",
+   "vendor": "Kimi",
+   "name": "Kimi K3",
+   "priceIn": 20,
+   "priceOut": 100,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档",
+    "推理",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.moonshot.cn/v1",
+   "note": "2.8 万亿参数开源旗舰 · 原生多模态 · 1M 上下文 · 缓存命中 ¥2 · 海外站 $3/$15"
+  },
+  {
+   "id": "kimi-k2-7-code",
+   "vendor": "Kimi",
+   "name": "Kimi K2.7 Code",
+   "priceIn": 6.5,
+   "priceOut": 27,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "长文档"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.moonshot.cn/v1",
+   "note": "编程专精 · ¥6.5/¥27 · 缓存命中 ¥1.3 · 256K · 文/图/视频输入 · 思考模式"
+  },
+  {
+   "id": "kimi-k2-6",
+   "vendor": "Kimi",
+   "name": "Kimi K2.6",
+   "priceIn": 6.5,
+   "priceOut": 27,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.moonshot.cn/v1",
+   "note": "多模态全能 · ¥6.5/¥27 · 缓存命中 ¥1.1 · 256K · 思考/非思考双模式"
+  },
+  {
+   "id": "glm-5-3",
+   "vendor": "GLM",
+   "name": "GLM-5.3",
+   "priceIn": 8,
+   "priceOut": 28,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "推理",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+   "note": "最新旗舰 · 长程 Agent 任务"
+  },
+  {
+   "id": "glm-5-2",
+   "vendor": "GLM",
+   "name": "GLM-5.2",
+   "priceIn": 8,
+   "priceOut": 28,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "推理",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+   "note": "与 5.3 同价 · MIT 权重可关思考 · 1M 上下文"
+  },
+  {
+   "id": "glm-5-3-flash",
+   "vendor": "GLM",
+   "name": "GLM-5.3 Flash",
+   "priceIn": 0.8,
+   "priceOut": 2.8,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+   "note": "1M · 原生多模态 · 缓存命中 ¥0.23（限时五折已结束，2026-10-19 核对官方文档）"
+  },
+  {
+   "id": "glm-5-3-flashx",
+   "vendor": "GLM",
+   "name": "GLM-5.3 FlashX",
+   "priceIn": 2,
+   "priceOut": 7,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+   "note": "Flash 高速款 · ¥2/¥7 · 1M · 原生多模态 · 缓存命中 ¥0.57"
+  },
+  {
+   "id": "glm-5-1",
+   "vendor": "GLM",
+   "name": "GLM-5.1",
+   "priceIn": 6,
+   "priceOut": 24,
+   "contextK": 200,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+   "note": "输入 ≥32K 时 ¥8/¥28"
+  },
+  {
+   "id": "glm-4-7",
+   "vendor": "GLM",
+   "name": "GLM-4.7",
+   "priceIn": 3,
+   "priceOut": 14,
+   "contextK": 200,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+   "note": "阶梯价：输入 <32K 且输出 <200 token ¥2/¥8 · 输出 ≥200 token ¥3/¥14 · 输入 32K–200K ¥4/¥16（按常见用法取中档）"
+  },
+  {
+   "id": "glm-4-7-flashx",
+   "vendor": "GLM",
+   "name": "GLM-4.7-FlashX",
+   "priceIn": 0.5,
+   "priceOut": 3,
+   "contextK": 200,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+   "note": "4.7 高速低价款"
+  },
+  {
+   "id": "glm-4-5-air",
+   "vendor": "GLM",
+   "name": "GLM-4.5-Air",
+   "priceIn": 0.8,
+   "priceOut": 6,
+   "contextK": 128,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+   "note": "阶梯价：输出 <200 token ¥0.8/¥2 · 输出 ≥200 token ¥0.8/¥6 · 输入 32K–128K ¥1.2/¥8"
+  },
+  {
+   "id": "qwen3-8-max",
+   "vendor": "Qwen",
+   "name": "Qwen3.8-Max",
+   "priceIn": 12,
+   "priceOut": 36,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "推理",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+   "note": "最新旗舰 · 2.4 万亿参数"
+  },
+  {
+   "id": "qwen3-8-flash",
+   "vendor": "Qwen",
+   "name": "Qwen3.8-Flash",
+   "priceIn": 0.8,
+   "priceOut": 2.7,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+   "note": "高速多模态 · 1M 上下文 · 性价比款"
+  },
+  {
+   "id": "qwen3-8-max-prime",
+   "vendor": "Qwen",
+   "name": "Qwen3.8-Max-Prime",
+   "priceIn": 24,
+   "priceOut": 72,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理",
+    "代码",
+    "长文档"
+   ],
+   "quality": 5,
+   "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+   "note": "超旗舰优速模式 · 1.5-2 倍吞吐 · 国际部署 $4/$12"
+  },
+  {
+   "id": "qwen3-8-omni-flash",
+   "vendor": "Qwen",
+   "name": "Qwen3.8-Omni-Flash",
+   "priceIn": 0.8,
+   "priceOut": 2.7,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+   "note": "全模态 · 音频输入与文本同价 · 缓存命中 ¥0.1 · 国际部署 $0.15/$0.47"
+  },
+  {
+   "id": "qwen3-max",
+   "vendor": "Qwen",
+   "name": "Qwen3-Max",
+   "priceIn": 2.5,
+   "priceOut": 10,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+   "note": "上一代旗舰 · 阶梯计价起价"
+  },
+  {
+   "id": "doubao-seed-2-1-pro",
+   "vendor": "豆包",
+   "name": "豆包 Seed 2.1 Pro",
+   "priceIn": 6,
+   "priceOut": 30,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
+   "note": "旗舰 · 1M 上下文 · 缓存命中 ¥1.2 · 批量/低优 ¥3/¥15"
+  },
+  {
+   "id": "doubao-seed-2-1-turbo",
+   "vendor": "豆包",
+   "name": "豆包 Seed 2.1 Turbo",
+   "priceIn": 3,
+   "priceOut": 15,
+   "contextK": 256,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
+   "note": "高速款 · 缓存命中 ¥0.6"
+  },
+  {
+   "id": "doubao-1-5-lite",
+   "vendor": "豆包",
+   "name": "豆包 1.5 Lite",
+   "priceIn": 0.3,
+   "priceOut": 0.6,
+   "contextK": 32,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
+   "note": "legacy 仍可调用 · 最低价档 · 高频低成本"
+  },
+  {
+   "id": "doubao-seed-2-1-lite",
+   "vendor": "豆包",
+   "name": "豆包 Seed 2.1 Lite",
+   "priceIn": 0.8,
+   "priceOut": 2.7,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
+   "note": "轻量档 · 1M 上下文 · 缓存命中 ¥0.16"
+  },
+  {
+   "id": "doubao-seed-evolving",
+   "vendor": "豆包",
+   "name": "豆包 Seed-Evolving",
+   "priceIn": 6,
+   "priceOut": 30,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "推理",
+    "长文档"
+   ],
+   "quality": 5,
+   "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
+   "note": "周级滚动更新版 · 1M 上下文 · 最大输出 256K · 缓存命中 ¥1.2"
+  },
+  {
+   "id": "hunyuan-hy4",
+   "vendor": "混元",
+   "name": "混元 Hy4 Preview",
+   "priceIn": 6,
+   "priceOut": 18,
+   "contextK": 1000,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.hunyuan.cloud.tencent.com/v1",
+   "note": "新一代预览版 · 770B-A49B · Apache 2.0 开源 · 缓存命中 ¥0.3 · 1M 上下文"
+  },
+  {
+   "id": "hunyuan-hy3",
+   "vendor": "混元",
+   "name": "混元 Hy3",
+   "priceIn": 1,
+   "priceOut": 4,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.hunyuan.cloud.tencent.com/v1",
+   "note": "稳定版 · Apache 2.0 · 295B-A21B · 缓存命中 ¥0.25"
+  },
+  {
+   "id": "ernie-5-1",
+   "vendor": "ERNIE",
+   "name": "文心 ERNIE 5.1",
+   "priceIn": 4,
+   "priceOut": 18,
+   "contextK": 128,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "推理",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://qianfan.baidubce.com/v2",
+   "note": "旗舰 · 阶梯计价：≤32K ¥4/¥18 · 32K–128K ¥6/¥22 · 128K 上下文"
+  },
+  {
+   "id": "minimax-m3",
+   "vendor": "MiniMax",
+   "name": "MiniMax M3",
+   "priceIn": 2.1,
+   "priceOut": 8.4,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "reasoning",
+    "vision"
+   ],
+   "scenarios": [
+    "代码",
+    "长文档",
+    "推理"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.minimax.chat/v1",
+   "note": "永久五折 · ≤512K 输入 ¥2.1/¥8.4 · 超 512K 价格加倍 · 缓存命中 ¥0.42"
+  },
+  {
+   "id": "minimax-m2-7",
+   "vendor": "MiniMax",
+   "name": "MiniMax M2.7 Highspeed",
+   "priceIn": 4.2,
+   "priceOut": 16.8,
+   "contextK": 205,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "推理"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.minimax.chat/v1",
+   "note": "高速版 · 204.8K · 缓存命中 ¥0.42"
+  },
+  {
+   "id": "spark-x2-5",
+   "vendor": "星火",
+   "name": "星火 Spark-X2.5",
+   "priceIn": 0.96,
+   "priceOut": 3.6,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理",
+    "代码",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://spark-api-open.xf-yun.com/v2",
+   "note": "新一代旗舰 · 293B-A30B MoE · 全国产算力训练 · 200+ 语言 · 限时三折（原 ¥3.2/¥12，讯飞星辰 MaaS 2026-10-14）"
+  },
+  {
+   "id": "spark-pro",
+   "vendor": "星火",
+   "name": "星火 Spark Pro",
+   "priceIn": 5,
+   "priceOut": 5,
+   "contextK": 128,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 4,
+   "baseUrl": "https://spark-api-open.xf-yun.com/v2",
+   "note": "输入输出同价"
+  },
+  {
+   "id": "mimo-v2-6-pro",
+   "vendor": "MiMo",
+   "name": "MiMo V2.6 Pro",
+   "priceIn": 3,
+   "priceOut": 6,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理",
+    "代码",
+    "长文档"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.open.xiaomi.com/v1",
+   "note": "旗舰 · 1.02T-A42B · MIT 开源 · 全模态 · 1M 上下文 · 缓存命中 ¥0.025"
+  },
+  {
+   "id": "mimo-v2-6-flash",
+   "vendor": "MiMo",
+   "name": "MiMo V2.6 Flash",
+   "priceIn": 1,
+   "priceOut": 2,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.open.xiaomi.com/v1",
+   "note": "高性价比款 · MIT 开源 · 全模态 · 1M 上下文 · 缓存命中 ¥0.02 · 批量推理半价"
+  },
+  {
+   "id": "mimo-v2-6-pro-ultraspeed",
+   "vendor": "MiMo",
+   "name": "MiMo V2.6 Pro UltraSpeed",
+   "priceIn": 30,
+   "priceOut": 60,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理",
+    "代码"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.open.xiaomi.com/v1",
+   "note": "UltraSpeed · 输出速度最高 20 倍 · 缓存命中 ¥0.25"
+  },
+  {
+   "id": "gpt-6-1-sol",
+   "vendor": "GPT",
+   "name": "GPT-6.1 Sol",
+   "priceIn": 14.4,
+   "priceOut": 72,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "推理",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "最新一代主力 · 2026-10-01 发布 · $2/$10 · 缓存输入 $0.10 · 1.05M"
+  },
+  {
+   "id": "gpt-6-astra",
+   "vendor": "GPT",
+   "name": "GPT-6 Astra",
+   "priceIn": 72,
+   "priceOut": 360,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理",
+    "代码"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "超旗舰档 · $10/$50 · 缓存输入 $1 · 1.05M"
+  },
+  {
+   "id": "gpt-5-2",
+   "vendor": "GPT",
+   "name": "GPT-5.2",
+   "priceIn": 12.6,
+   "priceOut": 100.8,
+   "contextK": 400,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "上代主力仍在售 · $1.75/$14 · 缓存输入 $0.175"
+  },
+  {
+   "id": "gpt-5-2-pro",
+   "vendor": "GPT",
+   "name": "GPT-5.2 Pro",
+   "priceIn": 151.2,
+   "priceOut": 1209.6,
+   "contextK": 400,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "最高推理档 · $21/$168"
+  },
+  {
+   "id": "gpt-6-luna",
+   "vendor": "GPT",
+   "name": "GPT-6 Luna",
+   "priceIn": 0.72,
+   "priceOut": 3.6,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "GPT-6 轻量档 · $0.10/$0.50 · 缓存输入 $0.01"
+  },
+  {
+   "id": "gpt-5-6-sol",
+   "vendor": "GPT",
+   "name": "GPT-5.6 Sol",
+   "priceIn": 28.8,
+   "priceOut": 144,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "推理",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "GPT-5.6 旗舰 · $4/$20 促销价（发布价 $5/$30，促销至少至 2026-11-21）"
+  },
+  {
+   "id": "gpt-5-6-terra",
+   "vendor": "GPT",
+   "name": "GPT-5.6 Terra",
+   "priceIn": 14.4,
+   "priceOut": 86.4,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档",
+    "办公"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "GPT-5.6 均衡档 · $2/$12"
+  },
+  {
+   "id": "gpt-5-6-luna",
+   "vendor": "GPT",
+   "name": "GPT-5.6 Luna",
+   "priceIn": 1.44,
+   "priceOut": 8.64,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 3,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "GPT-5.6 低成本档 · $0.20/$1.20"
+  },
+  {
+   "id": "gpt-5-5",
+   "vendor": "GPT",
+   "name": "GPT-5.5",
+   "priceIn": 36,
+   "priceOut": 216,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "推理",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "Agent 编程旗舰 · $5/$30 · 1.05M"
+  },
+  {
+   "id": "gpt-5-5-pro",
+   "vendor": "GPT",
+   "name": "GPT-5.5 Pro",
+   "priceIn": 216,
+   "priceOut": 1296,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "5.5 最高推理档 · $30/$180"
+  },
+  {
+   "id": "gpt-5-4",
+   "vendor": "GPT",
+   "name": "GPT-5.4",
+   "priceIn": 18,
+   "priceOut": 108,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "长文档",
+    "办公"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "专业工作档 · $2.50/$15 · 缓存输入 $0.25"
+  },
+  {
+   "id": "gpt-5-4-mini",
+   "vendor": "GPT",
+   "name": "GPT-5.4 mini",
+   "priceIn": 5.4,
+   "priceOut": 32.4,
+   "contextK": 400,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "5.4 轻量款 · $0.75/$4.50 · 缓存输入 $0.075"
+  },
+  {
+   "id": "gpt-5-4-nano",
+   "vendor": "GPT",
+   "name": "GPT-5.4 nano",
+   "priceIn": 1.44,
+   "priceOut": 9,
+   "contextK": 400,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "翻译"
+   ],
+   "quality": 2,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "5.4 最低价款 · $0.20/$1.25 · 缓存输入 $0.02"
+  },
+  {
+   "id": "claude-opus-5-5",
+   "vendor": "Claude",
+   "name": "Claude Opus 5.5",
+   "priceIn": 28.8,
+   "priceOut": 144,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "推理",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.anthropic.com/v1",
+   "note": "2026-09-22 发布 · 较 Opus 5 降价 20% · $4/$20"
+  },
+  {
+   "id": "claude-sonnet-5-5",
+   "vendor": "Claude",
+   "name": "Claude Sonnet 5.5",
+   "priceIn": 14.4,
+   "priceOut": 72,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "代码",
+    "写作",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.anthropic.com/v1",
+   "note": "当前主力 · $2/$10 永久价"
+  },
+  {
+   "id": "claude-haiku-5-5",
+   "vendor": "Claude",
+   "name": "Claude Haiku 5.5",
+   "priceIn": 0.72,
+   "priceOut": 3.6,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.anthropic.com/v1",
+   "note": "≤100K 提示 $0.1/$0.5 · 超长提示 $0.5/$2.5"
+  },
+  {
+   "id": "claude-fable-5-1",
+   "vendor": "Claude",
+   "name": "Claude Fable 5.1",
+   "priceIn": 72,
+   "priceOut": 360,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "推理"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.anthropic.com/v1",
+   "note": "创作/复杂任务旗舰 · $10/$50"
+  },
+  {
+   "id": "gemini-3-1-pro",
+   "vendor": "Gemini",
+   "name": "Gemini 3.1 Pro",
+   "priceIn": 14.4,
+   "priceOut": 86.4,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "长文档",
+    "推理",
+    "代码",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+   "note": "Preview · ≤200K $2/$12 · >200K $4/$18"
+  },
+  {
+   "id": "gemini-4-argon",
+   "vendor": "Gemini",
+   "name": "Gemini 4 Argon",
+   "priceIn": 14.4,
+   "priceOut": 72,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档",
+    "推理",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+   "note": "最新旗舰 · $2/$10（至 2026-11-30）· 12-01 起 $4/$20"
+  },
+  {
+   "id": "gemini-3-8-flash",
+   "vendor": "Gemini",
+   "name": "Gemini 3.8 Flash",
+   "priceIn": 5.4,
+   "priceOut": 27,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+   "note": "最新快速档 · 2026 促销 $0.75/$3.75 · 2027-01 起 $1.5/$7.5"
+  },
+  {
+   "id": "gemini-3-1-flash-lite",
+   "vendor": "Gemini",
+   "name": "Gemini 3.1 Flash-Lite",
+   "priceIn": 1.8,
+   "priceOut": 10.8,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "翻译",
+    "长文档"
+   ],
+   "quality": 3,
+   "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+   "note": "最低价档 · $0.25/$1.5"
+  },
+  {
+   "id": "gemini-3-6-flash",
+   "vendor": "Gemini",
+   "name": "Gemini 3.6 Flash",
+   "priceIn": 5.4,
+   "priceOut": 27,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+   "note": "快速档 · 多步工作流 · $0.75/$3.75"
+  },
+  {
+   "id": "gemini-3-5-flash-lite",
+   "vendor": "Gemini",
+   "name": "Gemini 3.5 Flash-Lite",
+   "priceIn": 2.16,
+   "priceOut": 18,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "翻译",
+    "长文档"
+   ],
+   "quality": 3,
+   "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+   "note": "低价快档 · $0.30/$2.50"
+  },
+  {
+   "id": "grok-4-7",
+   "vendor": "Grok",
+   "name": "Grok 4.7",
+   "priceIn": 14.4,
+   "priceOut": 43.2,
+   "contextK": 500,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning",
+    "search"
+   ],
+   "scenarios": [
+    "推理",
+    "代码",
+    "搜索"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.x.ai/v1",
+   "note": "2026-09-21 发布 · ≤200K $2/$6 · ≥200K $4/$12"
+  },
+  {
+   "id": "grok-4-3",
+   "vendor": "Grok",
+   "name": "Grok 4.3",
+   "priceIn": 9,
+   "priceOut": 18,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.x.ai/v1",
+   "note": "上一代 · 1M 上下文 · $1.25/$2.5"
+  },
+  {
+   "id": "grok-4-6",
+   "vendor": "Grok",
+   "name": "Grok 4.6",
+   "priceIn": 14.4,
+   "priceOut": 43.2,
+   "contextK": 500,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning",
+    "search"
+   ],
+   "scenarios": [
+    "推理",
+    "代码",
+    "搜索"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.x.ai/v1",
+   "note": "4.7 前一代 · ≤200K $2/$6 · ≥200K $4/$12 · 500K 上下文"
+  },
+  {
+   "id": "muse-spark-1-3",
+   "vendor": "Muse",
+   "name": "Muse Spark 1.3",
+   "priceIn": 9,
+   "priceOut": 30.6,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning",
+    "search"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.meta.ai/v1",
+   "note": "Meta 官方 API · 闭源 · $1.25/$4.25 · 缓存命中 $0.15 · Contributor 档 $0.10/$0.20（同意训练）"
+  },
+  {
+   "id": "qwen3-coder-next",
+   "vendor": "Qwen",
+   "name": "Qwen3-Coder-Next",
+   "priceIn": 1,
+   "priceOut": 4,
+   "contextK": 262,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "代码"
+   ],
+   "quality": 5,
+   "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+   "note": "编程专精 · 0-32K ¥1/¥4 · 32-128K ¥1.5/¥6 · 128-256K ¥2.5/¥10"
+  },
+  {
+   "id": "doubao-seed-code",
+   "vendor": "豆包",
+   "name": "豆包 Seed-Code",
+   "priceIn": 1.2,
+   "priceOut": 8,
+   "contextK": 256,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "代码"
+   ],
+   "quality": 5,
+   "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
+   "note": "编程专精 · 0-32K ¥1.2/¥8 · 32-128K ¥1.4/¥12 · 128-256K ¥2.8/¥16（Trae 内 Seed-Code 折上折）"
+  },
+  {
+   "id": "minimax-m2",
+   "vendor": "MiniMax",
+   "name": "MiniMax M2",
+   "priceIn": 2.1,
+   "priceOut": 8.4,
+   "contextK": 205,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "推理"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.minimax.chat/v1",
+   "note": "Agent / 编程通用档 · legacy · 官方人民币定价 ¥2.1/¥8.4 · 缓存命中 ¥0.21（与 M2.7 Highspeed 不同款）"
+  },
+  {
+   "id": "step-5-preview",
+   "vendor": "阶跃星辰",
+   "name": "Step 5 Preview",
+   "priceIn": 7,
+   "priceOut": 20,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理",
+    "代码",
+    "长文档"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.stepfun.com/v1",
+   "note": "多模态旗舰 · 600B-A27B · ¥7/¥20 · 缓存命中 ¥0.70（2026-10-14 起由 ¥0.35 上调）· 1M 上下文 · 2026-10-15 开放权重"
+  },
+  {
+   "id": "step-3-7-flash",
+   "vendor": "阶跃星辰",
+   "name": "Step 3.7 Flash",
+   "priceIn": 1.35,
+   "priceOut": 8.1,
+   "contextK": 262,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.stepfun.com/v1",
+   "note": "开放权重 · Apache 2.0 · ¥1.35/¥8.1 · 缓存命中 ¥0.27 · 262K"
+  },
+  {
+   "id": "step-3-5-flash",
+   "vendor": "阶跃星辰",
+   "name": "Step 3.5 Flash",
+   "priceIn": 0.7,
+   "priceOut": 2.1,
+   "contextK": 262,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://api.stepfun.com/v1",
+   "note": "开放权重 · ¥0.7/¥2.1 · 缓存命中 ¥0.14 · 262K 上下文"
+  },
+  {
+   "id": "sensenova-v65-pro",
+   "vendor": "商汤",
+   "name": "SenseNova V6.5-Pro",
+   "priceIn": 3,
+   "priceOut": 9,
+   "contextK": 128,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "推理"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.sensenova.cn/compatible-mode/v1",
+   "note": "日日新多模态旗舰 · ¥3/¥9 每百万（官网按 0.003/0.009 元每千计价）"
+  },
+  {
+   "id": "sensenova-v65-turbo",
+   "vendor": "商汤",
+   "name": "SenseNova V6.5-Turbo",
+   "priceIn": 1.5,
+   "priceOut": 4.5,
+   "contextK": 128,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://api.sensenova.cn/compatible-mode/v1",
+   "note": "日日新高速款 · ¥1.5/¥4.5 每百万"
+  },
+  {
+   "id": "baichuan4",
+   "vendor": "百川",
+   "name": "Baichuan4",
+   "priceIn": 100,
+   "priceOut": 100,
+   "contextK": 32,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "推理",
+    "办公"
+   ],
+   "quality": 3,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "4 系旗舰 · ¥100/百万（输入输出合并计价）· 32K"
+  },
+  {
+   "id": "baichuan4-turbo",
+   "vendor": "百川",
+   "name": "Baichuan4-Turbo",
+   "priceIn": 15,
+   "priceOut": 15,
+   "contextK": 32,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 3,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "4 系主力 · ¥15/百万（输入输出合并计价）· 32K"
+  },
+  {
+   "id": "baichuan4-air",
+   "vendor": "百川",
+   "name": "Baichuan4-Air",
+   "priceIn": 0.98,
+   "priceOut": 0.98,
+   "contextK": 32,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 2,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "全系最低价 · ¥0.98/百万（输入输出合并计价）· 32K"
+  },
+  {
+   "id": "baichuan-m3-plus",
+   "vendor": "百川",
+   "name": "Baichuan-M3-Plus",
+   "priceIn": 5,
+   "priceOut": 9,
+   "contextK": 32,
+   "caps": [
+    "fn",
+    "search"
+   ],
+   "scenarios": [
+    "推理",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "医疗旗舰 · ¥5/¥9 每百万 · 调用自动触发医疗搜索（¥0.03/次）另行计费 · 32K"
+  },
+  {
+   "id": "baichuan-m3",
+   "vendor": "百川",
+   "name": "Baichuan-M3",
+   "priceIn": 10,
+   "priceOut": 30,
+   "contextK": 32,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "医疗深度推理 · ¥10/¥30 每百万 · 32K"
+  },
+  {
+   "id": "baichuan-m2-plus",
+   "vendor": "百川",
+   "name": "Baichuan-M2-Plus",
+   "priceIn": 10,
+   "priceOut": 30,
+   "contextK": 32,
+   "caps": [
+    "fn",
+    "search"
+   ],
+   "scenarios": [
+    "推理"
+   ],
+   "quality": 3,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "与 M3 同价 · ¥10/¥30 每百万 · 自动触发医疗搜索（¥0.03/次）另行计费 · 32K"
+  },
+  {
+   "id": "baichuan-m2",
+   "vendor": "百川",
+   "name": "Baichuan-M2",
+   "priceIn": 2,
+   "priceOut": 20,
+   "contextK": 32,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "M 系输入最低价 · ¥2/¥20 每百万 · 32K"
+  },
+  {
+   "id": "baichuan3-turbo-128k",
+   "vendor": "百川",
+   "name": "Baichuan3-Turbo-128k",
+   "priceIn": 24,
+   "priceOut": 24,
+   "contextK": 128,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "长文档"
+   ],
+   "quality": 2,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "上一代长上下文款 · ¥24/百万（合并计价）· 128K"
+  },
+  {
+   "id": "baichuan3-turbo",
+   "vendor": "百川",
+   "name": "Baichuan3-Turbo",
+   "priceIn": 12,
+   "priceOut": 12,
+   "contextK": 32,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 2,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "上一代主力 · ¥12/百万（合并计价）· 32K"
+  },
+  {
+   "id": "baichuan2-turbo",
+   "vendor": "百川",
+   "name": "Baichuan2-Turbo",
+   "priceIn": 8,
+   "priceOut": 8,
+   "contextK": 32,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 1,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "上一代 · ¥8/百万（合并计价）· 仍在官方价目表，兼容旧集成"
+  },
+  {
+   "id": "baichuan2-53b",
+   "vendor": "百川",
+   "name": "Baichuan2-53B",
+   "priceIn": 20,
+   "priceOut": 20,
+   "contextK": 32,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作"
+   ],
+   "quality": 1,
+   "baseUrl": "https://api.baichuan-ai.com/v1",
+   "note": "上一代 · 分时段价：08:00-24:00 ¥20/百万、00:00-08:00 ¥10/百万（合并计价）"
+  },
+  {
+   "id": "gpt-5-3-codex",
+   "vendor": "GPT",
+   "name": "GPT-5.3-Codex",
+   "priceIn": 12.6,
+   "priceOut": 100.8,
+   "contextK": 400,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "编码专用 · $1.75/$14 · 缓存输入 $0.175 · 2026-02 发布"
+  },
+  {
+   "id": "grok-build-01",
+   "vendor": "Grok",
+   "name": "Grok Code（grok-build-0.1）",
+   "priceIn": 7.2,
+   "priceOut": 14.4,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.x.ai/v1",
+   "note": "编码专用 · $1/$2 · 缓存输入 $0.20 · 超 200K 上下文档位加价 · 旧别名 grok-code-fast-1 自动路由至本模型"
+  },
+  {
+   "id": "codestral",
+   "vendor": "Mistral",
+   "name": "Codestral",
+   "priceIn": 2.16,
+   "priceOut": 6.5,
+   "contextK": 128,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "代码"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.mistral.ai/v1",
+   "note": "Mistral 编码专用 · $0.30/$0.90 · 128K"
+  },
+  {
+   "id": "mistral-large-4",
+   "vendor": "Mistral",
+   "name": "Mistral Large 4",
+   "priceIn": 4.9,
+   "priceOut": 15.05,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "推理",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.mistral.ai/v1",
+   "note": "新旗舰 · 2026-10-06 公测 · 上市促销 $0.68/$2.09（原价 $1.36/$4.18，促销截止日未公布）· 缓存输入 $0.07 · 1M（EU 区 512K）"
+  },
+  {
+   "id": "mistral-large-3",
+   "vendor": "Mistral",
+   "name": "Mistral Large 3",
+   "priceIn": 3.6,
+   "priceOut": 10.8,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "推理",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.mistral.ai/v1",
+   "note": "上一代旗舰 · Apache 2.0 开放权重 · 多模态 · $0.50/$1.50 · 256K"
+  },
+  {
+   "id": "mistral-medium-3-5",
+   "vendor": "Mistral",
+   "name": "Mistral Medium 3.5",
+   "priceIn": 10.8,
+   "priceOut": 54,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "代码",
+    "推理",
+    "写作"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.mistral.ai/v1",
+   "note": "合并旗舰 · 128B dense · 256K · 多模态输入 · 开放权重 · $1.5/$7.5"
+  },
+  {
+   "id": "mistral-small-4",
+   "vendor": "Mistral",
+   "name": "Mistral Small 4",
+   "priceIn": 1.08,
+   "priceOut": 4.32,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.mistral.ai/v1",
+   "note": "统一 Instruct/Magistral/Devstral 的小型款 · 多模态输入 · $0.15/$0.60 · 256K"
+  },
+  {
+   "id": "ministral-3-8b",
+   "vendor": "Mistral",
+   "name": "Ministral 3 (8B)",
+   "priceIn": 1.08,
+   "priceOut": 1.08,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://api.mistral.ai/v1",
+   "note": "边缘/低成本款 · 开放权重 · 多模态输入 · $0.15/$0.15 · 256K"
+  },
+  {
+   "id": "command-a",
+   "vendor": "Cohere",
+   "name": "Command A",
+   "priceIn": 18,
+   "priceOut": 72,
+   "contextK": 256,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "推理"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.cohere.com/v2",
+   "note": "企业 RAG 主力 · 111B · $2.50/$10 · 256K（官网已转推 Model Vault）"
+  },
+  {
+   "id": "command-r7b",
+   "vendor": "Cohere",
+   "name": "Command R7B",
+   "priceIn": 0.27,
+   "priceOut": 1.08,
+   "contextK": 128,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://api.cohere.com/v2",
+   "note": "低成本款 · $0.0375/$0.15 · 128K"
+  },
+  {
+   "id": "nova-micro",
+   "vendor": "Amazon",
+   "name": "Amazon Nova Micro",
+   "priceIn": 0.25,
+   "priceOut": 1.01,
+   "contextK": 128,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "翻译"
+   ],
+   "quality": 2,
+   "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+   "note": "Nova 1 入门款 · 纯文本 · $0.035/$0.14 · 128K · 最大输出 10K"
+  },
+  {
+   "id": "nova-lite",
+   "vendor": "Amazon",
+   "name": "Amazon Nova Lite",
+   "priceIn": 0.43,
+   "priceOut": 1.73,
+   "contextK": 300,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 3,
+   "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+   "note": "Nova 1 多模态款 · $0.06/$0.24 · 300K · 最大输出 10K"
+  },
+  {
+   "id": "nova-pro",
+   "vendor": "Amazon",
+   "name": "Amazon Nova Pro",
+   "priceIn": 5.76,
+   "priceOut": 23.04,
+   "contextK": 300,
+   "caps": [
+    "fn",
+    "vision"
+   ],
+   "scenarios": [
+    "写作",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+   "note": "Nova 1 主力 · $0.80/$3.20 · 300K 上下文"
+  },
+  {
+   "id": "nova-2-lite",
+   "vendor": "Amazon",
+   "name": "Amazon Nova 2 Lite",
+   "priceIn": 2.16,
+   "priceOut": 18,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "长文档",
+    "推理"
+   ],
+   "quality": 4,
+   "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+   "note": "Nova 2 主力 · 全球路由 $0.30/$2.50 · 区域内 $0.33/$2.75 · 1M 上下文 · 缓存读取 $0.075 · 文/图/视频/文档输入"
+  },
+  {
+   "id": "nova-2-pro",
+   "vendor": "Amazon",
+   "name": "Amazon Nova 2 Pro",
+   "priceIn": 9,
+   "priceOut": 72,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理",
+    "代码",
+    "长文档"
+   ],
+   "quality": 5,
+   "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+   "note": "Nova 2 高阶 · Preview · 多数来源 $1.25/$10 · Preview 价格以 Bedrock 控制台为准"
+  },
+  {
+   "id": "nova-2-omni",
+   "vendor": "Amazon",
+   "name": "Amazon Nova 2 Omni",
+   "priceIn": 2.16,
+   "priceOut": 18,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
+   "note": "Nova 2 全模态 · Preview · 文本/图/视频输入 $0.30/$2.50 · 音频输入 $1 · 图像输出 $40"
+  },
+  {
+   "id": "nemotron-3-super",
+   "vendor": "NVIDIA",
+   "name": "Nemotron 3 Super 120B",
+   "priceIn": 0.61,
+   "priceOut": 2.88,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "推理",
+    "长文档"
+   ],
+   "quality": 4,
+   "baseUrl": "https://integrate.api.nvidia.com/v1",
+   "note": "开放权重 · 120B-A12B · LatentMoE · 第三方托管参考价（DeepInfra $0.085/$0.40）· build.nvidia.com 可免费试用"
+  },
+  {
+   "id": "nemotron-3-nano-30b",
+   "vendor": "NVIDIA",
+   "name": "Nemotron 3 Nano 30B",
+   "priceIn": 0.36,
+   "priceOut": 1.44,
+   "contextK": 262,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译",
+    "长文档"
+   ],
+   "quality": 3,
+   "baseUrl": "https://integrate.api.nvidia.com/v1",
+   "note": "开放权重 · 30B-A3B · $0.05/$0.20 · 262K · 第三方托管参考价"
+  },
+  {
+   "id": "nemotron-nano-9b-v2",
+   "vendor": "NVIDIA",
+   "name": "Nemotron Nano 9B v2",
+   "priceIn": 0.29,
+   "priceOut": 1.15,
+   "contextK": 131,
+   "caps": [
+    "fn"
+   ],
+   "scenarios": [
+    "写作",
+    "翻译"
+   ],
+   "quality": 3,
+   "baseUrl": "https://integrate.api.nvidia.com/v1",
+   "note": "开放权重 · 最低价款 · $0.04/$0.16 · 131K · 第三方托管参考价"
+  },
+  {
+   "id": "sonar",
+   "vendor": "Perplexity",
+   "name": "Sonar",
+   "priceIn": 1.8,
+   "priceOut": 18,
+   "contextK": 128,
+   "caps": [
+    "search"
+   ],
+   "scenarios": [
+    "搜索"
+   ],
+   "quality": 4,
+   "baseUrl": "https://api.perplexity.ai",
+   "note": "联网检索专用 · Agent API $0.25/$2.50 · 缓存命中 $0.0625 · Chat Completions 2026-09-27 退役 · web_search $2.5/千次（快速 $1）"
+  }
+ ],
+ "subscriptions": [
+  {
+   "vendor": "Kimi",
+   "product": "Kimi（含 Kimi Code）",
+   "company": "月之暗面",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "免费版",
+     "month": "¥0",
+     "year": "",
+     "benefits": "K3 免费用 · 单 Agent 任务 · 定时/Widget 各 2 个"
+    },
+    {
+     "name": "Andante",
+     "month": "¥49/月",
+     "year": "",
+     "benefits": "基础 Agent 额度 · 深度研究 · 网站部署 · 含 Kimi Code，与网页共用额度"
+    },
+    {
+     "name": "Moderato",
+     "month": "¥99/月",
+     "year": "",
+     "benefits": "2 倍 Agent 额度 · Agent Swarm · 2 并行任务 · 含 Kimi Code（共用额度）"
+    },
+    {
+     "name": "Allegretto",
+     "month": "¥199/月",
+     "year": "",
+     "benefits": "4 倍 Agent 额度 · Goal Mode · 专属 Kimi Claw · 含 Kimi Code（共用额度）"
+    },
+    {
+     "name": "Allegro",
+     "month": "¥699/月",
+     "year": "",
+     "benefits": "10 倍 Agent 额度 · K3 百万长对话 · 4 并行任务 · 含 Kimi Code（共用额度）"
+    }
+   ]
+  },
+  {
+   "vendor": "GLM",
+   "product": "GLM",
+   "company": "智谱",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "Lite",
+     "month": "¥20/月",
+     "year": "¥198/年",
+     "benefits": "GLM-5.3 基础额度"
+    },
+    {
+     "name": "Pro",
+     "month": "¥100/月",
+     "year": "¥990/年",
+     "benefits": "约 3 倍额度"
+    },
+    {
+     "name": "Max",
+     "month": "¥400/月",
+     "year": "¥3960/年",
+     "benefits": "最高额度 · 优先算力"
+    }
+   ]
+  },
+  {
+   "vendor": "GLM Coding Plan",
+   "product": "GLM Coding Plan",
+   "company": "智谱",
+   "engine": "底层 GLM",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "Lite",
+     "month": "¥94.4/月",
+     "year": "¥991/年",
+     "benefits": "周 10,000 积分 · 连续包月 8 折（原 ¥118）· Claude Code 等 20+ 工具"
+    },
+    {
+     "name": "Pro",
+     "month": "¥430.4/月",
+     "year": "¥4519/年",
+     "benefits": "6 倍 Lite 积分 · 连续包月 8 折（原 ¥538）· 精选 MCP"
+    },
+    {
+     "name": "Max",
+     "month": "¥862.4/月",
+     "year": "¥9055/年",
+     "benefits": "14 倍 Lite 积分 · 连续包月 8 折（原 ¥1078）· 高峰期优先"
+    }
+   ]
+  },
+  {
+   "vendor": "Qwen",
+   "product": "Qwen",
+   "company": "阿里巴巴",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "高级",
+     "month": "¥19/月",
+     "year": "¥200/年",
+     "benefits": "Qwen3.8-Max 额度 · 文档解析 · 长记忆"
+    },
+    {
+     "name": "精英",
+     "month": "¥49/月",
+     "year": "¥568/年",
+     "benefits": "更高额度 · 深度研究"
+    },
+    {
+     "name": "旗舰",
+     "month": "¥128/月",
+     "year": "¥1499/年",
+     "benefits": "最高额度"
+    },
+    {
+     "name": "百炼资源包",
+     "month": "按量计费",
+     "year": "预付费包折扣",
+     "benefits": "API 按量 · 资源包打折"
+    }
+   ]
+  },
+  {
+   "vendor": "阿里云",
+   "product": "百炼 Coding Plan / Qwen Code",
+   "company": "阿里云",
+   "engine": "底层 Qwen",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "Qwen Code CLI",
+     "month": "免费",
+     "year": "",
+     "benefits": "开源 Apache-2.0 客户端 · 模型调用另计"
+    },
+    {
+     "name": "百炼 Coding Plan Pro",
+     "month": "¥200/月",
+     "year": "",
+     "benefits": "每 5 小时 6,000 次 · 月 9 万次 · 首月 ¥39.9"
+    }
+   ]
+  },
+  {
+   "vendor": "Qoder",
+   "product": "Qoder",
+   "company": "阿里巴巴",
+   "engine": "底层 Qwen",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "社区版",
+     "month": "免费",
+     "year": "",
+     "benefits": "基础补全 · 有限体验额度（原「通义灵码」更名）"
+    },
+    {
+     "name": "个人专业版",
+     "month": "¥59/月",
+     "year": "",
+     "benefits": "2,000 Credits/月 · 仅按月订阅 · 官方页面标注限时免费"
+    },
+    {
+     "name": "Pro（国际）",
+     "month": "$20/月",
+     "year": "",
+     "benefits": "2,000 Credits/月"
+    },
+    {
+     "name": "企业标准版",
+     "month": "¥99/席/月",
+     "year": "",
+     "benefits": "3,000 Credits/席/月 · 团队权限与看板"
+    }
+   ]
+  },
+  {
+   "vendor": "豆包",
+   "product": "豆包",
+   "company": "字节跳动",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "豆包会员（标准版）",
+     "month": "¥68/月",
+     "year": "¥688/年",
+     "benefits": "Seed 2.1 高额度 · 长文本 · 语音与文件分析 · 连续包月（学生 ¥38）"
+    },
+    {
+     "name": "豆包会员（加强版）",
+     "month": "¥200/月",
+     "year": "¥2048/年",
+     "benefits": "更高额度 · 深度研究 / Agent"
+    },
+    {
+     "name": "豆包会员（高级版）",
+     "month": "¥500/月",
+     "year": "¥5088/年",
+     "benefits": "最高额度"
+    },
+    {
+     "name": "即梦 AI 会员",
+     "month": "¥69/月",
+     "year": "¥699/年",
+     "benefits": "图片/视频生成额度 · 去水印 · 高清导出"
+    },
+    {
+     "name": "火山方舟资源包",
+     "month": "按量计费",
+     "year": "预付费包 9 折",
+     "benefits": "API 预付费额度包 · 多模型通用"
+    }
+   ]
+  },
+  {
+   "vendor": "Trae",
+   "product": "Trae",
+   "company": "字节跳动",
+   "engine": "底层豆包 Seed-Code",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "¥0",
+     "year": "",
+     "benefits": "500 积分/月 · 2 云端任务并发"
+    },
+    {
+     "name": "会员 Lite",
+     "month": "¥49/月",
+     "year": "",
+     "benefits": "2,000 积分/月 · 2 并发"
+    },
+    {
+     "name": "会员 Pro",
+     "month": "¥99/月",
+     "year": "",
+     "benefits": "4,000 积分/月 · 10 并发 · Seed-Code 2.5 折"
+    },
+    {
+     "name": "会员 Pro+",
+     "month": "¥239/月",
+     "year": "",
+     "benefits": "12,000 积分/月 · 10 并发"
+    },
+    {
+     "name": "会员 Ultra",
+     "month": "¥699/月",
+     "year": "",
+     "benefits": "40,000 积分/月 · 20 并发 · 新模型优先"
+    }
+   ]
+  },
+  {
+   "vendor": "混元",
+   "product": "混元",
+   "company": "腾讯",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "元宝 App",
+     "month": "免费",
+     "year": "",
+     "benefits": "个人用户暂无付费订阅"
+    },
+    {
+     "name": "混元 API",
+     "month": "按量计费",
+     "year": "预付费包",
+     "benefits": "控制台按量 · 新户免费额度"
+    }
+   ]
+  },
+  {
+   "vendor": "CodeBuddy",
+   "product": "CodeBuddy / WorkBuddy",
+   "company": "腾讯",
+   "engine": "底层混元 · 多模型可选",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "体验版",
+     "month": "免费",
+     "year": "",
+     "benefits": "500 积分/月"
+    },
+    {
+     "name": "标准版",
+     "month": "¥99/月",
+     "year": "¥672/年",
+     "benefits": "2,000 积分/月（限时约 4,000）· 连续包月 ¥70 · 两款产品共用积分"
+    },
+    {
+     "name": "高级版",
+     "month": "¥199/月",
+     "year": "¥1344/年",
+     "benefits": "4,000 积分/月（限时约 9,000）· 连续包月 ¥140"
+    },
+    {
+     "name": "旗舰版",
+     "month": "¥999/月",
+     "year": "¥6720/年",
+     "benefits": "20,000 积分/月（限时约 50,000）· 连续包月 ¥700"
+    },
+    {
+     "name": "企业版",
+     "month": "¥198/席/月",
+     "year": "",
+     "benefits": "2,000 积分/席/月 · 团队看板"
+    }
+   ]
+  },
+  {
+   "vendor": "ERNIE",
+   "product": "ERNIE",
+   "company": "百度",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "文心 App",
+     "month": "免费",
+     "year": "",
+     "benefits": "2025-04-01 起全面免费 · ERNIE 5.1"
+    }
+   ]
+  },
+  {
+   "vendor": "Comate",
+   "product": "Comate 文心快码",
+   "company": "百度",
+   "engine": "底层文心",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "个人标准版",
+     "month": "免费",
+     "year": "",
+     "benefits": "注册赠 ¥10 模型额度 · 编程智能体与续写"
+    },
+    {
+     "name": "个人专业版",
+     "month": "¥59/月",
+     "year": "",
+     "benefits": "含 ¥55/月模型额度 · 高并发"
+    },
+    {
+     "name": "个人旗舰版",
+     "month": "¥199/月",
+     "year": "",
+     "benefits": "含 ¥199/月额度 · 10 任务并发"
+    }
+   ]
+  },
+  {
+   "vendor": "百度文库",
+   "product": "百度文库",
+   "company": "百度",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "文库 VIP",
+     "month": "¥39/季",
+     "year": "¥138/年",
+     "benefits": "AI 写作/改写/PPT 生成 · 下载特权 · 常有两年卡等活动价"
+    }
+   ]
+  },
+  {
+   "vendor": "星火",
+   "product": "星火",
+   "company": "科大讯飞",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "星火会员",
+     "month": "¥39/月",
+     "year": "¥388/年",
+     "benefits": "Spark Pro 额度 · 语音与文档"
+    },
+    {
+     "name": "专业版",
+     "month": "¥99/月",
+     "year": "¥980/年",
+     "benefits": "更高额度 · 行业插件 + API 额度"
+    }
+   ]
+  },
+  {
+   "vendor": "iFlyCode",
+   "product": "iFlyCode",
+   "company": "科大讯飞",
+   "engine": "底层星火",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "个人版",
+     "month": "¥69/月",
+     "year": "",
+     "benefits": "不限次问答 · 代码生成/补全/单测"
+    },
+    {
+     "name": "团队版",
+     "month": "¥129/人/月",
+     "year": "",
+     "benefits": "个人版全部 + 调试 + 成员管理与报表"
+    }
+   ]
+  },
+  {
+   "vendor": "MiMo",
+   "product": "MiMo Token Plan",
+   "company": "小米",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "Lite",
+     "month": "¥39/月",
+     "year": "",
+     "benefits": "MiMo V2.6 Pro / Flash 编程额度 · 首购与包年 88 折"
+    },
+    {
+     "name": "Standard",
+     "month": "¥99/月",
+     "year": "",
+     "benefits": "更高额度"
+    },
+    {
+     "name": "Pro",
+     "month": "¥329/月",
+     "year": "",
+     "benefits": "高额度"
+    },
+    {
+     "name": "Max",
+     "month": "¥659/月",
+     "year": "",
+     "benefits": "最高额度"
+    }
+   ]
+  },
+  {
+   "vendor": "MiniMax",
+   "product": "MiniMax Token Plan",
+   "company": "稀宇科技",
+   "engine": "底层 MiniMax",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "Plus",
+     "month": "¥49/月",
+     "year": "¥490/年",
+     "benefits": "M3 全系 · 编程与 Agent 共用额度 · 支持 3–4 个 Agent"
+    },
+    {
+     "name": "Max",
+     "month": "¥119/月",
+     "year": "¥1190/年",
+     "benefits": "更高额度 · 4–5 个 Agent"
+    },
+    {
+     "name": "Ultra",
+     "month": "¥469/月",
+     "year": "¥4690/年",
+     "benefits": "最高额度 · 6–7 个 Agent"
+    }
+   ]
+  },
+  {
+   "vendor": "Raccoon",
+   "product": "代码小浣熊",
+   "company": "商汤科技",
+   "engine": "底层日日新",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "免费版",
+     "month": "免费",
+     "year": "",
+     "benefits": "300 积分/日 · 标准模型对话与补全"
+    },
+    {
+     "name": "个人升级版",
+     "month": "¥29.9/月起",
+     "year": "",
+     "benefits": "500 积分/日 + 10,000 积分/月 · 知识库对话"
+    },
+    {
+     "name": "企业标准版",
+     "month": "议价",
+     "year": "¥1599 起/年/人",
+     "benefits": "不限次对话 · SSO · 可私有化"
+    }
+   ]
+  },
+  {
+   "vendor": "WPS AI",
+   "product": "WPS AI",
+   "company": "金山办公",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "超级会员",
+     "month": "按年订阅",
+     "year": "约 ¥148–249/年",
+     "benefits": "WPS 全组件权益 + AI 高额度（渠道不同价不同）"
+    },
+    {
+     "name": "大会员",
+     "month": "按年订阅",
+     "year": "约 ¥248/年",
+     "benefits": "AI 权益 + 1TB 空间 + 商用授权"
+    }
+   ]
+  },
+  {
+   "vendor": "飞书",
+   "product": "飞书 AI",
+   "company": "字节跳动",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "基础版",
+     "month": "按年订阅",
+     "year": "¥9900/年",
+     "benefits": "18 万点 AI 额度 · 智能纪要 + 多维表格 AI"
+    },
+    {
+     "name": "企业版",
+     "month": "按年订阅",
+     "year": "¥9.9万/年",
+     "benefits": "200 万点额度 · 知识流通与权限管控"
+    },
+    {
+     "name": "企业版 Plus",
+     "month": "按年订阅",
+     "year": "议价",
+     "benefits": "600 万点额度 · 企业知识问答 API 试用"
+    },
+    {
+     "name": "旗舰版",
+     "month": "按年订阅",
+     "year": "议价",
+     "benefits": "2,000 万点额度 · 完整企业知识问答 API"
+    }
+   ]
+  },
+  {
+   "vendor": "钉钉",
+   "product": "钉钉 AI",
+   "company": "阿里巴巴",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "365 会员（个人）",
+     "month": "¥19/月",
+     "year": "¥169/年",
+     "benefits": "个人 AI 助理 + AI 搜索 + 自动回复"
+    },
+    {
+     "name": "专业版",
+     "month": "按年订阅",
+     "year": "¥9800 起/年",
+     "benefits": "100-500 人企业 · 高级协作管理"
+    },
+    {
+     "name": "专属版",
+     "month": "按年订阅",
+     "year": "¥98000 起/年",
+     "benefits": "500 人以上 · 品牌定制与专属部署"
+    },
+    {
+     "name": "AI 算粒 Basic",
+     "month": "按年订阅",
+     "year": "¥9800/年",
+     "benefits": "20 万算粒 · AI 搜问/听记/表格"
+    }
+   ]
+  },
+  {
+   "vendor": "JoyCode",
+   "product": "JoyCode",
+   "company": "京东",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "团队版",
+     "month": "¥0/席/月",
+     "year": "",
+     "benefits": "限时免费 · 10,000 积分/席 · 补全 + 智能编码"
+    },
+    {
+     "name": "企业版",
+     "month": "¥79/席/月",
+     "year": "",
+     "benefits": "80,000 积分/席 · 团队管理与统一计费"
+    },
+    {
+     "name": "企业定制版",
+     "month": "议价",
+     "year": "",
+     "benefits": "私有化部署 · SSO · 专属支持"
+    }
+   ]
+  },
+  {
+   "vendor": "CodeArts",
+   "product": "CodeArts",
+   "company": "华为云",
+   "cnAvailable": "直连",
+   "tiers": [
+    {
+     "name": "体验版",
+     "month": "¥0/月",
+     "year": "",
+     "benefits": "500 积分/月 · 3 会话并发 · 500MB 知识空间"
+    },
+    {
+     "name": "标准版",
+     "month": "¥98/月",
+     "year": "¥823/年",
+     "benefits": "2,000 积分/月 · 5 并发 · 5GB 知识空间"
+    },
+    {
+     "name": "高级版",
+     "month": "¥198/月",
+     "year": "¥1663/年",
+     "benefits": "4,000 积分/月 · 高峰期优先"
+    },
+    {
+     "name": "旗舰版",
+     "month": "¥498/月",
+     "year": "¥4183/年",
+     "benefits": "10,000 积分/月 · 高峰期最优"
+    }
+   ]
+  },
+  {
+   "vendor": "GPT",
+   "product": "ChatGPT（含 Codex）",
+   "company": "OpenAI",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "GPT-6.1 Sol 限量 · 联网"
+    },
+    {
+     "name": "Go",
+     "month": "$8/月",
+     "year": "",
+     "benefits": "GPT-6.1 基础额度 · Codex 仅轻量任务"
+    },
+    {
+     "name": "Plus",
+     "month": "$20/月",
+     "year": "",
+     "benefits": "GPT-6.1 Sol 额度 · 深度研究 · 语音 · 含 Codex（与 ChatGPT 共用额度）"
+    },
+    {
+     "name": "Pro",
+     "month": "$100/月",
+     "year": "",
+     "benefits": "更高额度 · GPT-6 Astra · 含 Codex"
+    },
+    {
+     "name": "Pro 200",
+     "month": "$200/月",
+     "year": "",
+     "benefits": "Pro 加倍额度 · 长任务优先 · 含 Codex"
+    },
+    {
+     "name": "Pro 500",
+     "month": "$500/月",
+     "year": "",
+     "benefits": "最高额度 · 更快模型 · 含 Codex"
+    },
+    {
+     "name": "Business",
+     "month": "$25/席/月",
+     "year": "$240/席/年",
+     "benefits": "协作空间 · 管理后台 · 数据不用于训练 · 含 Codex · 2 席起"
+    },
+    {
+     "name": "Business 高级席",
+     "month": "$125/席/月",
+     "year": "$1200/席/年",
+     "benefits": "更高额度席位"
+    },
+    {
+     "name": "Enterprise",
+     "month": "议价",
+     "year": "",
+     "benefits": "SSO/SAML · 合规审计 · SLA"
+    }
+   ]
+  },
+  {
+   "vendor": "Copilot",
+   "product": "GitHub Copilot",
+   "company": "微软",
+   "engine": "底层 GPT",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "月 2,000 次补全 + 50 次对话"
+    },
+    {
+     "name": "Pro",
+     "month": "$10/月",
+     "year": "$100/年",
+     "benefits": "补全 + Chat + 多模型切换"
+    },
+    {
+     "name": "Pro+",
+     "month": "$39/月",
+     "year": "$390/年",
+     "benefits": "更高额度 · 顶级模型优先"
+    },
+    {
+     "name": "Max",
+     "month": "$100/月",
+     "year": "",
+     "benefits": "最高个人额度"
+    },
+    {
+     "name": "Business",
+     "month": "$19/席/月",
+     "year": "$228/席/年",
+     "benefits": "组织管理 · 策略控制 · 代码引用过滤"
+    },
+    {
+     "name": "Enterprise",
+     "month": "$39/席/月",
+     "year": "$468/席/年",
+     "benefits": "合规审计 · 私有索引"
+    }
+   ]
+  },
+  {
+   "vendor": "Claude",
+   "product": "Claude（含 Claude Code）",
+   "company": "Anthropic",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "Sonnet 5.5 限量 · 不含 Claude Code"
+    },
+    {
+     "name": "Pro",
+     "month": "$20/月",
+     "year": "$200/年",
+     "benefits": "Sonnet 5.5 标准额度 · Projects · 含 Claude Code（与 Claude 共用额度）"
+    },
+    {
+     "name": "Max 5x",
+     "month": "$100/月",
+     "year": "",
+     "benefits": "Pro 的 5 倍额度 · Opus 5.5 · 含 Claude Code · 仅月付"
+    },
+    {
+     "name": "Max 20x",
+     "month": "$200/月",
+     "year": "",
+     "benefits": "Pro 的 20 倍额度 · 含 Claude Code · 仅月付"
+    },
+    {
+     "name": "Team 标准席",
+     "month": "$25/席/月",
+     "year": "$240/席/年",
+     "benefits": "团队协作 · 用量看板 · 含 Claude Code"
+    },
+    {
+     "name": "Team 高级席",
+     "month": "$125/席/月",
+     "year": "$1200/席/年",
+     "benefits": "更高额度席位 · 含 Claude Code"
+    },
+    {
+     "name": "Enterprise",
+     "month": "$20/席/月 + API 用量",
+     "year": "",
+     "benefits": "SSO · 审计日志 · 20 席起 · 席位费外按 API 计费"
+    }
+   ]
+  },
+  {
+   "vendor": "Gemini",
+   "product": "Gemini",
+   "company": "Google",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "AI Plus",
+     "month": "$4.99/月",
+     "year": "",
+     "benefits": "Gemini 3.6 Flash · 约 2 倍用量 · 400GB 存储 · 家庭共享（2026-06 降价）"
+    },
+    {
+     "name": "AI Pro",
+     "month": "$19.99/月",
+     "year": "",
+     "benefits": "Gemini 4 Argon / 3.1 Pro · 约 4 倍用量 · 5TB 存储 · NotebookLM"
+    },
+    {
+     "name": "AI Ultra 5x",
+     "month": "$99.99/月",
+     "year": "",
+     "benefits": "Pro 的 5 倍额度"
+    },
+    {
+     "name": "AI Ultra 20x",
+     "month": "$199.99/月",
+     "year": "",
+     "benefits": "Pro 的 20 倍额度 · Veo 视频优先"
+    },
+    {
+     "name": "Workspace Business",
+     "month": "$18/席/月",
+     "year": "$180/席/年",
+     "benefits": "企业版邮件/文档 + Gemini 集成"
+    }
+   ]
+  },
+  {
+   "vendor": "Google",
+   "product": "Gemini Code Assist",
+   "company": "Google",
+   "engine": "底层 Gemini",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Standard",
+     "month": "$22.8/席/月",
+     "year": "$19/席/月",
+     "benefits": "更高配额 · 安全管理 · IP 赔偿"
+    },
+    {
+     "name": "Enterprise",
+     "month": "$54/席/月",
+     "year": "$45/席/月",
+     "benefits": "私有库代码感知 · GCP 集成"
+    }
+   ]
+  },
+  {
+   "vendor": "Grok",
+   "product": "Grok（含 Grok Build）",
+   "company": "xAI",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "Grok 4.3 限量 · 含 Grok Build"
+    },
+    {
+     "name": "SuperGrok Lite",
+     "month": "$10/月",
+     "year": "$100/年",
+     "benefits": "入门档 · 含 Grok Build"
+    },
+    {
+     "name": "SuperGrok",
+     "month": "$30/月",
+     "year": "$300/年",
+     "benefits": "Grok 4.7 高额度 · 深度思考 · 含 Grok Build（共用额度）"
+    },
+    {
+     "name": "SuperGrok Plus",
+     "month": "$100/月",
+     "year": "$1000/年",
+     "benefits": "更高额度 · Grok 4.7 Fast 优先"
+    },
+    {
+     "name": "SuperGrok Heavy",
+     "month": "$300/月",
+     "year": "$3000/年",
+     "benefits": "最高额度 · 含 X Premium+"
+    },
+    {
+     "name": "Grok Business",
+     "month": "$30/席/月",
+     "year": "",
+     "benefits": "团队席位 · 管理后台 · API 额度"
+    }
+   ]
+  },
+  {
+   "vendor": "Perplexity",
+   "product": "Perplexity",
+   "company": "Perplexity",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "每日有限快速搜索"
+    },
+    {
+     "name": "Pro",
+     "month": "$20/月",
+     "year": "$200/年",
+     "benefits": "无限快速搜索 · 顶级模型切换"
+    },
+    {
+     "name": "Max",
+     "month": "$200/月",
+     "year": "$2000/年",
+     "benefits": "深度研究不限量 · 最高算力"
+    },
+    {
+     "name": "Enterprise Pro",
+     "month": "$40/席/月",
+     "year": "$400/席/年",
+     "benefits": "团队空间 · SSO · 数据隔离"
+    },
+    {
+     "name": "Enterprise Max",
+     "month": "$325/席/月",
+     "year": "$3250/席/年",
+     "benefits": "企业最高档"
+    }
+   ]
+  },
+  {
+   "vendor": "Amazon Q",
+   "product": "Amazon Q Developer",
+   "company": "亚马逊 AWS",
+   "engine": "多模型（Nova 等）",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "月 50 次 Agent 请求 · Java 升级 1,000 行"
+    },
+    {
+     "name": "Pro",
+     "month": "$19/人/月",
+     "year": "",
+     "benefits": "更高请求量 · 管理看板 · IP 赔偿"
+    }
+   ]
+  },
+  {
+   "vendor": "Midjourney",
+   "product": "Midjourney",
+   "company": "Midjourney",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Basic",
+     "month": "$10/月",
+     "year": "$96/年",
+     "benefits": "约 200 张/月"
+    },
+    {
+     "name": "Standard",
+     "month": "$30/月",
+     "year": "$288/年",
+     "benefits": "约 15 小时快速出图 · 慢速不限"
+    },
+    {
+     "name": "Pro",
+     "month": "$60/月",
+     "year": "$576/年",
+     "benefits": "隐身模式 · 更多并发"
+    },
+    {
+     "name": "Mega",
+     "month": "$120/月",
+     "year": "$1152/年",
+     "benefits": "最高并发与额度"
+    }
+   ]
+  },
+  {
+   "vendor": "OpenClaw",
+   "product": "OpenClaw",
+   "company": "开源社区",
+   "engine": "任意模型 · 自带 Key",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "开源",
+     "month": "免费",
+     "year": "",
+     "benefits": "MIT 开源 · 官方无付费版与托管 · 模型 API 与服务器自付"
+    }
+   ]
+  },
+  {
+   "vendor": "Muse",
+   "product": "Muse",
+   "company": "Meta",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "1 亿 Muse tokens/周 · 功能与付费档相同 · 含云虚拟机"
+    },
+    {
+     "name": "Power",
+     "month": "$20/月",
+     "year": "",
+     "benefits": "5 亿 Muse tokens/周"
+    },
+    {
+     "name": "Maximum",
+     "month": "$100/月",
+     "year": "",
+     "benefits": "30 亿 Muse tokens/周"
+    }
+   ]
+  },
+  {
+   "vendor": "Cursor",
+   "product": "Cursor",
+   "company": "Anysphere",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "有限额度 · 基础补全"
+    },
+    {
+     "name": "Plus",
+     "month": "$8/月",
+     "year": "",
+     "benefits": "共享用量池基准额度 · 月费内仅含 Grok 模型，其他模型按 API 价另计"
+    },
+    {
+     "name": "Premium",
+     "month": "$30/月",
+     "year": "",
+     "benefits": "Plus 的 4 倍额度"
+    },
+    {
+     "name": "Super",
+     "month": "$100/月",
+     "year": "",
+     "benefits": "Plus 的 15 倍额度"
+    },
+    {
+     "name": "Ultra",
+     "month": "$200/月",
+     "year": "",
+     "benefits": "Plus 的 50 倍额度"
+    },
+    {
+     "name": "Teams",
+     "month": "$30/席/月起",
+     "year": "",
+     "benefits": "Plus 的 4–50 倍额度（按席位档）· 集中计费"
+    }
+   ]
+  },
+  {
+   "vendor": "Devin",
+   "product": "Devin（含 Devin Desktop，原 Windsurf）",
+   "company": "Cognition",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "轻量 Agent 配额 · 补全与内联编辑不限"
+    },
+    {
+     "name": "Pro",
+     "month": "$20/月",
+     "year": "",
+     "benefits": "更高配额 · 前沿模型 · Devin 云 Agent"
+    },
+    {
+     "name": "Max",
+     "month": "$200/月",
+     "year": "",
+     "benefits": "更高配额 · 高并发不限"
+    },
+    {
+     "name": "Teams",
+     "month": "$80/月 + $40/席/月",
+     "year": "",
+     "benefits": "共享计划 · 集中计费 · 管理看板"
+    }
+   ]
+  },
+  {
+   "vendor": "Augment",
+   "product": "Augment Code",
+   "company": "Augment",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Standard",
+     "month": "$20/月",
+     "year": "",
+     "benefits": "含 $20/月用量 · 最多 50 席 · 可用 CLI"
+    },
+    {
+     "name": "Business",
+     "month": "$100/月",
+     "year": "",
+     "benefits": "含 $100/月用量 · 最多 50 席"
+    },
+    {
+     "name": "Enterprise",
+     "month": "议价",
+     "year": "",
+     "benefits": "定制用量 · SSO / SCIM"
+    }
+   ]
+  },
+  {
+   "vendor": "Factory",
+   "product": "Factory Droid",
+   "company": "Factory",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Pro",
+     "month": "$20/月",
+     "year": "",
+     "benefits": "桌面/CLI/SDK · 云端与本地后台 Agent"
+    },
+    {
+     "name": "Plus",
+     "month": "$100/月",
+     "year": "",
+     "benefits": "约 5 倍 Pro 用量 · 托管 Droid 计算机"
+    },
+    {
+     "name": "Max",
+     "month": "$200/月",
+     "year": "",
+     "benefits": "约 10 倍 Pro 用量"
+    },
+    {
+     "name": "Teams",
+     "month": "$60/月 + $40/席/月",
+     "year": "",
+     "benefits": "集中计费 · 含 Pro 全部权益"
+    }
+   ]
+  },
+  {
+   "vendor": "Replit",
+   "product": "Replit",
+   "company": "Replit",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Core",
+     "month": "$20/月",
+     "year": "$204/年",
+     "benefits": "更多 Agent 用量 + $20 高级模型额度"
+    },
+    {
+     "name": "Pro",
+     "month": "$100/月",
+     "year": "$1080/年",
+     "benefits": "Turbo 模式 + $100 模型额度 + 15 协作者"
+    },
+    {
+     "name": "Enterprise",
+     "month": "议价",
+     "year": "",
+     "benefits": "定制用量 · SSO · 私有化"
+    }
+   ]
+  },
+  {
+   "vendor": "JetBrains",
+   "product": "JetBrains AI",
+   "company": "JetBrains",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "AI Free",
+     "month": "免费",
+     "year": "",
+     "benefits": "每 30 天 3 AI Credits · IDE 内补全"
+    },
+    {
+     "name": "AI Pro",
+     "month": "$10/月",
+     "year": "$100/人/年",
+     "benefits": "每 30 天 10 Credits · 云模型 + Junie Agent"
+    },
+    {
+     "name": "AI Ultimate",
+     "month": "$30/月",
+     "year": "$300/人/年",
+     "benefits": "每 30 天 35 Credits"
+    }
+   ]
+  },
+  {
+   "vendor": "Tabnine",
+   "product": "Tabnine",
+   "company": "Tabnine",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Code Assistant",
+     "month": "$39/席/月（年付）",
+     "year": "",
+     "benefits": "代码补全与对话 · 已取消免费版与 Dev 档"
+    },
+    {
+     "name": "Agentic",
+     "month": "$59/席/月（年付）",
+     "year": "",
+     "benefits": "Agent 工作流 · 自托管/气隙部署"
+    }
+   ]
+  },
+  {
+   "vendor": "Sourcegraph",
+   "product": "Sourcegraph Amp",
+   "company": "Sourcegraph",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Hobby",
+     "month": "免费",
+     "year": "",
+     "benefits": "全功能 · 自带 Runner 与 Key"
+    },
+    {
+     "name": "Megawatt",
+     "month": "$20/月",
+     "year": "",
+     "benefits": "含 $20 Agent 用量 + 750 小时小 orb"
+    },
+    {
+     "name": "Gigawatt",
+     "month": "$200/月",
+     "year": "",
+     "benefits": "含 $200 用量 + 1000 小时大 orb"
+    }
+   ]
+  },
+  {
+   "vendor": "Cline",
+   "product": "Cline",
+   "company": "Cline",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "开源版",
+     "month": "免费",
+     "year": "",
+     "benefits": "Apache-2.0 开源 · 自带 API Key 按量付费"
+    },
+    {
+     "name": "ClinePass",
+     "month": "$9.99/月",
+     "year": "",
+     "benefits": "可选订阅 · 模型按成本价"
+    },
+    {
+     "name": "Teams",
+     "month": "$20/席/月",
+     "year": "",
+     "benefits": "前 10 席免费"
+    },
+    {
+     "name": "Enterprise",
+     "month": "议价",
+     "year": "",
+     "benefits": "SSO · SLA · VPC 部署"
+    }
+   ]
+  },
+  {
+   "vendor": "Kilo Code",
+   "product": "Kilo Code",
+   "company": "Kilo",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "个人免费",
+     "month": "免费",
+     "year": "",
+     "benefits": "自带 Key / 本地模型 · 500+ 模型可选"
+    },
+    {
+     "name": "Kilo Pass",
+     "month": "$19/月起",
+     "year": "",
+     "benefits": "最高约 $26.6 月度额度"
+    },
+    {
+     "name": "Teams",
+     "month": "$15/席/月",
+     "year": "",
+     "benefits": "团队协作与共享额度"
+    }
+   ]
+  },
+  {
+   "vendor": "Qodo",
+   "product": "Qodo",
+   "company": "Qodo",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Pro Team 2,500",
+     "month": "$30/月",
+     "year": "",
+     "benefits": "约 18 次评审/月 · 团队共享积分池"
+    },
+    {
+     "name": "Pro Team 5,000",
+     "month": "$60/月",
+     "year": "",
+     "benefits": "约 36 次评审/月"
+    },
+    {
+     "name": "Pro Team 20,000",
+     "month": "$240/月",
+     "year": "",
+     "benefits": "约 144 次评审/月"
+    },
+    {
+     "name": "Enterprise",
+     "month": "议价",
+     "year": "",
+     "benefits": "SSO · 自带 Key + 私有化"
+    }
+   ]
+  },
+  {
+   "vendor": "Notion",
+   "product": "Notion AI",
+   "company": "Notion",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "少量 AI 试用额度"
+    },
+    {
+     "name": "Business（含 AI）",
+     "month": "$24/月",
+     "year": "$20/月",
+     "benefits": "Notion Agent · 会议纪要 · 企业搜索 · SSO"
+    },
+    {
+     "name": "Custom Agents",
+     "month": "$10 / 1000 积分",
+     "year": "",
+     "benefits": "自主智能体按积分叠加"
+    }
+   ]
+  },
+  {
+   "vendor": "Manus",
+   "product": "Manus",
+   "company": "蝴蝶效应",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "每日 300 刷新积分 + 1,000 一次性积分"
+    },
+    {
+     "name": "Pro",
+     "month": "$20/月",
+     "year": "",
+     "benefits": "4,000 积分/月 · 20 并发任务"
+    },
+    {
+     "name": "Pro+",
+     "month": "$40/月",
+     "year": "",
+     "benefits": "8,000 积分/月 · Wide Research 扩容"
+    },
+    {
+     "name": "Extended",
+     "month": "$200/月",
+     "year": "",
+     "benefits": "40,000 积分/月 · 含免费云电脑"
+    },
+    {
+     "name": "Team",
+     "month": "$20/席/月",
+     "year": "",
+     "benefits": "共享积分池 4,000/席起 · SSO · 审计"
+    }
+   ]
+  },
+  {
+   "vendor": "Microsoft 365 Copilot",
+   "product": "Microsoft 365 Copilot",
+   "company": "微软",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Copilot Business",
+     "month": "$21/席/月",
+     "year": "",
+     "benefits": "Word/Excel/PPT/Outlook 内 AI · 需底座许可"
+    },
+    {
+     "name": "Copilot（Enterprise）",
+     "month": "$30/席/月",
+     "year": "",
+     "benefits": "Researcher/Analyst 深推理 + 高级安全"
+    }
+   ]
+  },
+  {
+   "vendor": "Grammarly",
+   "product": "Grammarly",
+   "company": "Grammarly",
+   "cnAvailable": "需特殊网络",
+   "tiers": [
+    {
+     "name": "Free",
+     "month": "$0",
+     "year": "",
+     "benefits": "语法纠错 + 基础语气 + 100 次 AI 提示"
+    },
+    {
+     "name": "Pro",
+     "month": "$30/月",
+     "year": "$144/年",
+     "benefits": "全句改写 + 2,000 次 AI 提示 + 查重 · 年付合 $12/月"
+    },
+    {
+     "name": "Enterprise",
+     "month": "议价",
+     "year": "",
+     "benefits": "并入 Superhuman Go · 风格指南 · 品牌语气 · 管理看板"
+    }
+   ]
+  }
+ ]
+}

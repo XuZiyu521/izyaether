@@ -1,0 +1,372 @@
+{
+ "logo": {
+  "aliyun": "logo_aliyun",
+  "amazon": "logo_amazon",
+  "amazonq": "logo_amazonq",
+  "amp": "logo_amp",
+  "augment": "logo_augment",
+  "baichuan": "logo_baichuan",
+  "baidu": "logo_baidu",
+  "baiduwenku": "logo_baiduwenku",
+  "bytedance": "logo_bytedance",
+  "claude": "logo_claude",
+  "claudecode": "logo_claudecode",
+  "cline": "logo_cline",
+  "codearts": "logo_codearts",
+  "codebuddy": "logo_codebuddy",
+  "codex": "logo_codex",
+  "cohere": "logo_cohere",
+  "comate": "logo_comate",
+  "copilot": "logo_copilot",
+  "cursor": "logo_cursor",
+  "deepseek": "logo_deepseek",
+  "devin": "logo_devin",
+  "dingtalk": "logo_dingtalk",
+  "doubao": "logo_doubao",
+  "ernie": "logo_ernie",
+  "factory": "logo_factory",
+  "feishu": "logo_feishu",
+  "gemini": "logo_gemini",
+  "glm": "logo_glm",
+  "google": "logo_google",
+  "grammarly": "logo_grammarly",
+  "grok": "logo_grok",
+  "huawei": "logo_huawei",
+  "hunyuan": "logo_hunyuan",
+  "iflycode": "logo_iflycode",
+  "jetbrains": "logo_jetbrains",
+  "joycode": "logo_joycode",
+  "kilocode": "logo_kilocode",
+  "kimi": "logo_kimi",
+  "kimicode": "logo_kimicode",
+  "m365copilot": "logo_m365copilot",
+  "manus": "logo_manus",
+  "meta": "logo_meta",
+  "midjourney": "logo_midjourney",
+  "mimo": "logo_mimo",
+  "minimax": "logo_minimax",
+  "mistral": "logo_mistral",
+  "notion": "logo_notion",
+  "openclaw": "logo_openclaw",
+  "nvidia": "logo_nvidia",
+  "openai": "logo_openai",
+  "perplexity": "logo_perplexity",
+  "qoder": "logo_qoder",
+  "qodo": "logo_qodo",
+  "qwen": "logo_qwen",
+  "raccoon": "logo_raccoon",
+  "replit": "logo_replit",
+  "sensetime": "logo_sensetime",
+  "siliconflow": "logo_siliconflow",
+  "spark": "logo_spark",
+  "stepfun": "logo_stepfun",
+  "tabnine": "logo_tabnine",
+  "tencent": "logo_tencent",
+  "trae": "logo_trae",
+  "volcengine": "logo_volcengine",
+  "windsurf": "logo_windsurf",
+  "workbuddy": "logo_workbuddy",
+  "wps": "logo_wps",
+  "anthropic": "logo_claude",
+  "claude_code": "logo_claudecode",
+  "codestral": "logo_mistral",
+  "copilot_gh": "logo_copilot",
+  "gpt": "logo_openai",
+  "iflytek": "logo_spark",
+  "kilo": "logo_kilocode",
+  "moonshot": "logo_kimi",
+  "muse": "logo_meta",
+  "nova": "logo_amazon",
+  "sonar": "logo_perplexity",
+  "sourcegraph": "logo_amp",
+  "wenxin": "logo_ernie",
+  "xinghuo": "logo_spark",
+  "zhipu": "logo_zhipu"
+ },
+ "mark": {
+  "aliyun": "AC",
+  "stepfun": "SF",
+  "sensetime": "ST",
+  "baichuan": "BC",
+  "siliconflow": "Si",
+  "mistral": "M",
+  "cohere": "Co",
+  "workbuddy": "WB",
+  "codebuddy": "CB",
+  "huawei": "HW",
+  "joycode": "JD",
+  "raccoon": "Rac",
+  "iflytek": "讯",
+  "windsurf": "W",
+  "amazonq": "Q",
+  "amazon": "AWS",
+  "tabnine": "Tn",
+  "jetbrains": "JB",
+  "sourcegraph": "SG",
+  "devin": "D",
+  "augment": "Au",
+  "factory": "F",
+  "replit": "R",
+  "cline": "Cl",
+  "kilo": "K",
+  "qodo": "Qo",
+  "notion": "N",
+  "manus": "M",
+  "feishu": "飞",
+  "dingtalk": "钉",
+  "grammarly": "G",
+  "nvidia": "NV"
+ },
+ "fromGroup": {
+  "Amazon": "amazon",
+  "Amazon Q": "amazonq",
+  "Augment": "augment",
+  "Claude": "claude",
+  "Claude Code": "claudecode",
+  "Cline": "cline",
+  "CodeArts": "codearts",
+  "CodeBuddy": "codebuddy",
+  "Codex": "codex",
+  "Cohere": "cohere",
+  "Comate": "comate",
+  "Copilot": "copilot",
+  "Cursor": "cursor",
+  "DeepSeek": "deepseek",
+  "Devin": "devin",
+  "ERNIE": "ernie",
+  "Factory": "factory",
+  "GLM": "glm",
+  "GLM Coding Plan": "glm",
+  "GPT": "openai",
+  "Gemini": "gemini",
+  "Google": "google",
+  "Grammarly": "grammarly",
+  "Grok": "grok",
+  "Grok Build": "grok",
+  "JetBrains": "jetbrains",
+  "JoyCode": "joycode",
+  "Kilo Code": "kilocode",
+  "Kimi": "kimi",
+  "Kimi Code": "kimicode",
+  "Manus": "manus",
+  "MiMo": "mimo",
+  "Microsoft 365 Copilot": "m365copilot",
+  "Midjourney": "midjourney",
+  "MiniMax": "minimax",
+  "MiniMax Coding Plan": "minimax",
+  "Mistral": "mistral",
+  "Muse": "meta",
+  "NVIDIA": "nvidia",
+  "Notion": "notion",
+  "OpenClaw": "openclaw",
+  "Perplexity": "perplexity",
+  "Qoder": "qoder",
+  "Qodo": "qodo",
+  "Qwen": "qwen",
+  "Raccoon": "raccoon",
+  "Replit": "replit",
+  "Sourcegraph": "amp",
+  "Tabnine": "tabnine",
+  "Trae": "trae",
+  "WPS AI": "wps",
+  "Windsurf": "windsurf",
+  "WorkBuddy": "workbuddy",
+  "iFlyCode": "iflycode",
+  "商汤": "sensetime",
+  "星火": "spark",
+  "混元": "hunyuan",
+  "百度文库": "baiduwenku",
+  "豆包": "doubao",
+  "钉钉": "dingtalk",
+  "阶跃星辰": "stepfun",
+  "百川": "baichuan",
+  "阿里云": "aliyun",
+  "飞书": "feishu"
+ },
+ "shot": {
+  "deepseek": [
+   "#4D6BFE",
+   "#9FB6FF"
+  ],
+  "moonshot": [
+   "#2B2B2B",
+   "#6B6B6B"
+  ],
+  "zhipu": [
+   "#2F6BFF",
+   "#8FB2FF"
+  ],
+  "openai": [
+   "#10A37F",
+   "#5FD6B6"
+  ],
+  "anthropic": [
+   "#C96442",
+   "#EDA88F"
+  ],
+  "doubao": [
+   "#2A6BFF",
+   "#7BA5FF"
+  ],
+  "qwen": [
+   "#6E2BD9",
+   "#B394F2"
+  ],
+  "aliyun": [
+   "#FF6A00",
+   "#FFAC66"
+  ],
+  "ernie": [
+   "#2932E1",
+   "#7C83F4"
+  ],
+  "hunyuan": [
+   "#0052D9",
+   "#5C99FF"
+  ],
+  "minimax": [
+   "#E8407A",
+   "#FF9BBC"
+  ],
+  "spark": [
+   "#0A6CFF",
+   "#6BAAFF"
+  ],
+  "mimo": [
+   "#FF6900",
+   "#FFAB66"
+  ],
+  "stepfun": [
+   "#00A88E",
+   "#57DCC4"
+  ],
+  "sensetime": [
+   "#0A59F7",
+   "#67A3FF"
+  ],
+  "baichuan": [
+   "#7B5CFF",
+   "#B39BFF"
+  ],
+  "siliconflow": [
+   "#0F9B8E",
+   "#46D6BB"
+  ],
+  "gemini": [
+   "#4285F4",
+   "#A47BF7"
+  ],
+  "grok": [
+   "#111111",
+   "#575757"
+  ],
+  "muse": [
+   "#0866FF",
+   "#6BA0FF"
+  ],
+  "mistral": [
+   "#FF7000",
+   "#FFB877"
+  ],
+  "cohere": [
+   "#39594D",
+   "#77A794"
+  ],
+  "codebuddy": [
+   "#2B6BF5",
+   "#7BA5FF"
+  ],
+  "huawei": [
+   "#C7000B",
+   "#F2606A"
+  ],
+  "joycode": [
+   "#D8231A",
+   "#F5746C"
+  ],
+  "raccoon": [
+   "#00878F",
+   "#46C3C9"
+  ],
+  "iflytek": [
+   "#1677FF",
+   "#6FAEFF"
+  ],
+  "windsurf": [
+   "#09B6A2",
+   "#5BE0CE"
+  ],
+  "amazon": [
+   "#C45500",
+   "#FFAB5E"
+  ],
+  "tabnine": [
+   "#4B23C4",
+   "#9381F0"
+  ],
+  "jetbrains": [
+   "#D6336C",
+   "#FF8FB4"
+  ],
+  "sourcegraph": [
+   "#E8443A",
+   "#FF9189"
+  ],
+  "devin": [
+   "#1F6FEB",
+   "#7BA9FF"
+  ],
+  "augment": [
+   "#3F5AF4",
+   "#8B9BFF"
+  ],
+  "factory": [
+   "#333333",
+   "#8A8A8A"
+  ],
+  "replit": [
+   "#E85D04",
+   "#FFA45B"
+  ],
+  "cline": [
+   "#5B4EF5",
+   "#A99BFF"
+  ],
+  "kilo": [
+   "#C77800",
+   "#FFC46B"
+  ],
+  "qodo": [
+   "#0F62FE",
+   "#74A4FF"
+  ],
+  "notion": [
+   "#2B2B2B",
+   "#767676"
+  ],
+  "manus": [
+   "#6C4BF4",
+   "#AE9BFF"
+  ],
+  "feishu": [
+   "#3370FF",
+   "#82A9FF"
+  ],
+  "dingtalk": [
+   "#1379F0",
+   "#6FB1FF"
+  ],
+  "grammarly": [
+   "#15C39A",
+   "#62E0C0"
+  ],
+  "nvidia": [
+   "#5C8A00",
+   "#A6D14A"
+  ],
+  "openclaw": [
+   "#D6001C",
+   "#FF6B74"
+  ]
+ }
+}

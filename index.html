@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>izyAether · AI 玩家掌上工作台</title>
+<meta name="description" content="AI 大模型比价、Prompt 库、API 余额一站看">
+<link rel="icon" href="assets/img/icon.png">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <div class="brand"><span class="bi">i</span><span class="bz">zyAether</span></div>
+    <nav id="nav"></nav>
+    <div class="side-foot">
+      <select id="langPick" aria-label="language"></select>
+      <div class="ver" id="verLine"></div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <div id="content"></div>
+  </main>
+
+  <nav id="dock"></nav>
+</div>
+<div id="toast"></div>
+<script>window.onerror=function(m){document.title='ERR:'+m;var d=document.getElementById('app');if(d)d.setAttribute('data-err',m);};</script>
+<script src="assets/app.js"></script>
+<script src="assets/screens.js"></script>
+<script>
+/* 2026-10-19：去掉 WorkBuddy 云同步，纯静态站点，数据只存在浏览器本地（与 App「数据不出设备」一致） */
+(function () {
+  try { if (window.AppBoot) window.AppBoot(); } catch (e) { document.title = 'BOOT:' + e; }
+})();
+</script>
+</body>
+</html>
