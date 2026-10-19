@@ -178,6 +178,8 @@ const IC = {
   spark: () => svg('<path d="M12 3l1.8 4.6L18.4 9.4l-4.6 1.8L12 15.8l-1.8-4.6L5.6 9.4l4.6-1.8z"/>', 19, 1.8, '#FFFFFF'),
   /* App IconKind.Sparkle / Zap：填充型（库卡与回收站卡片徽章同款） */
   sparkleW: (s) => svgF('<path d="M12 2.2C12.6 7.6 16.4 11.4 21.8 12C16.4 12.6 12.6 16.4 12 21.8C11.4 16.4 7.6 12.6 2.2 12C7.6 11.4 11.4 7.6 12 2.2Z"/>', s || 19, '#FFFFFF'),
+  /* App IconKind.Prompt：对话气泡（2026-10-19 替换星芒，避开 Gemini 标志） */
+  promptW: (s, c) => svgF('<path d="M5.2 3.6H18.8A2.8 2.8 0 0 1 21.6 6.4V14.6A2.8 2.8 0 0 1 18.8 17.4H10.6L5.6 21.2L6.6 17.4H5.2A2.8 2.8 0 0 1 2.4 14.6V6.4A2.8 2.8 0 0 1 5.2 3.6Z"/>', s || 19, c || '#FFFFFF'),
   zapW: (s) => svgF('<path d="M13.6 2L5 13.4H11.2L10.4 22L19 10.6H12.8Z"/>', s || 19, '#FFFFFF'),
   zap: () => svg('<path d="M13 2L4 14h6l-1 8 9-12h-6z"/>', 19, 1.8, '#FFFFFF'),
   checkW: () => svg('<path d="M4 12l5 5L20 6"/>', 13, 2.2, '#FFFFFF'),
@@ -404,7 +406,7 @@ function expandQuery(kw) {
 const BUILTIN_CAT_MAP = [
   '科研论文', 'lib.cat.research', 'AI 前沿', 'lib.cat.ai', '工程效率', 'lib.cat.eng',
   '写作', 'lib.cat.write', '翻译', 'lib.cat.translate', '改代码', 'lib.cat.code',
-  '职场', 'lib.cat.work', '写论文', 'lib.cat.paper', '学习', 'lib.cat.study', '数据分析', 'lib.cat.data'
+  '职场', 'lib.cat.work', '写论文', 'lib.cat.paper', '学习', 'lib.cat.study', '生活', 'lib.cat.life', '数据分析', 'lib.cat.data'
 ];
 function catLabel(name) {
   if (!name || name === '未分类') return t('cat.none');
@@ -492,7 +494,7 @@ function libTopRow(n) {
     <span class="ltr-t">${esc(hint ? t('price.reorder.hint') : t('lib.count', n))}</span>
     ${(skillCount > 0 || S.libType !== 'all') ? `<span class="libtseg">
       <span class="slider" style="transform:translateX(${types.indexOf(S.libType) * 100}%)"></span>
-      ${types.map(function (ty) { return `<button data-type="${ty}" class="${S.libType === ty ? 'on' : ''}">${esc(t('lib.type.' + ty))}</button>`; }).join('')}
+      ${types.map(function (ty) { const ic = ty === 'skill' ? IC.zapW(10).replace('#FFFFFF', '#7B5CFF') : (ty === 'prompt' ? IC.promptW(10, '#0A59F7') : ''); return `<button data-type="${ty}" class="${S.libType === ty ? 'on' : ''}">${ic}${esc(t('lib.type.' + ty))}</button>`; }).join('')}
     </span>` : ''}
   </div>`;
 }
@@ -572,7 +574,7 @@ function promptCard(p) {
     : `<span class="pused">${esc(t('lib.used', p.useCount || 0))} · ${esc(daysAgoIn(p.lastUsedAt))}</span>`;
   return `<div class="pcard" draggable="true" data-id="${esc(p.id)}" data-open="${esc(p.id)}">
     <div class="prow">
-      <span class="pbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW() : IC.sparkleW()}</span>
+      <span class="pbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW() : IC.promptW()}</span>
       <div class="ptxt">
         <div class="ptitle">${esc(p.title)}</div>
         ${p.content ? `<div class="pabs">${esc(previewOf(p.content).slice(0, 90))}</div>` : ''}
@@ -738,7 +740,7 @@ function viewPrice() {
 function cmpEntry() {
   const on = S.cmpOn;
   return `<button class="cmpentry ${on ? 'on' : ''}" id="cmpToggle">
-    <span class="ce-ic">${on ? IC.checkW() : IC.sparkle()}</span>
+    <span class="ce-ic">${on ? IC.checkW() : IC.plus()}</span>
     <span class="ce-t">${esc(on ? t('cmp.pick', S.cmpIds.length) : t('cmp.entry'))}</span>
     ${on ? `<span class="ce-exit" id="cmpExit">${esc(t('cmp.exit'))}</span>`
       : `<span class="ce-tip">${esc(t('cmp.tip'))}</span>${IC.chevR()}`}</button>`;
@@ -1586,11 +1588,13 @@ function exportJSON() {
 
 /* ══════════ 启动 ══════════ */
 async function boot() {
+  /* no-cache：每次向服务器确认是否有新版本（GitHub Pages 默认缓存 10 分钟，否则更新后老访客看到旧内容） */
+  const NC = { cache: 'no-cache' };
   const [d, i, b, e] = await Promise.all([
-    fetch('data/app-data.json').then(r => r.json()),
-    fetch('data/i18n.json').then(r => r.json()),
-    fetch('data/brand.json').then(r => r.json()),
-    fetch('data/extra.json').then(r => r.json()).catch(() => ({}))
+    fetch('data/app-data.json', NC).then(r => r.json()),
+    fetch('data/i18n.json', NC).then(r => r.json()),
+    fetch('data/brand.json', NC).then(r => r.json()),
+    fetch('data/extra.json', NC).then(r => r.json()).catch(() => ({}))
   ]);
   DATA = d; I18N = i; BRAND = b; EXTRA = e;
   S.lang = store.get(LS.lang, guessLang());

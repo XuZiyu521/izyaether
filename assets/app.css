@@ -1315,3 +1315,6 @@ body.insub #dock{display:none !important}
 /* 官方 logo 图片约束（防大图溢出卡片） */
 .bmark img{width:100%; height:100%; object-fit:contain; border-radius:11px; display:block}
 .cmprow.head .cv .bmark{margin-bottom:2px}
+
+/* 2026-10-19 类型切换图例：蓝色对话气泡 = Prompt，紫色闪电 = Skill */
+.libtseg button svg{width:10px;height:10px;vertical-align:-1px;margin-right:3px}

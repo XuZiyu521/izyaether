@@ -518,7 +518,7 @@ SCREENS.trash = function () {
     const isSkill = p.type === 'skill';
     return `<div class="trcard">
         <div class="trcard-row">
-          <span class="trbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW(17) : IC.sparkleW(17)}</span>
+          <span class="trbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW(17) : IC.promptW(17)}</span>
           <div class="trcard-txt">
             <div class="trcard-title">${esc(p.title)}</div>
             <div class="trcard-meta">${esc(trashMeta(p))}</div>
