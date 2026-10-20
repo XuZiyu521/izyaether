@@ -557,7 +557,7 @@ function paintPrompts() {
       return terms.some(function (w) { return hay.indexOf(w) >= 0; });
     });
   }
-  const order = store.get(LS.order, []);
+  const order = libOrder();
   if (recent) list.sort(function (a, b) { return b.lastUsedAt - a.lastUsedAt; });
   else list.sort(function (a, b) {
     const fa = a.fav ? 0 : 1, fb = b.fav ? 0 : 1;
@@ -691,8 +691,13 @@ function bindCardDrag(box) {
     el.ondragend = function () { dragId = null; };
   });
 }
+/* 库页顺序：用户拖过就用他自己的；没拖过用开发者在 App 里调好的默认顺序（app-data.json → defaultOrder） */
+function libOrder() {
+  const mine = store.get(LS.order, []);
+  return mine.length ? mine : (DATA.defaultOrder || []);
+}
 function currentOrderIds() {
-  const o = store.get(LS.order, []);
+  const o = libOrder();
   const all = allPrompts().map(function (p) { return p.id; });
   return o.concat(all.filter(function (id) { return o.indexOf(id) < 0; }));
 }
