@@ -8,12 +8,13 @@ const LS = {
   keys: 'izy.keys', prompts: 'izy.prompts',
   trash: 'izy.trash', cats: 'izy.cats', cover: 'izy.cover', theme: 'izy.theme',
   profile: 'izy.profile', follow: 'izy.follow', alert: 'izy.alert', order: 'izy.order',
-  hidden: 'izy.hidden_builtin'
+  hidden: 'izy.hidden_builtin',
+  usage: 'izy.usage', bfav: 'izy.bfav'   /* 内置条目的使用统计 / 收藏（内置条目不入 prompts 表，单独记） */
 };
 const S = {
   lang: 'zh-CN', page: 'library', sub: '', arg: '', q: '', priceTab: 'api',
   libType: 'all', favOnly: false, cmpOn: false, cmpIds: [], open: {}, cat: '',
-  manualOpen: false
+  manualOpen: false, expId: '', expVals: {}
 };
 const LANGS = [
   ['zh-CN', '简体中文'], ['zh-TW', '繁體中文'], ['en-US', 'English'],
@@ -379,11 +380,32 @@ function selfPrompts() { return store.get(LS.prompts, []); }
 function hiddenBuilt() { return store.get(LS.hidden, []); }
 function allPrompts() {
   const hidden = hiddenBuilt();
+  const use = store.get(LS.usage, {});
+  const bfav = store.get(LS.bfav, []);
   const built = (DATA.builtinPrompts || []).filter(function (b) { return hidden.indexOf(b.id) < 0; })
     .map(function (b) {
-      return Object.assign({}, b, { builtin: true, id: b.id || ('b_' + b.title) });
+      const id = b.id || ('b_' + b.title);
+      const u = use[id] || {};
+      return Object.assign({}, b, { builtin: true, id: id, useCount: u.n || 0, lastUsedAt: u.t || 0, fav: bfav.indexOf(id) >= 0 });
     });
-  return built.concat(selfPrompts());
+  const mine = selfPrompts().map(function (x) { x.lastUsedAt = x.lastUsedAt || x.lastUsed || 0; return x; });
+  return built.concat(mine);
+}
+/* App repo.markUsed：用过 +1、记时间（「最近用过」分类按它排序）。自建写回 prompts，内置写 usage 表 */
+function markUsed(p) {
+  const now = Date.now();
+  const mine = selfPrompts();
+  const own = mine.filter(function (x) { return x.id === p.id; })[0];
+  if (own) {
+    own.useCount = (own.useCount || 0) + 1;
+    own.lastUsedAt = now; own.lastUsed = now;
+    store.set(LS.prompts, mine);
+    return;
+  }
+  const use = store.get(LS.usage, {});
+  const u = use[p.id] || { n: 0, t: 0 };
+  u.n += 1; u.t = now; use[p.id] = u;
+  store.set(LS.usage, use);
 }
 function libCats() {
   const counts = {};
@@ -418,6 +440,8 @@ function catLabel(name) {
 }
 /* App realCatLabel：内置条目的 DB 分类是集合名，真实题材在 tags 里 */
 function realCatLabel(p) {
+  /* App：分类不是集合名「内置精选」时直接用分类本身（v6 起内置条目都带真实题材分类） */
+  if (p.category && p.category !== '内置精选') return catLabel(p.category);
   if (p.builtin) {
     const tags = p.tags || [];
     for (let ti = 0; ti < tags.length; ti++) {
@@ -466,19 +490,21 @@ function viewLibrary() {
   const built = (DATA.builtinPrompts || []).length;
   const q = libQuota(self.length, built);
   const trashCount = store.get(LS.trash, []).length;
+  const n = store.get(LS.cover, 1);
+  const pf = store.get(LS.profile, {});
+  const img = (pf.coverCustom && pf.coverImg) ? pf.coverImg : 'assets/img/cover_' + n + '.jpg';
+  /* App LibraryPage.header（2026-10-19）：封面背景 + 白字标题 / 额度 + 玻璃圆钮；搜索框压在渐隐带上 */
   return `<div class="libwrap">
-    <div class="libhead">
+    <div class="cover libcover"><img src="${esc(img)}" alt=""><div class="scrim"></div><div class="fade"></div>
       <div class="libtop">
-        <h2>${esc(t('tab.library'))}</h2>
-        <span class="ltools">
-          <button class="lchip" id="goTrash">${IC.trashL()}${trashCount ? `<i class="badge">${trashCount > 99 ? '99+' : trashCount}</i>` : ''}</button>
-          <button class="lchip ${S.favOnly ? 'on' : ''}" id="favOnly">${IC.star(S.favOnly)}<span>${esc(t('lib.fav'))}</span></button>
-        </span>
+        <div class="lt-l"><h1>${esc(t('tab.library'))}</h1>
+          <div class="libquota ${q.full ? 'full' : ''}"><span>${esc(q.txt)}</span>${q.full ? `<button class="upgrade" id="goPro">${esc(t('lib.pro.upgrade'))}</button>` : ''}</div></div>
+        <button class="gbtn" id="goTrash" aria-label="${esc(t('web.trash.entry'))}">${IC.trashL().replace(/stroke="[^"]*"/g, 'stroke="#FFFFFF"')}${trashCount ? `<i class="badge">${trashCount > 99 ? '99+' : trashCount}</i>` : ''}</button>
+        <button class="gbtn ${S.favOnly ? 'on' : ''}" id="favOnly" aria-label="${esc(t('lib.fav'))}">${IC.star(S.favOnly).replace(/#98A1A9/g, '#FFFFFF').replace(/#F5A623/g, '#FFD666')}</button>
       </div>
-      <div class="libquota ${q.full ? 'full' : ''}"><span>${esc(q.txt)}</span>${q.full ? `<button class="upgrade" id="goPro">${esc(t('lib.pro.upgrade'))}</button>` : ''}</div>
-      <div class="search lib-search">${IC.searchL()}<input type="search" id="q" value="${esc(S.q)}" placeholder="${esc(t('lib.search'))}">
-        ${S.q ? `<span class="clear" id="qc">${IC.close()}</span>` : ''}</div>
     </div>
+    <div class="search lib-search">${IC.searchL()}<input type="search" id="q" value="${esc(S.q)}" placeholder="${esc(t('lib.search'))}">
+      ${S.q ? `<span class="clear" id="qc">${IC.close()}</span>` : ''}</div>
     <div class="catrow"><span class="catinner" id="cats"></span><span class="cathint">${esc(t('lib.cat.hint'))}</span></div>
     <div class="page libpage"><div id="list" class="plist"></div></div>
   </div>`;
@@ -503,9 +529,9 @@ function paintPrompts() {
   if (chips) {
     const c = libCats();
     // App categoryRow：「全部」+「内置精选」+ 题材分类 + 分类表其余；行尾挂长按管理提示
-    const order = [''].concat(['__builtin__']).concat(c.all.filter(function (x) { return x !== '__builtin__'; }));
-    const label = function (x) { return x === '__builtin__' ? t('lib.cat.builtinCat') : (x === '' ? t('lib.cat.all') : x); };
-    const key = function (x) { return x === '__builtin__' ? '科研论文' : x; };
+    const order = ['', '__recent__', '__builtin__'].concat(c.all.filter(function (x) { return x !== '__builtin__'; }));
+    const label = function (x) { return x === '__recent__' ? t('lib.recent') : x === '__builtin__' ? t('lib.cat.builtinCat') : (x === '' ? t('lib.cat.all') : catLabel(x)); };
+    const key = function (x) { return x; };
     chips.innerHTML = order.map(function (x) {
       const k = key(x);
       const on = S.cat === k || (x === '' && S.cat === '');
@@ -518,7 +544,9 @@ function paintPrompts() {
   const box = document.getElementById('list');
   if (!box) return;
   let list = allPrompts();
-  if (S.cat === '科研论文') list = list.filter(function (p) { return p.builtin || (p.category || '') === '科研论文'; });
+  const recent = S.cat === '__recent__';
+  if (recent) list = list.filter(function (p) { return p.lastUsedAt > 0; });
+  else if (S.cat === '__builtin__') list = list.filter(function (p) { return p.builtin; });
   else if (S.cat) list = list.filter(function (p) { return (p.category || '') === S.cat; });
   if (S.libType !== 'all') list = list.filter(function (p) { return (p.type || 'prompt') === S.libType; });
   if (S.favOnly) list = list.filter(function (p) { return p.fav; });
@@ -530,12 +558,13 @@ function paintPrompts() {
     });
   }
   const order = store.get(LS.order, []);
-  list.sort(function (a, b) {
+  if (recent) list.sort(function (a, b) { return b.lastUsedAt - a.lastUsedAt; });
+  else list.sort(function (a, b) {
     const fa = a.fav ? 0 : 1, fb = b.fav ? 0 : 1;
     if (fa !== fb) return fa - fb;
     const oa = order.indexOf(a.id), ob = order.indexOf(b.id);
     if (oa >= 0 && ob >= 0) return oa - ob;
-    return (b.lastUsed || b.createdAt || 0) - (a.lastUsed || a.createdAt || 0);
+    return (b.lastUsedAt || b.createdAt || 0) - (a.lastUsedAt || a.createdAt || 0);
   });
   if (!list.length) {
     // App 空态三态：收藏空 / 有筛选无结果 / 无数据
@@ -550,7 +579,41 @@ function paintPrompts() {
     b.onclick = function () { S.libType = b.dataset.type; paintPrompts(); };
   });
   box.querySelectorAll('[data-fav]').forEach(function (b) { b.onclick = function (e) { e.stopPropagation(); favToggle(b.dataset.fav); }; });
-  box.querySelectorAll('[data-open]').forEach(function (b) { b.onclick = function () { goHash('library/detail/' + encodeURIComponent(b.dataset.open)); }; });
+  bindCardTap(box, list);
+}
+/* App onCardRelease：Skill（长工作流）→ 进详情；Prompt → 原地展开（填变量 / 复制 / 发送），再点收起。同一时间只展开一张 */
+function bindCardTap(box, list) {
+  const byId = {};
+  list.forEach(function (p) { byId[p.id] = p; });
+  box.querySelectorAll('.pcard').forEach(function (el) {
+    el.onclick = function (e) {
+      if (e.target.closest('button,input,.pexp')) return;
+      const p = byId[el.dataset.id];
+      if (!p) return;
+      if (p.type === 'skill') { goHash('library/detail/' + encodeURIComponent(p.id)); return; }
+      if (S.expId !== p.id) S.expVals = {};
+      S.expId = S.expId === p.id ? '' : p.id;
+      paintPrompts();
+    };
+  });
+  box.querySelectorAll('.pexp input[data-var]').forEach(function (inp) {
+    inp.oninput = function () { S.expVals[inp.dataset.var] = inp.value; };
+  });
+  const filled = function (p) { return renderVars(p.content || '', S.expVals); };
+  box.querySelectorAll('[data-act]').forEach(function (b) {
+    b.onclick = function (e) {
+      e.stopPropagation();
+      const p = byId[b.dataset.id];
+      if (!p) return;
+      const act = b.dataset.act;
+      if (act === 'detail') { goHash('library/detail/' + encodeURIComponent(p.id)); return; }
+      const text = filled(p);
+      markUsed(p);
+      if (act === 'copy') { copyText(text); toast(t('detail.copiedName', p.title)); return; }
+      if (navigator.share) navigator.share({ title: p.title, text: text }).catch(function () {});
+      else { copyText(text); toast(t('detail.shareFail')); }
+    };
+  });
 }
 /* Prompt 卡（App PromptCard：徽章 38 渐变 / 标题 16 Bold / 摘要 12 两行 / meta 11 / 变量行 10）
    ★App 卡片只有「星标 + 点开详情」两个交互，没有编辑/删除按钮（删除只在详情页）★ */
@@ -568,21 +631,28 @@ function promptCard(p) {
   const isSkill = p.type === 'skill';
   const fav = !!p.fav;
   const vars = parseVars(p.content || '');
-  const metaLeft = realCatLabel(p) + (p.targetModel && p.targetModel !== '通用' ? ' · ' + p.targetModel : '');
-  const metaRight = p.builtin
-    ? (srcShort(p) ? `<span class="psrc">${esc(srcShort(p))}</span>` : '')
-    : `<span class="pused">${esc(t('lib.used', p.useCount || 0))} · ${esc(daysAgoIn(p.lastUsedAt))}</span>`;
-  return `<div class="pcard" draggable="true" data-id="${esc(p.id)}" data-open="${esc(p.id)}">
+  const open = !isSkill && S.expId === p.id;
+  /* App PromptCard.metaLine：题材（非「通用」时带适用模型）· 来源（自建则用过 N 次 · 时间）· N 个变量 */
+  const parts = [realCatLabel(p) + (p.targetModel && p.targetModel !== '通用' ? ' · ' + p.targetModel : '')];
+  parts.push(p.builtin && srcShort(p) ? srcShort(p) : t('lib.used', p.useCount || 0) + ' · ' + daysAgoIn(p.lastUsedAt));
+  if (vars.length) parts.push(t('lib.card.vars', vars.length));
+  const lock = PAYWALL_ENABLED && isSkill && p.builtin && proStatus() !== 2;
+  return `<div class="pcard ${open ? 'open' : ''}" draggable="${open ? 'false' : 'true'}" data-id="${esc(p.id)}">
     <div class="prow">
-      <span class="pbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW() : IC.promptW()}</span>
+      <span class="pbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW(14) : IC.promptW(14)}</span>
       <div class="ptxt">
-        <div class="ptitle">${esc(p.title)}</div>
-        ${p.content ? `<div class="pabs">${esc(previewOf(p.content).slice(0, 90))}</div>` : ''}
+        <div class="ptitle"><span>${esc(p.title)}</span>${lock ? `<i class="pmember">${esc(t('detail.member'))}</i>` : ''}</div>
+        ${p.content ? `<div class="pabs ${open ? 'l3' : ''}">${esc(previewOf(p.content).slice(0, 240))}</div>` : ''}
+        <div class="pmeta">${esc(parts.join(' · '))}</div>
       </div>
       <button class="pstar" data-fav="${esc(p.id)}">${IC.star(fav)}</button>
     </div>
-    <div class="pmeta2"><span class="pml">${esc(metaLeft)}</span>${metaRight}</div>
-    ${vars.length ? `<div class="pvars"><span class="pvl">${esc(t('lib.vars'))}</span>${vars.map(function (v) { return `<span class="pvc">${esc(v)}</span>`; }).join('')}</div>` : ''}
+    ${open ? `<div class="pexp">
+      ${vars.map(function (v) { return `<label class="pvrow"><span>${esc(v)}</span><input data-var="${esc(v)}" value="${esc(S.expVals[v] || '')}" placeholder="${esc(t('detail.fill.hint', v))}"></label>`; }).join('')}
+      <div class="pbtns"><button class="pb main" data-act="copy" data-id="${esc(p.id)}">${esc(t('lib.card.copy'))}</button>
+        <button class="pb" data-act="send" data-id="${esc(p.id)}">${esc(t('lib.card.send'))}</button>
+        <button class="pb" data-act="detail" data-id="${esc(p.id)}">${esc(t('lib.card.detail'))}</button></div>
+    </div>` : ''}
   </div>`;
 }
 /* 变量提取（App VarParser.extract：{{变量名}}，按出现顺序去重） */
@@ -629,7 +699,14 @@ function currentOrderIds() {
 function favToggle(id) {
   const mine = selfPrompts();
   const p = mine.filter(function (x) { return x.id === id; })[0];
-  if (!p) return;
+  if (!p) {
+    const bf = store.get(LS.bfav, []);
+    const i = bf.indexOf(id);
+    if (i >= 0) bf.splice(i, 1); else bf.push(id);
+    store.set(LS.bfav, bf);
+    paintPrompts();
+    return;
+  }
   p.fav = !p.fav;
   store.set(LS.prompts, mine);
   paintPrompts();

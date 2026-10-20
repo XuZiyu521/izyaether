@@ -219,13 +219,7 @@ function bindDetail() {
 function copyAndCount(p, text) {
   copyText(text);
   toast(t('detail.copied'));
-  const mine = selfPrompts();
-  const own = mine.filter(function (x) { return x.id === p.id; })[0];
-  if (own) {
-    own.useCount = (own.useCount || 0) + 1;
-    own.lastUsed = Date.now();
-    store.set(LS.prompts, mine);
-  }
+  markUsed(p);
 }
 /* App 变量填写弹层（showFill：86% 宽 / r16 / maxHeight 70% / 取消·生成 40 高 r20） */
 function openFill(p, vars) {
