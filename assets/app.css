@@ -1617,3 +1617,13 @@ html.glass .search input{font-size:calc(15px / var(--tz,1))}
 html.glass .cchip{font-size:calc(13px / var(--tz,1))}
 html.glass .pgmore{font-size:calc(13.5px / var(--tz,1))}
 html.glass .libtseg button{font-size:calc(11px / var(--tz,1))}
+/* 按参考截图实测（换算到 412 宽 CSS 像素）：分区标题≈21、条目标题≈18、副标题≈14、图标≈60、行高≈88 */
+html.glass .plist .ptitle{font-size:calc(17.5px / var(--tz,1))}
+html.glass .psub,html.glass .plist .pabs{font-size:calc(13.5px / var(--tz,1))}
+html.glass .pgtitle{font-size:calc(21px / var(--tz,1))}
+html.glass .plist .pcard{padding:16px 16px 16px 14px}
+html.glass .plist .pbadge{width:58px; height:58px; flex:0 0 58px; border-radius:16px}
+html.glass .plist .pbadge svg{width:24px; height:24px}
+html.glass .plist .pcard + .pcard::before,html.glass .pgmore::before{left:86px}
+html.glass .pgmore{padding-left:86px}
+html.glass .pexp{padding-left:72px}
