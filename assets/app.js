@@ -284,7 +284,10 @@ function applyTheme() {
       document.body.insertBefore(bg, document.body.firstChild);
     }
     const img = bg.querySelector('img');
-    const url = coverImgUrl();
+    /* 玻璃要有东西可透：预设封面是纯渐变，模糊后仍是一片平色，玻璃感出不来 → 换成程序生成的黑白夜海纹理；
+       用户自己的照片封面照常用（去色 + 轻模糊） */
+    const pf0 = store.get(LS.profile, {});
+    const url = (pf0.coverCustom && pf0.coverImg) ? pf0.coverImg : 'assets/img/glass_scene.jpg';
     if (img.getAttribute('src') !== url) img.setAttribute('src', url);
     /* 预设封面是纯渐变、没有纹理：叠一层同色系的光斑网格 + 细颗粒，模拟照片背景的明暗层次；自定义照片不叠 */
     const pf = store.get(LS.profile, {});
