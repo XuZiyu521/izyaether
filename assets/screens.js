@@ -95,6 +95,7 @@ SCREENS.detail = function () {
       ${vars.length ? `<div class="dvars-card"><span class="dvars-l">${esc(t('detail.vars'))}</span>
         <div class="dvars-row">${vars.map(function (v) { return `<span class="dvar">${esc(v)}</span>`; }).join('')}</div></div>` : ''}
       <button class="dcost" id="dCost"><span>${esc(t('detail.cost'))}</span>${IC.chevRP()}</button>
+      <button class="ddel2" id="dDel2">${esc(t('detail.delete'))}</button>
     </div>
     <div class="dfoot">
       <button class="duse ${locked ? 'locked' : ''}" id="dUse">${esc(locked ? t('detail.unlock') : t('detail.use'))}</button>
@@ -102,6 +103,14 @@ SCREENS.detail = function () {
     </div>
   </div>`;
 };
+/* 行内：**粗体**、`代码`、{{变量}}、行首【标签】（2026-10-22：原先 ** 与 {{}} 原样露出） */
+function mdInline(text) {
+  return esc(text)
+    .replace(/\*\*([^*]+?)\*\*/g, '<b>$1</b>')
+    .replace(/`([^`]+?)`/g, '<code class="md-ic">$1</code>')
+    .replace(/\{\{([^{}]+?)\}\}/g, '<span class="md-var">$1</span>')
+    .replace(/^【([^】]{1,10})】/, '<b class="md-lb">【$1】</b>');
+}
 function mdLite(s) {
   /* App MdLite：h(19/16/15 Bold) / code(11 等宽 #D8E4F0 on #263238) / li(• 14 primary) / quote(13 左 3px 主色边) / p(14 lh22)，块间距 6 */
   const blocks = [];
@@ -144,12 +153,14 @@ function mdLite(s) {
   return blocks.map(function (b) {
     if (b.type === 'h') {
       const fs = b.level === 1 ? 19 : b.level === 2 ? 16 : 15;
-      return `<div class="md-h" style="font-size:${fs}px">${esc(b.text)}</div>`;
+      return `<div class="md-h md-h${b.level}" style="font-size:${fs}px">${mdInline(b.text)}</div>`;
     }
     if (b.type === 'code') return `<div class="md-code">${esc(b.text)}</div>`;
-    if (b.type === 'li') return `<div class="md-li"><span>•</span><i>${esc(b.text)}</i></div>`;
-    if (b.type === 'quote') return `<div class="md-quote">${esc(b.text)}</div>`;
-    return `<div class="md-p">${esc(b.text)}</div>`;
+    if (b.type === 'li') return `<div class="md-li"><span>•</span><i>${mdInline(b.text)}</i></div>`;
+    if (b.type === 'quote') return `<div class="md-quote">${mdInline(b.text)}</div>`;
+    /* 整行只有「【阶段 1：扎根题材】」这类标签 → 当小标题 */
+    if (/^【[^】]{2,30}】$/.test(b.text.trim())) return `<div class="md-h md-h3 md-stage">${esc(b.text.trim().slice(1, -1))}</div>`;
+    return `<div class="md-p">${b.text.split('\n').map(mdInline).join('<br>')}</div>`;
   }).join('');
 }
 function bindDetail() {
@@ -203,6 +214,8 @@ function bindDetail() {
       history.back();
     }, 'warn');
   };
+  const dl2 = document.getElementById('dDel2');
+  if (dl2 && dl) dl2.onclick = function () { dl.click(); };
   const use = document.getElementById('dUse');
   if (use) use.onclick = function () {
     if (locked) {
@@ -424,6 +437,16 @@ SCREENS.cats = function () {
       <input type="text" id="catName" class="einput" value="${esc(CATS.newName)}" placeholder="${esc(CATS.renameFrom ? t('cat.renamePh', CATS.renameFrom) : t('cat.ph'))}">
       <button class="topbar-act primary" id="catOk">${esc(CATS.renameFrom ? t('common.save') : t('cat.add'))}</button>
     </div>` : ''}
+    ${(function () {
+    /* 2026-10-22：内置题材分类原来不显示（页面是空的）→ 列出来，只读，带条数 */
+    const counts = {};
+    allPrompts().forEach(function (p) { if (p.builtin && p.category) counts[p.category] = (counts[p.category] || 0) + 1; });
+    const bcats = Object.keys(counts);
+    return bcats.length ? `<div class="catsec-t">${esc(t('web.cat.builtin'))}</div><div class="catlist">${bcats.map(function (c) {
+      return `<div class="catrow-card"><span class="catrow-name">${esc(catLabel(c))}</span><span class="catrow-n">${esc(t('web.count', counts[c]))}</span></div>`;
+    }).join('')}</div><div class="catsec-t">${esc(t('web.cat.mine'))}</div>` : '';
+  })()}
+    ${cats.length ? '' : `<div class="catempty">${esc(t('web.cat.empty'))}</div>`}
     <div class="catlist">
       ${cats.map(function (c) {
     return `<div class="catrow-card"><span class="catrow-name">${esc(catLabel(c))}</span>
@@ -431,7 +454,7 @@ SCREENS.cats = function () {
         <button class="catrow-act warn" data-dl="${esc(c)}">${esc(t('common.delete'))}</button></div>`;
   }).join('')}
     </div>
-    <div class="catfoot">${esc(trialActive() ? t('cat.foot.trial') : t('cat.foot.free'))}</div>
+    ${PAYWALL_ENABLED ? `<div class="catfoot">${esc(trialActive() ? t('cat.foot.trial') : t('cat.foot.free'))}</div>` : ''}
   </div>`;
 };
 function bindCats() {

@@ -46,15 +46,15 @@ const WEB = {
 /* 2026-10-21 界面风格 */
 (function () {
   const add = {
-    'zh-CN': ['界面风格', '经典', '沉浸玻璃', '沉浸玻璃下固定为深色', '查看全部 {0} 条', '图片太大，换一张试试'],
-    'zh-TW': ['介面風格', '經典', '沉浸玻璃', '沉浸玻璃下固定為深色', '查看全部 {0} 條', '圖片太大，換一張試試'],
-    'en-US': ['Style', 'Classic', 'Glass', 'Glass style is always dark', 'See all {0}', 'Image too large, try another'],
-    'ja-JP': ['スタイル', 'クラシック', 'ガラス', 'ガラスは常にダーク', 'すべて表示（{0}）', '画像が大きすぎます'],
-    'ko-KR': ['스타일', '클래식', '글래스', '글래스는 항상 다크', '{0}개 모두 보기', '이미지가 너무 큽니다'],
-    'de-DE': ['Stil', 'Klassisch', 'Glas', 'Glas ist immer dunkel', 'Alle {0} anzeigen', 'Bild zu groß'],
-    'es-ES': ['Estilo', 'Clásico', 'Cristal', 'Cristal siempre es oscuro', 'Ver los {0}', 'Imagen demasiado grande'],
-    'fr-FR': ['Style', 'Classique', 'Verre', 'Le style verre est toujours sombre', 'Voir les {0}', 'Image trop lourde'],
-    'ru-RU': ['Стиль', 'Классика', 'Стекло', 'Стекло всегда тёмное', 'Показать все ({0})', 'Слишком большое изображение']
+    'zh-CN': ['界面风格', '经典', '沉浸玻璃', '沉浸玻璃下固定为深色', '查看全部 {0} 条', '图片太大，换一张试试', '全部 {0}', '夜海（可换成照片）', '内置分类', '我的分类', '还没有自建分类，点右上角「新建」添加'],
+    'zh-TW': ['介面風格', '經典', '沉浸玻璃', '沉浸玻璃下固定為深色', '查看全部 {0} 條', '圖片太大，換一張試試', '全部 {0}', '夜海（可換成照片）', '內建分類', '我的分類', '還沒有自建分類，點右上角「新建」新增'],
+    'en-US': ['Style', 'Classic', 'Glass', 'Glass style is always dark', 'See all {0}', 'Image too large, try another', 'All {0}', 'Night sea (or your photo)', 'Built-in', 'Mine', 'No custom categories yet. Tap “New” to add one.'],
+    'ja-JP': ['スタイル', 'クラシック', 'ガラス', 'ガラスは常にダーク', 'すべて表示（{0}）', '画像が大きすぎます', 'すべて {0}', '夜の海（写真に変更可）', '内蔵カテゴリ', 'マイカテゴリ', 'まだありません。右上の「新規」で追加'],
+    'ko-KR': ['스타일', '클래식', '글래스', '글래스는 항상 다크', '{0}개 모두 보기', '이미지가 너무 큽니다', '전체 {0}', '밤바다 (사진으로 변경 가능)', '기본 분류', '내 분류', '아직 없습니다. 오른쪽 위 「새로 만들기」로 추가'],
+    'de-DE': ['Stil', 'Klassisch', 'Glas', 'Glas ist immer dunkel', 'Alle {0} anzeigen', 'Bild zu groß', 'Alle {0}', 'Nachtmeer (oder Foto)', 'Integriert', 'Eigene', 'Noch keine eigenen Kategorien – oben „Neu“ tippen'],
+    'es-ES': ['Estilo', 'Clásico', 'Cristal', 'Cristal siempre es oscuro', 'Ver los {0}', 'Imagen demasiado grande', 'Todos {0}', 'Mar nocturno (o tu foto)', 'Integradas', 'Mías', 'Aún no hay categorías propias. Toca «Nueva»'],
+    'fr-FR': ['Style', 'Classique', 'Verre', 'Le style verre est toujours sombre', 'Voir les {0}', 'Image trop lourde', 'Tous {0}', 'Mer de nuit (ou photo)', 'Intégrées', 'Les miennes', 'Aucune catégorie perso. Touchez « Nouvelle »'],
+    'ru-RU': ['Стиль', 'Классика', 'Стекло', 'Стекло всегда тёмное', 'Показать все ({0})', 'Слишком большое изображение', 'Все {0}', 'Ночное море (или фото)', 'Встроенные', 'Мои', 'Своих категорий пока нет — нажмите «Новая»']
   };
   Object.keys(add).forEach(function (l) {
     WEB[l] = WEB[l] || {};
@@ -62,6 +62,9 @@ const WEB = {
     WEB[l]['web.style.glass'] = add[l][2]; WEB[l]['web.style.darkonly'] = add[l][3];
     WEB[l]['web.style.more'] = add[l][4];
     WEB[l]['web.cover.tooBig'] = add[l][5];
+    WEB[l]['web.style.all'] = add[l][6];
+    WEB[l]['web.cover.sea'] = add[l][7];
+    WEB[l]['web.cat.builtin'] = add[l][8]; WEB[l]['web.cat.mine'] = add[l][9]; WEB[l]['web.cat.empty'] = add[l][10];
   });
 })();
 function guessLang() {
@@ -228,7 +231,8 @@ function brandMark(group, size) {
   const key = BRAND.fromGroup[group] || group;
   const logo = BRAND.logo[key];
   if (logo) return `<span class="bmark" style="width:${size}px;height:${size}px"><img src="assets/img/${logo}.png" alt="${esc(group)}"></span>`;
-  const mark = BRAND.mark[key] || BRAND.mark[group] || '';
+  /* 没有 Logo 也没有字标的厂商（如 Qoder）退回首字母，不再是一块空白 */
+  const mark = BRAND.mark[key] || BRAND.mark[group] || String(group || '?').charAt(0).toUpperCase();
   return `<span class="bmark" style="width:${size}px;height:${size}px;font-size:${Math.round(size * 0.42)}px">${esc(mark)}</span>`;
 }
 const AVATARS = [1, 2, 3, 4, 5, 6];
@@ -576,7 +580,8 @@ function viewLibrary() {
       <div class="libtop">
         <div class="lt-l"><h1>${esc(t('tab.library'))}</h1>
           <div class="libquota ${q.full ? 'full' : ''}"><span>${esc(q.txt)}</span>${q.full ? `<button class="upgrade" id="goPro">${esc(t('lib.pro.upgrade'))}</button>` : ''}</div></div>
-        <button class="gbtn" id="goTrash" aria-label="${esc(t('web.trash.entry'))}">${IC.trashL().replace(/stroke="[^"]*"/g, 'stroke="#FFFFFF"')}${trashCount ? `<i class="badge">${trashCount > 99 ? '99+' : trashCount}</i>` : ''}</button>
+        ${isGlass() ? `<button class="gbtn" id="goImport" aria-label="+">${IC.plus()}</button>` : ''}
+        <button class="gbtn ${isGlass() ? 'hide' : ''}" id="goTrash" aria-label="${esc(t('web.trash.entry'))}">${IC.trashL().replace(/stroke="[^"]*"/g, 'stroke="#FFFFFF"')}${trashCount ? `<i class="badge">${trashCount > 99 ? '99+' : trashCount}</i>` : ''}</button>
         <button class="gbtn ${S.favOnly ? 'on' : ''}" id="favOnly" aria-label="${esc(t('lib.fav'))}">${IC.star(S.favOnly).replace(/#98A1A9/g, '#FFFFFF').replace(/#F5A623/g, '#FFD666')}</button>
       </div>
     </div>
@@ -634,8 +639,8 @@ function glassSections(list) {
     const cut = grouped && k !== '__fav__' && all.length > CAP;
     const rows = cut ? all.slice(0, CAP) : all;
     return `<section class="pgsec">
-      <div class="pghead"><span class="pgtitle">${esc(title)}</span><span class="pgcount">${all.length}</span>${i === 0 ? libTypeSeg() : ''}</div>
-      <div class="pgroup">${rows.map(promptCard).join('')}${cut ? `<button class="pgmore" data-more="${esc(k)}">${esc(t('web.style.more', all.length))}<span>›</span></button>` : ''}</div>
+      <div class="pghead"><span class="pgtitle">${esc(title)}</span>${cut ? `<button class="pgmorelink" data-more="${esc(k)}">${esc(t('web.style.all', all.length))}${IC.chevR2()}</button>` : ''}</div>
+      <div class="pgroup">${rows.map(promptCard).join('')}</div>
     </section>`;
   }).join('');
 }
@@ -759,6 +764,13 @@ function previewOf(content) {
   return out.length > 0 ? out.join(' ') : String(content || '');
 }
 /* 标题按第一个冒号拆成「主标题 + 副标题」：沉浸玻璃下主标题大号粗体、副标题单独一行，避免满屏省略号 */
+/* 一句话说明的第一小句（到第一个句读为止），作沉浸玻璃的副标题 */
+function shortNote(note) {
+  const n = String(note || '').trim();
+  if (!n) return '';
+  const m = /^(.{4,26}?)[，。；;,.！!？?]/.exec(n);
+  return m ? m[1] : (n.length > 26 ? n.slice(0, 26) : n);
+}
 function splitTitle(title) {
   const m = /^(.{2,24}?)\s*([：:])\s*(.+)$/.exec(String(title || ''));
   return m ? { main: m[1], sep: m[2], sub: m[3] } : { main: String(title || ''), sep: '', sub: '' };
@@ -782,7 +794,7 @@ function promptCard(p) {
       <span class="pbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW(14) : IC.promptW(14)}</span>
       <div class="ptxt">
         <div class="ptitle"><span>${esc(tt.main)}${tt.sub ? `<b class="pts">${esc(tt.sep + tt.sub)}</b>` : ''}</span>${lock ? `<i class="pmember">${esc(t('detail.member'))}</i>` : ''}</div>
-        <div class="psub">${esc(tt.sub || (realCatLabel(p) + ' · ' + (isSkill ? 'Skill' : 'Prompt')))}</div>
+        <div class="psub">${esc(tt.sub || shortNote(p.note) || (vars.length ? t('lib.card.vars', vars.length) : (isSkill ? 'Skill' : 'Prompt')))}</div>
         ${p.content ? `<div class="pabs ${open ? 'l3' : ''}">${esc(previewOf(p.content).slice(0, 240))}</div>` : ''}
         <div class="pmeta">${esc(parts.join(' · '))}</div>
       </div>
@@ -943,7 +955,7 @@ function hitSub(s, q) {
   return hay.indexOf(q) >= 0;
 }
 function viewPrice() {
-  return coverHTML(t('price.title'), t('price.sub')) + `<div class="page">
+  return coverHTML(t('price.title'), t('price.sub')) + `<div class="page pricepage">
     ${calcCard()}
     <div class="segbox">
       <div class="seg ${S.priceTab === 'sub' ? 'tab2' : ''}">
@@ -1425,7 +1437,7 @@ function viewQuota() {
     const note = (['doubao', 'qwen', 'aliyun', 'ernie'].indexOf(v.id) >= 0) ? t('quota.err.manualHint') : t('quota.err.noApi');
     return `<button class="qmrow" data-vid="${esc(v.id)}">
             ${brandMark(v.id, 32)}
-            <span class="qmtxt"><b>${esc(v.name)}</b><i>${esc(note)}</i></span>
+            <span class="qmtxt"><b>${esc(vendorLabel(v.id) !== v.id ? vendorLabel(v.id) : v.name)}</b><i>${esc(note)}</i></span>
             <span class="qmgo">›</span>
           </button>`;
   }).join('')}
@@ -1598,7 +1610,7 @@ function viewMine() {
       <div class="grouptitle">${esc(t('mine.pref'))}</div>
       <div class="card setcard">
         <div class="setrow" onclick="openCover()"><span>${esc(t('mine.cover'))}</span>
-          <span class="val">${esc((p.coverCustom && p.coverImg) ? t('mine.cover.custom') : (coverN + ' / 6'))}</span>${IC.chevR2()}</div>
+          <span class="val">${esc((p.coverCustom && p.coverImg) ? t('mine.cover.custom') : (isGlass() ? t('web.cover.sea') : (coverN + ' / 6')))}</span>${IC.chevR2()}</div>
         <div class="rdiv"></div>
         <div class="setrow" onclick="openLang()"><span>${esc(t('mine.language'))}</span>
           <span class="val">${esc((LANGS.filter(function (x) { return x[0] === S.lang; })[0] || [])[1] || S.lang)}</span>${IC.chevR2()}</div>

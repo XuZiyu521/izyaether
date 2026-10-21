@@ -1,0 +1,670 @@
+/* ══════════════════════════════════════════════════════════════════════
+   izyAether · 沉浸玻璃（2026-10-21 重写）
+   只在 html.glass 下生效；经典风格完全不受影响。
+
+   设计体系（412 宽手机 CSS 像素）：
+     字号  页标题 30/800 · 二级页标题 22/800 · 分区标题 21/800
+           行标题 18/700 · 正文 16/1.65 · 副字 14/500 · 说明 13（最小，不再出现 11/12）
+     颜色  主字 #FFF · 副字 .66 · 说明 .50 · 面板 17% 白 · 控件 12% 白 · 分隔线 10% 白
+     间距  页边 18 · 面板内边 16 · 分区间 26 · 头部节奏 14
+     按钮  主按钮 白底深字 50 高；次按钮 玻璃底白字 50 高；圆钮 44
+   字号统一除以 --tz：华为浏览器等会整体放大网页文字（实测约 1.25），这里还原成设计尺寸。
+   ══════════════════════════════════════════════════════════════════════ */
+
+html.glass{
+  --app_bg:transparent;
+  --card:rgba(255,255,255,.17);
+  --ctl:rgba(255,255,255,.12);
+  --primary:#FFFFFF; --on_primary:#0B1220;
+  --purple:#FFFFFF; --ok:#7FE0C8; --warn:#FF8A7A; --star:#FFD666;
+  --text_main:#FFFFFF; --text_sub:rgba(255,255,255,.66); --text_ter:rgba(255,255,255,.50);
+  --line:rgba(255,255,255,.10); --fill_bg:rgba(255,255,255,.10); --blue_bg:rgba(255,255,255,.14);
+  --green_bg:rgba(127,224,200,.16); --purple_bg:rgba(255,255,255,.14); --amber:#FFD666; --amber_bg:rgba(255,214,102,.16);
+  --glass_blur:blur(22px);
+  --page_pad:18px;
+  -webkit-text-size-adjust:100%; text-size-adjust:100%;
+}
+html.glass body{background:#07111D; color:#fff}
+html.glass #app{z-index:1}
+
+/* ── 背景：彩色夜海（自定义照片则用照片）；上深下浅，柔焦 ── */
+#glassbg{position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none}
+#glassbg img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:blur(7px) saturate(1.25) brightness(1.22)}
+#glassbg.photo img{filter:blur(3px) saturate(1.05) brightness(.85)}
+#glassbg .mesh,#glassbg .grain{display:none}
+#glassbg i{position:absolute; inset:0;
+  background:linear-gradient(180deg,rgba(2,10,22,.80) 0%,rgba(2,10,22,.45) 14%,rgba(2,10,22,0) 40%,rgba(2,10,22,0) 70%,rgba(2,10,22,.25))}
+
+/* ── 材质 ── */
+html.glass .card,html.glass .pgroup,html.glass .calc,html.glass .cmpentry,html.glass .cmpbar,html.glass .gpanel{
+  background:var(--card); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur);
+  border:0; box-shadow:none}
+html.glass .sheet{background:rgba(22,30,44,.86); -webkit-backdrop-filter:blur(30px); backdrop-filter:blur(30px); border:0}
+html.glass .mask{background:rgba(0,0,0,.45)}
+html.glass .toast{background:rgba(255,255,255,.95); color:#0B1220}
+
+/* ── 内置 SVG 图标的硬编码颜色统一换成白（属性选择器，不改 JS） ── */
+html.glass svg[stroke="#182431"],html.glass svg[stroke="#667788"],html.glass svg[stroke="#0A59F7"]{stroke:#FFFFFF}
+html.glass svg[stroke="#98A1A9"]{stroke:rgba(255,255,255,.62)}
+html.glass svg[fill="#0A59F7"]{fill:#FFFFFF}
+
+/* ── 侧栏（电脑宽屏） ── */
+html.glass #side{background:rgba(255,255,255,.06); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur); border-right:1px solid rgba(255,255,255,.08)}
+html.glass .navbtn{color:rgba(255,255,255,.72); font-size:calc(15px / var(--tz,1))}
+html.glass .navbtn:hover{background:rgba(255,255,255,.08)}
+html.glass .navbtn.on{background:rgba(255,255,255,.16); color:#fff}
+html.glass .navbtn img{filter:brightness(0) invert(1); opacity:.85}
+html.glass .brand .bi,html.glass .brand .bz{color:#fff}
+html.glass .side-foot{border-top-color:rgba(255,255,255,.10)}
+html.glass #langPick{background:rgba(255,255,255,.10); color:#fff; border:0}
+html.glass .ver{color:rgba(255,255,255,.45)}
+
+/* ── 通用控件 ── */
+html.glass input,html.glass select,html.glass textarea{
+  background:var(--ctl); color:#fff; border:0; border-radius:14px; box-shadow:none;
+  font-size:calc(16px / var(--tz,1)); font-family:inherit}
+html.glass input::placeholder,html.glass textarea::placeholder{color:rgba(255,255,255,.45)}
+html.glass input:focus,html.glass textarea:focus{outline:none; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45)}
+html.glass .btn{background:var(--ctl); color:#fff; border:0; font-size:calc(15px / var(--tz,1)); font-weight:600}
+html.glass .btn.primary{background:#fff; color:#0B1220}
+html.glass .chip{background:var(--ctl); color:rgba(255,255,255,.8); font-size:calc(13.5px / var(--tz,1))}
+html.glass .chip.on{background:#fff; color:#0B1220}
+html.glass .rdiv{background:rgba(255,255,255,.10)}
+html.glass .empty .e1{font-size:calc(18px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .empty .e2{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.6)}
+
+/* 开关 */
+html.glass .tsw,html.glass .qswitch{background:rgba(255,255,255,.22)}
+html.glass .tsw.on,html.glass .qswitch.on{background:#fff}
+html.glass .tsw i,html.glass .qswitch i{background:#fff}
+html.glass .tsw.on i,html.glass .qswitch.on i{background:#0B1220}
+
+/* ── 二级页顶栏：返回圆钮 44 + 标题 22 ── */
+html.glass .subhdr,html.glass .subtop{background:transparent; -webkit-backdrop-filter:none; backdrop-filter:none; border:0}
+html.glass .tb-back,html.glass .tb-round,html.glass .tb-40{width:44px; height:44px; border-radius:22px; border:0;
+  background:var(--card); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur);
+  display:inline-flex; align-items:center; justify-content:center; padding:0; flex:0 0 44px}
+html.glass .tb-back svg,html.glass .tb-round svg,html.glass .tb-40 svg{width:22px; height:22px; stroke:#fff; stroke-width:2.2}
+html.glass .subtop-t{font-size:calc(22px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .topbar-act{font-size:calc(15px / var(--tz,1)); font-weight:600; color:#fff;
+  background:var(--card); border-radius:18px; padding:9px 15px; border:0}
+html.glass .topbar-act.warn{color:#FF8A7A}
+html.glass .bighead-t{font-size:calc(30px / var(--tz,1)); font-weight:800; color:#fff; letter-spacing:-.3px}
+html.glass .bighead-s{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.62); margin-top:6px}
+html.glass .rt-txt b{font-size:calc(20px / var(--tz,1)); color:#fff}
+html.glass .rt-txt i{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .sectitle{margin-bottom:12px}
+html.glass .sectitle i{display:none}
+html.glass .sectitle span{font-size:calc(19px / var(--tz,1)); font-weight:800; color:#fff}
+
+/* ── 主页面封面头：不再单独成块（背景已是整页） ── */
+html.glass .cover > img,html.glass .cover .scrim,html.glass .cover .fade,
+html.glass .mcover > img,html.glass .mcover .scrim,html.glass .mcover .fade{display:none}
+html.glass .cover,html.glass .mcover{background:transparent}
+html.glass .cover{--cover_h:92px}
+html.glass .cover .ttl{top:22px; left:18px; right:18px}
+html.glass .cover h1{font-size:calc(30px / var(--tz,1)); font-weight:800; letter-spacing:-.3px}
+html.glass .cover .sub{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.62); margin-top:4px}
+html.glass .grouptitle{font-size:calc(21px / var(--tz,1)); font-weight:800; color:#fff; padding:26px 2px 12px}
+
+/* ══════════ 底部导航：一条药丸 + 独立圆；选中白底深色图标 ══════════ */
+html.glass .pill,html.glass .orb,html.glass .dockfab{
+  background:rgba(255,255,255,.16); -webkit-backdrop-filter:blur(30px); backdrop-filter:blur(30px);
+  border:0; box-shadow:0 8px 24px rgba(0,0,0,.28)}
+html.glass .dockblob{display:none}
+html.glass .pill .ib .bg,html.glass .orb .circle{background:#fff}
+html.glass .pill img,html.glass .orb img{filter:brightness(0) invert(1); opacity:.78}
+html.glass .pill .it.on img,html.glass .orb.on img{filter:brightness(0); opacity:1}
+html.glass .pill .lb,html.glass .orb .lb{font-size:calc(11.5px / var(--tz,1)); color:rgba(255,255,255,.66)}
+html.glass .pill .it.on .lb{color:#fff; font-weight:700}
+html.glass .orb.on .lb{color:#0B1220; font-weight:700}
+html.glass .dockfab{color:#fff; width:48px; height:48px; border-radius:24px; font-size:26px}
+
+/* ══════════ 库页 ══════════ */
+html.glass .libcover{--cover_h:84px}
+html.glass .libcover .libtop{left:18px; right:18px; top:18px; align-items:center}
+html.glass .libcover h1{font-size:calc(30px / var(--tz,1)); font-weight:800}
+html.glass .libquota{display:none}
+html.glass .gbtn{width:44px; height:44px; flex:0 0 44px; border-radius:22px; border:0;
+  background:var(--card); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .gbtn svg{width:24px; height:24px; overflow:visible}
+html.glass .gbtn svg *{stroke:#fff; stroke-width:1.9}
+html.glass .gbtn svg path{transform:scale(1.22); transform-origin:12px 12px}
+html.glass .gbtn.on svg *{stroke:#FFD666}
+html.glass .gbtn.on svg path{fill:#FFD666}
+html.glass .gbtn .badge{top:-2px; right:-2px; min-width:18px; height:18px; border-radius:9px; font-size:11px;
+  background:#FF6B57; color:#fff; font-style:normal; display:flex; align-items:center; justify-content:center; padding:0 5px}
+html.glass .libwrap .search.lib-search{position:relative; z-index:2; margin:0 18px; height:48px; border-radius:24px; padding:0 18px; gap:10px;
+  background:rgba(255,255,255,.18); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur);
+  border:0; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22)}
+html.glass .search{background:rgba(255,255,255,.16); border:0; box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.18);
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .search svg{width:20px; height:20px; stroke:rgba(255,255,255,.8)}
+html.glass .search input{background:transparent; border:0; box-shadow:none; color:#fff; font-size:calc(16.5px / var(--tz,1))}
+/* 分类行：无底胶囊，选中白底；右端渐隐 */
+html.glass .catrow{padding-left:18px; margin-top:14px;
+  -webkit-mask-image:linear-gradient(90deg,#000 84%,transparent); mask-image:linear-gradient(90deg,#000 84%,transparent)}
+html.glass .cathint{display:none}
+html.glass .cchip{background:transparent; border:0; color:rgba(255,255,255,.72); font-size:calc(15px / var(--tz,1)); font-weight:600; padding:8px 15px}
+html.glass .cchip.on{background:#fff; color:#0B1220}
+/* 分区 */
+html.glass .page.libpage{padding-left:18px; padding-right:18px}
+html.glass .pgsec{margin-top:28px}
+html.glass .pgsec:first-child{margin-top:18px}
+html.glass .pghead{display:flex; align-items:center; margin:0 2px 12px}
+html.glass .pgtitle{display:block; flex:1; font-size:calc(22px / var(--tz,1)); font-weight:800; color:#fff; margin:0}
+html.glass .pgcount{display:none}
+html.glass .pgmorelink{border:0; background:transparent; color:rgba(255,255,255,.62); font:600 calc(15px / var(--tz,1)) inherit; font-family:inherit;
+  display:flex; align-items:center; gap:2px; padding:4px 0; cursor:pointer}
+html.glass .pgmorelink svg{width:18px; height:18px}
+html.glass .pgroup{display:flex; flex-direction:column; gap:0; border-radius:24px; overflow:hidden}
+/* 行 */
+html.glass .plist .pcard{background:transparent; border:0; border-radius:0; box-shadow:none; padding:15px 16px 15px 14px;
+  min-height:86px; display:flex; flex-direction:column; justify-content:center; position:relative; cursor:pointer}
+html.glass .plist .pcard + .pcard::before{content:""; position:absolute; top:0; left:76px; right:16px; height:1px; background:rgba(255,255,255,.10)}
+html.glass .plist .pcard.open{background:rgba(255,255,255,.07)}
+html.glass .plist .prow{display:flex; align-items:center; gap:14px}
+html.glass .plist .pbadge{width:48px; height:48px; flex:0 0 48px; border-radius:13px; margin:0; box-shadow:none;
+  display:flex; align-items:center; justify-content:center; background:#F2F3F5}
+html.glass .plist .pbadge svg{width:26px; height:26px}
+html.glass .plist .pbadge svg path{fill:#111316}
+html.glass .plist .pbadge.skill{background:#101215; box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+html.glass .plist .pbadge.skill svg path{fill:#fff}
+html.glass .plist .ptxt{min-width:0; flex:1}
+html.glass .plist .ptitle{display:flex; align-items:center; font-size:calc(18px / var(--tz,1)); font-weight:700; line-height:1.3; color:#fff}
+html.glass .plist .ptitle span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+html.glass .pts{display:none}
+html.glass .pcard .psub{display:block; font-size:calc(14px / var(--tz,1)); font-weight:500; color:rgba(255,255,255,.64); margin-top:3px;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+html.glass .plist .pabs,html.glass .plist .pmeta{display:none}
+html.glass .plist .pcard.open .pabs{display:-webkit-box; -webkit-line-clamp:4; font-size:calc(14.5px / var(--tz,1)); line-height:1.6;
+  color:rgba(255,255,255,.78); margin-top:8px}
+html.glass .pmember{background:#fff; color:#0B1220; font-size:11px; font-weight:700}
+/* 星标：只在已收藏时常显（金色）；未收藏不画，保持画面安静 */
+html.glass .pstar{padding:6px 0 6px 10px; display:none}
+html.glass .pstar.on{display:flex}
+html.glass .pstar svg{width:22px; height:22px; overflow:visible}
+html.glass .pstar svg path{transform:scale(1.3); transform-origin:12px 12px; stroke:#FFD666; stroke-width:1.5; fill:#FFD666}
+html.glass .pcard.open .pstar{display:flex}
+html.glass .pcard.open .pstar:not(.on) svg path{stroke:#fff; fill:none}
+/* 展开区 */
+html.glass .pexp{padding-left:62px; margin-top:6px}
+html.glass .pvrow{margin-top:10px}
+html.glass .pvrow span{width:72px; flex:0 0 72px; font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.72)}
+html.glass .pvrow input{height:44px; border-radius:12px; font-size:calc(15.5px / var(--tz,1))}
+html.glass .pbtns{gap:10px; margin-top:14px}
+html.glass .pb{height:44px; border-radius:22px; padding:0 18px; background:var(--ctl); color:#fff; font-size:calc(15px / var(--tz,1)); font-weight:600}
+html.glass .pb.main{background:#fff; color:#0B1220; font-size:calc(15.5px / var(--tz,1)); font-weight:700}
+/* 「＋」已移到库页右上角：底部只留导航，不再三个浮层挤在一起 */
+html.glass .fabrow{display:none}
+html.glass .gbtn svg[stroke="#0A59F7"] path{transform:scale(1.1)}
+
+/* ══════════ Prompt 详情 ══════════ */
+html.glass .subpage.detail .subtop{padding:12px 18px 6px; gap:8px}
+html.glass #dDel{display:none}
+html.glass .dwrap{padding:8px 18px 24px}
+html.glass .dtitle{font-size:calc(26px / var(--tz,1)); font-weight:800; line-height:1.3; color:#fff}
+html.glass .dtype{background:var(--card); color:#fff; font-size:calc(13px / var(--tz,1)); font-weight:700; border-radius:10px; padding:4px 10px}
+html.glass .dtype.skill{background:#101215; box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+html.glass .dmeta{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.62); margin-top:6px}
+html.glass .dtags{gap:8px; margin-top:12px}
+html.glass .dtag{background:var(--ctl); color:rgba(255,255,255,.85); font-size:calc(13.5px / var(--tz,1)); border-radius:12px; padding:5px 11px}
+html.glass .dsrc{margin-top:16px; padding:14px 16px; border-radius:20px; background:var(--card);
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur); border:0}
+html.glass .dsrc-l{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .dsrc-v{font-size:calc(16px / var(--tz,1)); font-weight:600; color:#fff}
+html.glass .dsrc-open{color:#fff; font-size:calc(14.5px / var(--tz,1)); font-weight:600; background:var(--ctl); border-radius:16px; padding:7px 12px}
+html.glass .dsrc-open svg{stroke:#fff}
+html.glass .dbody-card{margin-top:12px; padding:20px 18px; border-radius:24px; background:var(--card);
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .dbody-card > * + *{margin-top:10px}
+html.glass .md-h{color:#fff; font-weight:800; line-height:1.35}
+html.glass .md-h1{font-size:calc(22px / var(--tz,1)) !important}
+html.glass .md-h2,html.glass .md-h3,html.glass .md-h4{font-size:calc(18px / var(--tz,1)) !important; margin-top:18px !important}
+html.glass .dbody-card > .md-h:first-child{margin-top:0 !important}
+html.glass .md-p,html.glass .md-li{font-size:calc(16px / var(--tz,1)); line-height:1.7; color:rgba(255,255,255,.88)}
+html.glass .md-p b,html.glass .md-li b,html.glass .md-lb{color:#fff}
+html.glass .md-li span{color:rgba(255,255,255,.6)}
+html.glass .md-quote{font-size:calc(15px / var(--tz,1)); color:rgba(255,255,255,.75); border-left-color:rgba(255,255,255,.5)}
+html.glass .md-code{background:rgba(0,0,0,.30); color:#E6EEF6; font-size:calc(13px / var(--tz,1)); border-radius:12px}
+html.glass .md-ic{background:rgba(255,255,255,.14); color:#fff}
+html.glass .md-var{background:rgba(255,255,255,.92); color:#0B1220}
+html.glass .dnote-card,html.glass .dvars-card{margin-top:12px; padding:16px 18px; border-radius:20px; background:var(--card);
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur); border:0}
+html.glass .dnote-l,html.glass .dvars-l{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .dnote-v{font-size:calc(15.5px / var(--tz,1)); line-height:1.65; color:rgba(255,255,255,.9)}
+html.glass .dvar{background:var(--ctl); color:#fff; font-size:calc(14px / var(--tz,1)); border-radius:12px; padding:5px 11px}
+html.glass .dcost{margin-top:12px; padding:16px 18px; border-radius:20px; background:var(--card);
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .dcost span{font-size:calc(16px / var(--tz,1)); font-weight:600; color:#fff}
+html.glass .dcost svg{stroke:rgba(255,255,255,.6)}
+html.glass .ddel2{display:block; width:100%; margin-top:12px; height:50px; border:0; border-radius:20px; cursor:pointer;
+  background:var(--card); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur);
+  color:#FF8A7A; font:600 calc(16px / var(--tz,1)) inherit; font-family:inherit}
+html.glass .dfoot{background:linear-gradient(180deg,rgba(4,10,20,0),rgba(4,10,20,.55)); padding:14px 18px calc(16px + env(safe-area-inset-bottom,0px))}
+html.glass .duse{height:52px; border-radius:26px; background:#fff; color:#0B1220; font-size:calc(17px / var(--tz,1)); font-weight:700}
+html.glass .duse.locked{background:#fff; color:#0B1220}
+html.glass .shmenu{background:rgba(22,30,44,.92); -webkit-backdrop-filter:blur(30px); backdrop-filter:blur(30px); border-radius:16px}
+html.glass .shmenu button{color:#fff; font-size:calc(15px / var(--tz,1))}
+html.glass .md-li .md-var{color:#0B1220}
+
+/* ══════════ 额度 ══════════ */
+html.glass .qcard{border-radius:24px; padding:18px; margin-top:12px}
+html.glass .qcard.sum{padding:20px}
+/* 空状态：横排紧凑，不再占半屏；重复的虚线「添加」按钮在空状态下隐藏 */
+html.glass .qempty{flex-direction:row; align-items:center; gap:16px; padding:18px; margin-top:6px; flex-wrap:wrap}
+html.glass .qempty .qbadge{width:60px; height:60px; margin:0; flex:0 0 60px}
+html.glass .qempty .qbadge i:first-child{width:60px; height:60px; background:#fff; opacity:.14}
+html.glass .qempty .qbadge i:nth-child(2){width:38px; height:38px; background:#fff; opacity:.22}
+html.glass .qbadge b{color:#fff; font-size:22px}
+html.glass .qempty .et1{margin:0; font-size:calc(19px / var(--tz,1)); font-weight:800; flex:1; min-width:0; color:#fff}
+html.glass .qempty .et2{order:3; width:100%; margin:0; font-size:calc(14.5px / var(--tz,1)); line-height:1.6; color:rgba(255,255,255,.66)}
+html.glass .qempty .qbtn{order:4; width:100%; height:50px; border-radius:25px; background:#fff; color:#0B1220;
+  font-size:calc(16.5px / var(--tz,1)); font-weight:700; margin:2px 0 0}
+html.glass .page:has(.qempty) .qadd{display:none}
+html.glass .qadd{height:54px; border:0; border-radius:24px; background:var(--card); color:#fff;
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur);
+  font-size:calc(16.5px / var(--tz,1)); font-weight:700}
+html.glass .qpill{background:var(--card); color:#fff; border:0; font-size:calc(15px / var(--tz,1)); font-weight:600; height:40px; padding:0 16px}
+/* 汇总 */
+html.glass .qlbl{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.62)}
+html.glass .qbig{font-size:calc(36px / var(--tz,1)); font-weight:800; color:#fff; letter-spacing:-.5px}
+html.glass .qmid{font-size:calc(24px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .qsep{background:#fff; opacity:.2; height:44px}
+html.glass .qusd{background:var(--ctl); color:rgba(255,255,255,.75); font-size:calc(13.5px / var(--tz,1)); border-radius:12px; padding:9px 12px}
+html.glass .qblow{background:#FF6B57; font-size:calc(13px / var(--tz,1)); font-weight:600}
+html.glass .qfail{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.62)}
+/* 卡片标题 / 说明 */
+html.glass .qstitle span{font-size:calc(18px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .qstitle i{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .qstitle em{font-size:calc(14.5px / var(--tz,1)); font-weight:600; color:#fff}
+html.glass .qhint{font-size:calc(15px / var(--tz,1)); line-height:1.6; color:rgba(255,255,255,.78); margin-top:10px}
+html.glass .qfoot{font-size:calc(13px / var(--tz,1)); line-height:1.6; color:rgba(255,255,255,.50); margin-top:10px}
+html.glass .qsv i{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .qsv b{font-size:calc(21px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .qsv b.sub{color:rgba(255,255,255,.7)}
+html.glass .qsv.hl b{color:#7FE0C8; font-weight:800}
+html.glass .qpro{background:var(--ctl); border-radius:14px; padding:11px 13px}
+html.glass .qpro span,html.glass .qpro i{color:#fff; font-size:calc(14px / var(--tz,1))}
+/* 余额预警 */
+html.glass .qatitle{font-size:calc(18px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .qasub{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.62); margin-top:4px}
+html.glass .qswitch{width:52px; height:31px; border-radius:16px; flex:0 0 52px}
+html.glass .qswitch i{width:25px; height:25px; border-radius:13px}
+html.glass .qswitch.on i{transform:translateX(21px)}
+html.glass .qth{margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,.10)}
+html.glass .qth span{font-size:calc(15.5px / var(--tz,1)); color:#fff}
+html.glass .qthv{font-size:calc(16px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .qthmenu button{background:var(--ctl); border:0; color:#fff; font-size:calc(14.5px / var(--tz,1)); border-radius:14px; padding:8px 14px}
+/* Key 卡 */
+html.glass .kname{font-size:calc(18px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .kalias{font-size:calc(13.5px / var(--tz,1)); color:rgba(255,255,255,.6)}
+html.glass .kstat b{font-size:calc(21px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .kstat i{font-size:calc(13px / var(--tz,1))}
+html.glass .kstat i.ok{color:#7FE0C8} html.glass .kstat i.warn,html.glass .kstat.warn b{color:#FF8A7A}
+html.glass .kcovers{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .kprog .progress{background:rgba(255,255,255,.14); height:7px}
+html.glass .kprog .progress i{background:#fff}
+/* 手动查看的厂商 */
+html.glass .qmrow{padding:12px 0; border-top:1px solid rgba(255,255,255,.08)}
+html.glass .qmtxt b{font-size:calc(16.5px / var(--tz,1)); font-weight:600; color:#fff}
+html.glass .qmtxt i{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .qmgo{color:rgba(255,255,255,.5); font-size:20px}
+/* 卡片标题行：标题 + 右侧动作同一行，说明单独换到下一行（不再把标题挤成两行） */
+html.glass .qstitle{display:grid; grid-template-columns:1fr auto; align-items:center; column-gap:10px; row-gap:4px}
+html.glass .qstitle span{grid-column:1; grid-row:1}
+html.glass .qstitle em{grid-column:2; grid-row:1; margin:0}
+html.glass .qstitle i{grid-column:1 / span 2; grid-row:2; margin:0}
+/* 空状态卡已说明「添加后自动监控」，页头副题重复 → 隐藏 */
+html.glass .cover:has(+ .page .qempty) .sub{display:none}
+
+/* ══════════ 二级页通用骨架（添加 Key / 编辑 / 资料 / 计算器 / 导入 …） ══════════ */
+html.glass .subpage{background:transparent}
+html.glass .subtop{padding:calc(var(--sb) + 4px) 18px 6px; gap:10px}
+html.glass .bigtop{padding:calc(var(--sb) + 4px) 18px 0}
+html.glass .bighead{padding:14px 18px 4px}
+/* 表单卡：面板 24 圆角，内边 18 */
+html.glass .acard,html.glass .ecard{padding:18px; border-radius:24px; background:var(--card); margin-top:14px;
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur); border:0}
+html.glass .awrap,html.glass .ewrap{padding:0 18px 30px}
+/* 输入框：控件底（12% 白）、无描边、48 高、16 号字 */
+html.glass .einput{background:var(--ctl); border:0; border-radius:14px; color:#fff; padding:13px 14px;
+  font-size:calc(16px / var(--tz,1)); line-height:1.5}
+html.glass .einput.key{background:var(--ctl)}
+html.glass .einput:focus{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45)}
+/* 厂商选择 */
+html.glass .achips{gap:10px}
+html.glass .achip{background:var(--ctl); border:0; color:#fff; font-size:calc(15.5px / var(--tz,1)); font-weight:600;
+  height:44px; padding:0 16px; border-radius:22px; margin:0}
+html.glass .achip.on{background:#fff; color:#0B1220}
+html.glass .achip .bmark{width:22px; height:22px; flex:0 0 22px}
+html.glass .amanual > span{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.6)}
+html.glass .amanual-go{color:#fff; font-size:calc(15px / var(--tz,1)); font-weight:600}
+html.glass .asecure span{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .asecure svg{stroke:rgba(255,255,255,.55)}
+/* 按钮：验证 = 次按钮（玻璃）；保存 = 主按钮（白底深字） */
+html.glass .averify{padding:0 18px}
+html.glass .abtn-verify{height:52px; border-radius:26px; background:var(--card); color:#fff; font-size:calc(16.5px / var(--tz,1)); font-weight:700;
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .abtn-save{height:52px; border-radius:26px; background:#fff !important; color:#0B1220; font-size:calc(17px / var(--tz,1)); font-weight:700; margin-top:12px}
+html.glass .abtn-save:disabled,html.glass .abtn-verify:disabled{opacity:.4}
+html.glass .ares{border-radius:18px; padding:14px 16px}
+html.glass .ares.ok{background:rgba(127,224,200,.16)}
+html.glass .ares.fail{background:rgba(255,138,122,.14)}
+html.glass .ares-h{font-size:calc(16px / var(--tz,1)); font-weight:700; color:#7FE0C8}
+html.glass .ares-h.warn{color:#FF8A7A}
+html.glass .ares-bal{font-size:calc(22px / var(--tz,1)); color:#fff}
+html.glass .ares-msg{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.72)}
+html.glass .averify{padding:0; margin-top:14px}
+
+/* ══════════ 比价 ══════════ */
+/* 成本计算器入口：玻璃卡，标题 18、说明 14、右侧白色药丸 */
+html.glass .calc{background:var(--card) !important; box-shadow:none; border-radius:24px; padding:18px; gap:12px}
+html.glass .calc b{font-size:calc(19px / var(--tz,1)); font-weight:800}
+html.glass .calc .s{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.66); margin-top:4px}
+html.glass .calc em{background:#fff; color:#0B1220; font-size:calc(14.5px / var(--tz,1)); font-weight:700; border-radius:18px; padding:8px 14px}
+/* API 价格 / 会员订阅 切换：玻璃槽 + 白色滑块 */
+html.glass .segbox{margin-top:18px}
+html.glass .seg{width:100%; max-width:376px; height:48px; padding:4px; border-radius:24px; background:var(--card);
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .seg .slider{width:calc(50% - 4px); height:40px; top:4px; left:4px; border-radius:20px; background:#fff; box-shadow:none}
+html.glass .seg.tab2 .slider{transform:translateX(100%)}
+html.glass .seg button{font-size:calc(16px / var(--tz,1)); font-weight:600; color:rgba(255,255,255,.75)}
+html.glass .seg button.on{color:#0B1220; font-weight:700}
+html.glass .pricepage .search{height:48px; border-radius:24px; margin-top:14px; padding:0 18px}
+/* 横向对比入口 */
+html.glass .cmpentry{height:52px; border-radius:24px; margin-top:12px; padding:0 14px}
+html.glass .cmpentry .ce-ic{width:28px; height:28px; flex:0 0 28px; border-radius:14px; background:rgba(255,255,255,.18)}
+html.glass .cmpentry.on .ce-ic{background:#fff}
+html.glass .cmpentry .ce-t{font-size:calc(16.5px / var(--tz,1)); font-weight:700; color:#fff; margin-left:12px}
+html.glass .cmpentry.on .ce-t{color:#fff}
+html.glass .cmpentry .ce-tip{font-size:calc(13.5px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .cmpentry .ce-exit{background:#fff; color:#0B1220; font-size:calc(13.5px / var(--tz,1)); font-weight:700}
+/* 厂商列表：合成一块大面板，行间细线（和库页同一套） */
+html.glass .pricepage #list{margin-top:14px; border-radius:24px; overflow:hidden; background:var(--card);
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .pricepage #list:has(> .empty){background:transparent}
+html.glass .pricepage .sorthint{display:none}
+html.glass .pricepage .vcard{background:transparent !important; -webkit-backdrop-filter:none; backdrop-filter:none;
+  border-radius:0; margin:0; padding:16px 16px 16px 14px; position:relative}
+html.glass .pricepage .vcard + .vcard::before{content:""; position:absolute; top:0; left:72px; right:16px; height:1px; background:rgba(255,255,255,.10)}
+html.glass .vhead{gap:14px}
+html.glass .vhead .bmark{width:44px !important; height:44px !important; flex:0 0 44px; border-radius:12px; background:#fff;
+  color:#0B1220; font-weight:800; display:flex; align-items:center; justify-content:center}
+html.glass .vhead .bmark img{border-radius:12px}
+html.glass .vname{font-size:calc(18px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .vmeta{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.62); margin-top:3px}
+html.glass .region{font-size:calc(12px / var(--tz,1)); font-weight:600; border-radius:9px; padding:2px 8px; margin-left:8px}
+html.glass .region.cn{color:rgba(255,255,255,.85); background:rgba(255,255,255,.14)}
+html.glass .region.gl{color:#FFD666; background:rgba(255,214,102,.14)}
+html.glass .chev svg{stroke:rgba(255,255,255,.6); width:20px; height:20px}
+/* 展开后的模型行 */
+html.glass .models{margin-top:12px; padding-left:58px}
+html.glass .msep{background:#fff; opacity:.10}
+html.glass .mrow{padding:12px 0 0; align-items:center}
+html.glass .mname{font-size:calc(16px / var(--tz,1)); font-weight:600; color:#fff}
+html.glass .mmeta{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .mprice .p1{font-size:calc(16px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .mprice .p2{font-size:calc(12.5px / var(--tz,1)); color:rgba(255,255,255,.5)}
+html.glass .mnote{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.58); padding-bottom:12px}
+html.glass .pstar.small{display:flex}
+html.glass .pstar.small svg path{transform:none; stroke:rgba(255,255,255,.7); fill:none}
+html.glass .pick{border-color:rgba(255,255,255,.4)}
+html.glass .pick.on{background:#fff; border-color:#fff}
+/* 会员订阅档位 */
+html.glass .tiers{padding-left:58px; margin-top:12px}
+html.glass .tier{background:var(--ctl); border-radius:16px; padding:12px 14px}
+html.glass .tname{font-size:calc(16px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .tprice{font-size:calc(16px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .tprice em{font-size:calc(12.5px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .tben{font-size:calc(13.5px / var(--tz,1)); line-height:1.55; color:rgba(255,255,255,.7); margin-top:5px}
+html.glass .cmpbar{border-radius:24px}
+html.glass .mmeta{white-space:normal}
+
+/* ══════════ 成本计算器 ══════════ */
+html.glass .cwrap{padding:0 18px 30px}
+html.glass .ccard{padding:18px; border-radius:24px; background:var(--card); margin-top:14px;
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .ccard-h .sectitle{margin:0; flex:1}
+html.glass .copt{background:var(--ctl); color:rgba(255,255,255,.7); font-size:calc(13px / var(--tz,1)); border-radius:10px; padding:3px 9px}
+html.glass .ccard textarea{background:var(--ctl); border:0; margin-top:12px; min-height:96px}
+html.glass .cparams{gap:12px; margin-top:4px}
+html.glass .cparam > span,html.glass .ctype-l{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.66)}
+html.glass .cparam .einput{background:var(--ctl); margin-top:8px; height:48px; font-size:calc(17px / var(--tz,1)); font-weight:600}
+html.glass .ctype-l{margin-top:18px}
+html.glass .ctypes{gap:10px; margin-top:10px}
+html.glass .ctype{background:var(--ctl); color:rgba(255,255,255,.85); height:46px; border-radius:23px; font-size:calc(16px / var(--tz,1)); font-weight:600}
+html.glass .ctype.on{background:#fff; color:#0B1220; font-weight:700}
+html.glass .cest{background:var(--card); border-radius:20px; padding:16px 18px; margin-top:12px;
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .cest-t{font-size:calc(18px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .cest-s{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55); margin-top:5px}
+html.glass .crun{height:54px; border-radius:27px; background:#fff !important; color:#0B1220; box-shadow:none;
+  font-size:calc(17.5px / var(--tz,1)); font-weight:800; margin-top:16px}
+html.glass .cempty{padding:22px 10px 10px}
+html.glass .cempty-t{font-size:calc(16px / var(--tz,1)); font-weight:600; color:rgba(255,255,255,.82)}
+html.glass .cempty-s{font-size:calc(13.5px / var(--tz,1)); color:rgba(255,255,255,.55)}
+/* 结果 */
+html.glass .cres-l{font-size:calc(19px / var(--tz,1)); font-weight:800; color:#fff; margin:26px 2px 10px}
+html.glass .cres,html.glass .cpick{background:var(--card); border:0; border-radius:22px; padding:16px 18px;
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .cres-rank{width:28px; height:28px; flex:0 0 28px; border-radius:14px; background:rgba(255,255,255,.16); color:#fff; font-size:14px; font-weight:800}
+html.glass .cres-name,html.glass .cpick-name{font-size:calc(17px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .cres-vendor,html.glass .cpick-vendor{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.58)}
+html.glass .cres-cost,html.glass .cpick-cost b{font-size:calc(20px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .cpick-cost b.top{color:#7FE0C8}
+html.glass .cpick-cost i{font-size:calc(12.5px / var(--tz,1)); color:rgba(255,255,255,.5)}
+html.glass .cres-badge,html.glass .cpick-tag{font-size:calc(12px / var(--tz,1)); font-weight:700; border-radius:8px; padding:2px 8px;
+  background:rgba(255,255,255,.18) !important; color:#fff}
+html.glass .cres-badge.low{background:#fff !important; color:#0B1220}
+html.glass .ccopy{font-size:calc(14px / var(--tz,1)); font-weight:600; color:#fff; background:var(--ctl); border-radius:14px; padding:6px 12px; margin-top:12px}
+html.glass .cpick-h{margin:26px 0 10px}
+html.glass .cpick-h > span{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .cfoot{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.5)}
+
+/* ══════════ 我的 ══════════ */
+html.glass .mcover{height:26px; cursor:default}
+html.glass .prow2{margin-top:0; padding:14px 18px 6px}
+html.glass .avatar{width:76px; height:76px; border-radius:38px; flex:0 0 76px; background:rgba(255,255,255,.2)}
+html.glass .avatar img{width:72px; height:72px; border-radius:36px}
+html.glass .ptxt2{margin-left:16px}
+html.glass .pname{font-size:calc(24px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .prow2 .psub{font-size:calc(14.5px / var(--tz,1)); color:rgba(255,255,255,.66); margin-top:5px}
+html.glass .pextra{font-size:calc(13.5px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .minepage{padding:0 18px}
+html.glass .setcard{border-radius:24px}
+html.glass .setrow{height:58px; padding:0 18px; font-size:calc(17px / var(--tz,1)); font-weight:600; color:#fff}
+html.glass .setrow .val{font-size:calc(15px / var(--tz,1)); color:rgba(255,255,255,.6)}
+html.glass .approw{padding:16px 18px 18px}
+html.glass .apt{font-size:calc(17px / var(--tz,1)); font-weight:600; color:#fff}
+html.glass .apchips{gap:10px; margin-top:12px}
+html.glass .apchip{background:var(--ctl); color:rgba(255,255,255,.82); height:44px; border-radius:22px; font-size:calc(15.5px / var(--tz,1)); font-weight:600}
+html.glass .apchip.on{background:#fff; color:#0B1220; font-weight:700}
+/* 沉浸玻璃固定深色：「外观」不可用 → 直接不出现（连同它上面的分隔线） */
+html.glass .approw.apoff,html.glass .rdiv:has(+ .approw.apoff){display:none}
+html.glass .rdiv{margin:0 18px}
+html.glass .drow{padding:16px 18px}
+html.glass .dcol b{font-size:calc(17px / var(--tz,1)); font-weight:600; color:#fff}
+html.glass .dcol i{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.58); margin-top:4px}
+html.glass .aboutcard{padding:20px 18px}
+html.glass .ab1{font-size:calc(18px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .ab2{font-size:calc(14.5px / var(--tz,1)); line-height:1.7; color:rgba(255,255,255,.66); margin-top:10px}
+html.glass .ab2 + .ab2{margin-top:6px}
+html.glass .aboutcard .ablinks{gap:10px; margin-top:16px}
+html.glass .aboutcard .ablinks a{color:#fff; font-size:calc(15px / var(--tz,1)); font-weight:600; background:var(--ctl); border-radius:16px; padding:8px 14px}
+html.glass .minebottom{height:120px}
+
+/* ══════════ 编辑资料 ══════════ */
+html.glass .prtop{height:auto; padding:calc(var(--sb) + 4px) 18px 6px; gap:12px}
+html.glass .prtop-t{font-size:calc(22px / var(--tz,1)); font-weight:800; color:#fff; margin-left:0}
+html.glass .prwrap{padding:6px 18px 100px}
+/* 头像区收紧：大头像 + 右侧挑选，不再竖着占一屏 */
+html.glass .pravatar{width:84px; height:84px; border-radius:42px}
+html.glass .pravatar-l{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.66); margin-top:12px}
+html.glass .avatarow{gap:12px; margin-top:12px; flex-wrap:wrap}
+html.glass .prav,html.glass .prav img,html.glass .pralbum{width:46px; height:46px; border-radius:23px}
+html.glass .prav.on::after{width:50px; height:50px; left:-2px; top:-2px; border-color:#fff}
+html.glass .pralbum{background:var(--ctl); border:0; color:#fff}
+html.glass .pralbum.on{border:2.5px solid #fff}
+html.glass .pravatar-hint{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.5)}
+html.glass .prcard{border-radius:24px; padding:18px; margin-top:16px; background:var(--card);
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .prcard + .prcard{margin-top:12px}
+html.glass .prcard-h span{font-size:calc(18px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .prcard-h i{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.5)}
+html.glass .prinput{background:var(--ctl); border:0; border-radius:14px; height:48px; padding:0 14px; margin-top:12px;
+  font-size:calc(16px / var(--tz,1)); color:#fff}
+html.glass .prinput.row{height:46px; border-radius:14px; font-size:calc(16px / var(--tz,1))}
+html.glass .prarea{height:96px; padding:12px 14px}
+html.glass .prrow{margin-top:12px; gap:12px}
+html.glass .prrow-l{font-size:calc(15.5px / var(--tz,1)); color:#fff; font-weight:600; width:76px; flex:0 0 76px}
+html.glass .prrow-u{font-size:calc(15px / var(--tz,1)); color:rgba(255,255,255,.6)}
+html.glass .prregion{font-size:calc(15.5px / var(--tz,1)); color:#fff}
+html.glass .prregion.unset{color:rgba(255,255,255,.55)}
+html.glass .prgender{background:var(--ctl); color:rgba(255,255,255,.85); height:42px; padding:0 18px; border-radius:21px;
+  font-size:calc(15.5px / var(--tz,1)); font-weight:600}
+html.glass .prgender.on{background:#fff; color:#0B1220}
+html.glass .prsave{height:54px; border-radius:27px; background:#fff; color:#0B1220; font-size:calc(17.5px / var(--tz,1)); font-weight:800}
+html.glass .prlogout{color:#FF8A7A; font-size:calc(15px / var(--tz,1))}
+/* 属地选择弹层 */
+html.glass .regsheet-t{font-size:calc(19px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .regsheet-s{font-size:calc(13.5px / var(--tz,1)); color:rgba(255,255,255,.6)}
+html.glass .regauto,html.glass .regnone,html.glass .regchip{background:var(--ctl); color:#fff; font-size:calc(15px / var(--tz,1)); border:0}
+html.glass .regnone.on,html.glass .regchip.on{background:#fff; color:#0B1220}
+html.glass .avatarow{gap:8px; flex-wrap:nowrap}
+html.glass .prav,html.glass .prav img,html.glass .pralbum{width:44px; height:44px; border-radius:22px; flex:0 0 44px}
+html.glass .prav.on::after{width:48px; height:48px}
+
+/* ══════════ 导入 ══════════ */
+html.glass .iwrap{padding:0 18px 40px}
+html.glass .imp-lead,html.glass .imp-editor,html.glass .imp-item{border-radius:24px; padding:18px; background:var(--card);
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .imp-lead-t{font-size:calc(19px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .imp-lead-s{font-size:calc(14px / var(--tz,1)); line-height:1.6; color:rgba(255,255,255,.62); margin-top:6px}
+html.glass .imp-srcs{gap:12px; margin-top:12px}
+html.glass .imp-src{border-radius:22px; padding:16px; background:var(--card); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur);
+  flex-direction:column; align-items:flex-start; gap:12px}
+html.glass .imp-src-ic{width:44px; height:44px; flex:0 0 44px; border-radius:13px; background:#fff !important}
+html.glass .imp-src-ic svg{width:22px; height:22px; stroke:#0B1220 !important}
+html.glass .imp-src-ic svg[fill="#FFFFFF"]{fill:#0B1220}
+html.glass .imp-src-txt{margin-left:0}
+html.glass .imp-src-txt b{font-size:calc(17px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .imp-src-txt i{font-size:calc(13px / var(--tz,1)); line-height:1.5; color:rgba(255,255,255,.58); margin-top:4px; white-space:normal}
+html.glass .imp-editor{margin-top:12px}
+html.glass .imp-editor-h > span:first-child{font-size:calc(18px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .imp-found{font-size:calc(13.5px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .imp-found.ok{color:#7FE0C8}
+html.glass .imp-editor textarea{background:var(--ctl); border:0; margin-top:12px}
+html.glass .imp-split{margin-top:16px}
+html.glass .imp-split-txt b{font-size:calc(16px / var(--tz,1)); font-weight:600; color:#fff}
+html.glass .imp-split-txt i{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.55); margin-top:3px}
+html.glass .tsw{width:52px; height:31px; border-radius:16px}
+html.glass .tsw i{width:25px; height:25px; border-radius:13px}
+html.glass .imp-list-l{font-size:calc(19px / var(--tz,1)); font-weight:800; color:#fff; margin:24px 2px 10px}
+html.glass .imp-item-no{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.5)}
+html.glass .imp-item-t{font-size:calc(17px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .imp-item-s{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.62)}
+html.glass .tychip{background:var(--ctl); color:rgba(255,255,255,.8); font-size:calc(13.5px / var(--tz,1)); border-radius:12px; padding:5px 12px}
+html.glass .tychip.on.prompt,html.glass .tychip.on.skill{background:#fff; color:#0B1220}
+html.glass .imp-go{height:54px; border-radius:27px; background:#fff; color:#0B1220; font-size:calc(17.5px / var(--tz,1)); font-weight:800; margin-top:16px}
+html.glass .imp-go.dim{background:var(--card); color:rgba(255,255,255,.5)}
+html.glass .imp-busy{background:var(--card); border-radius:16px}
+html.glass .imp-busy span{color:#fff; font-size:calc(14px / var(--tz,1))}
+
+/* ══════════ 回收站 ══════════ */
+html.glass .trtop{padding:calc(var(--sb) + 4px) 18px 6px; gap:10px}
+html.glass .trtop-t{font-size:calc(22px / var(--tz,1)); font-weight:800; color:#fff; margin-left:2px}
+html.glass .trtop-act{background:var(--card); color:#fff; border-radius:18px; padding:9px 15px; font-size:calc(15px / var(--tz,1)); font-weight:600}
+html.glass .trtop-act.warn{color:#FF8A7A}
+html.glass .trtop-act.dim{display:none}   /* 空的时候不显示「恢复全部 / 清空」 */
+html.glass .trhint{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.58); padding:4px 18px 0}
+html.glass .trlist{padding:14px 18px 0}
+html.glass .trcard{background:var(--card); border:0; border-radius:22px; padding:16px 18px;
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .trbadge{width:44px; height:44px; flex:0 0 44px; border-radius:12px; background:#F2F3F5}
+html.glass .trbadge svg path{fill:#111316}
+html.glass .trbadge.skill{background:#101215; box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+html.glass .trbadge.skill svg path{fill:#fff}
+html.glass .trcard-title{font-size:calc(17px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .trcard-meta{font-size:calc(13.5px / var(--tz,1)); color:rgba(255,255,255,.58)}
+html.glass .trleft{font-size:calc(13.5px / var(--tz,1)); color:rgba(255,255,255,.58)}
+html.glass .trleft.warn{color:#FF8A7A}
+html.glass .trpill{height:38px; padding:0 16px; border-radius:19px; font-size:calc(14.5px / var(--tz,1)); font-weight:600}
+html.glass .trpill.primary{background:#fff; color:#0B1220}
+html.glass .trpill.warn{background:var(--ctl); color:#FF8A7A}
+html.glass .trempty{padding:70px 20px}
+html.glass .trempty-badge{width:84px; height:84px; border-radius:42px; background:var(--card)}
+html.glass .trempty-t{font-size:calc(19px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .trempty-s{font-size:calc(14.5px / var(--tz,1)); color:rgba(255,255,255,.6)}
+
+/* ══════════ 分类管理 ══════════ */
+html.glass .topbar-act.primary{background:#fff; color:#0B1220}
+html.glass .catsec-t{font-size:calc(19px / var(--tz,1)); font-weight:800; color:#fff; padding:22px 20px 10px}
+html.glass .catlist{gap:0; padding:0 18px; }
+html.glass .catlist:not(:empty){background:transparent}
+html.glass .catrow-card{background:var(--card); border-radius:0; padding:16px 18px; -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur); position:relative}
+html.glass .catrow-card:first-child{border-radius:22px 22px 0 0}
+html.glass .catrow-card:last-child{border-radius:0 0 22px 22px}
+html.glass .catrow-card:only-child{border-radius:22px}
+html.glass .catrow-card + .catrow-card::before{content:""; position:absolute; top:0; left:18px; right:18px; height:1px; background:rgba(255,255,255,.10)}
+html.glass .catrow-name{font-size:calc(17px / var(--tz,1)); font-weight:600; color:#fff}
+html.glass .catrow-n{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .catrow-act{font-size:calc(14.5px / var(--tz,1)); font-weight:600; color:#fff; margin-left:14px}
+html.glass .catrow-act.warn{color:#FF8A7A}
+html.glass .catempty{font-size:calc(14.5px / var(--tz,1)); color:rgba(255,255,255,.58); padding:0 20px}
+html.glass .catinline{padding:12px 18px 0; gap:10px}
+html.glass .catinline .einput{height:48px; border-radius:14px}
+html.glass .catfoot{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.5); padding:14px 20px}
+
+/* ══════════ 新建 / 编辑 ══════════ */
+html.glass .ewrap{padding:6px 18px 30px}
+html.glass .ewrap > .einput,html.glass .ewrap > .erow,html.glass .ewrap > textarea{margin-top:12px}
+html.glass .ewrap .einput{background:var(--card); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur);
+  border-radius:18px; padding:14px 16px}
+html.glass #pTitle{font-size:calc(20px / var(--tz,1)); font-weight:700; height:56px}
+html.glass .ewrap .earea{min-height:220px; line-height:1.7}
+html.glass .ewrap .earea.short{min-height:90px}
+html.glass .erow{gap:10px}
+html.glass .etype-group{background:var(--card); border-radius:22px; padding:4px; -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .etchip{height:40px; padding:0 18px; border-radius:20px; color:rgba(255,255,255,.8); font-size:calc(15.5px / var(--tz,1)); font-weight:600}
+html.glass .etchip.on.prompt,html.glass .etchip.on.skill{background:#fff; color:#0B1220}
+html.glass .esel{height:48px; max-width:60%; border:0; border-radius:24px; background:var(--card); color:#fff; padding:0 16px;
+  font-size:calc(15.5px / var(--tz,1)); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .evars-n{font-size:calc(14px / var(--tz,1)); color:#7FE0C8; margin-top:10px}
+html.glass .evar{background:var(--ctl); color:#fff; font-size:calc(13.5px / var(--tz,1)); border-radius:10px; padding:4px 10px}
+html.glass .epaste{background:var(--card); color:#fff; font-size:calc(15px / var(--tz,1)); font-weight:600; border-radius:20px; padding:10px 16px}
+html.glass .subtop-t{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis}
+html.glass .esel{flex:1; min-width:0; max-width:none}
+html.glass .cmpentry.on .ce-ic svg{stroke:#0B1220}
+html.glass .cmpbar{padding:12px 14px; gap:10px}
+html.glass .cmpbar .hint{font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.62)}
+html.glass .cmpbar .chip.on{background:#fff; color:#0B1220; font-size:calc(13px / var(--tz,1))}
+
+/* ══════════ 模型对比 ══════════ */
+html.glass .cmpwrap{padding:6px 18px 30px; background:transparent; box-shadow:none}
+html.glass .cmphead,html.glass .cmpprice,html.glass .cmpattr{background:var(--card); border:0;
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .cmphead{border-radius:24px 24px 0 0; padding:16px 6px}
+html.glass .cmpattr:last-of-type{border-radius:0 0 24px 24px}
+html.glass .cmpprice,html.glass .cmpattr{border-top:1px solid rgba(255,255,255,.08); margin-top:0; padding:10px 12px}
+html.glass .cmpcol .bmark{width:40px; height:40px; flex:0 0 40px; border-radius:11px; background:#fff}
+html.glass .cmpcol b{font-size:calc(14.5px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .cmpcol i{font-size:calc(12px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .cmplabel,html.glass .cmpattrcol{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.58)}
+html.glass .cmpcell b{font-size:calc(15px / var(--tz,1)); color:#fff}
+html.glass .cmpcell i{font-size:calc(11.5px / var(--tz,1)); color:rgba(255,255,255,.55)}
+html.glass .cmpline .cmpcell.hl b,html.glass .cmpline .cmpcell.hl i,html.glass .cmpattr .cmpcell.ok b{color:#7FE0C8}
+html.glass .cmpattr .cmpcell.hl-blue b,html.glass .cmpattr .cmpcell.hl-blue i{color:#fff; font-weight:800}
+html.glass .cmpattr .cmpcell.hl-star b,html.glass .cmpattr .cmpcell.hl-star i,html.glass .cmpattr .cmpcell.amber b{color:#FFD666}
+html.glass .cmpattr .cmpcell.sub b{font-size:calc(13px / var(--tz,1)); color:rgba(255,255,255,.72)}
+html.glass .cmpdiv{background:rgba(255,255,255,.08)}
+html.glass .cmpsummary,html.glass .cmpnote{background:var(--card); border:0; border-radius:22px; padding:16px 18px;
+  -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .cmpsummary-t{font-size:calc(18px / var(--tz,1)); font-weight:800; color:#fff}
+html.glass .cmpsum-row{padding:8px 0}
+html.glass .cmpsum-row span{font-size:calc(13.5px / var(--tz,1)); color:rgba(255,255,255,.6)}
+html.glass .cmpsum-row b{font-size:calc(14.5px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .cmpsum-row em{font-size:calc(14px / var(--tz,1)); color:#fff; font-weight:700}
+html.glass .cmpnote-h b{font-size:calc(15.5px / var(--tz,1)); font-weight:700; color:#fff}
+html.glass .cmpnote-h .bmark{width:26px; height:26px; flex:0 0 26px; background:#fff}
+html.glass .cmpnote p,html.glass .cmpnote div:not(.cmpnote-h){font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.72); line-height:1.6}

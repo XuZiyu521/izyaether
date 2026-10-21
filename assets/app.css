@@ -3,7 +3,7 @@
    text_main #182431 · text_sub #667788 · text_ter #98A1A9 · line #E9EDF3 · fill_bg #F1F4F8 */
 :root{
   --app_bg:#F1F3F5; --card:#FFFFFF;
-  --primary:#0A59F7; --purple:#7B5CFF; --ok:#0F9B8E; --warn:#E84026; --star:#F7BA2E;
+  --primary:#0A59F7; --on_primary:#FFFFFF; --purple:#7B5CFF; --ok:#0F9B8E; --warn:#E84026; --star:#F7BA2E;
   --text_main:#182431; --text_sub:#667788; --text_ter:#98A1A9;
   --line:#E9EDF3; --fill_bg:#F1F4F8; --blue_bg:#EBF2FF;
   --green_bg:#E6F6F4; --amber:#B26A00; --amber_bg:#FFF3E0;
@@ -107,7 +107,7 @@ html.dark .libhead{background:linear-gradient(180deg,#16202E 0%,#131A24 55%,#101
   padding:7px 14px; margin-right:8px; font-size:13px; font-family:inherit; font-weight:400;
   cursor:pointer; white-space:nowrap; flex:0 0 auto;
 }
-.cchip.on{background:var(--primary); border-color:var(--primary); color:#fff; font-weight:500}
+.cchip.on{background:var(--primary); border-color:var(--primary); color:var(--on_primary); font-weight:500}
 .cathint{font-size:10px; color:var(--text_ter); margin-left:2px; margin-right:16px; white-space:nowrap; flex:0 0 auto}
 
 /* 库页内容区与排序提示 */
@@ -142,7 +142,7 @@ html.dark .libhead{background:linear-gradient(180deg,#16202E 0%,#131A24 55%,#101
   padding:8px 14px; font-size:13.5px; font-weight:500; cursor:pointer; font-family:inherit;
 }
 .btn:hover{border-color:#D6DDE4}
-.btn.primary{background:var(--primary); border-color:var(--primary); color:#fff}
+.btn.primary{background:var(--primary); border-color:var(--primary); color:var(--on_primary)}
 .btn.sm{padding:5px 10px; font-size:12.5px; border-radius:9px}
 .pillbtn{                      /* App 额度页「刷新 / 添加」胶囊：高 32、padding 12/14、radius 16 */
   display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 14px 0 12px;
@@ -187,7 +187,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--primary)}
   border:0; background:var(--card); color:var(--text_sub); border-radius:13px;
   padding:5px 11px; font-size:11px; font-weight:400; cursor:pointer; font-family:inherit;
 }
-.chip.on{background:var(--primary); color:#fff}
+.chip.on{background:var(--primary); color:var(--on_primary)}
 .chip.act{margin-left:auto; background:transparent; color:var(--text_ter)}
 
 /* ── 比价 · 厂商卡（App：radius 16 / padding 14 / 标 38 / 名 15 Medium / 副 11） ── */
@@ -445,7 +445,7 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .apchip{flex:1; min-width:0; border:0; border-radius:14px; padding:7px 0; font-size:12px; font-family:inherit;
   background:var(--blue_bg); color:var(--text_sub); cursor:pointer; text-align:center;
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.apchip.on{background:var(--primary); color:#fff; font-weight:500}
+.apchip.on{background:var(--primary); color:var(--on_primary); font-weight:500}
 /* 数据行（App dataRow：标题 15 + 说明 11 两行 + 箭头 17） */
 .drow{display:flex; align-items:center; width:100%; padding:13px 16px; cursor:pointer}
 .dcol{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start}
@@ -597,8 +597,8 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .toolrow{display:flex; align-items:center; gap:8px; margin-top:12px; flex-wrap:wrap}
 .toolrow .chip{display:inline-flex; align-items:center; gap:5px; height:32px; padding:0 12px; border-radius:16px;
   background:var(--card); box-shadow:0 1px 2px rgba(24,36,49,.05); font-size:12.5px; font-weight:500; color:var(--text_sub)}
-.toolrow .chip.on{background:var(--primary); color:#fff}
-.toolrow .chip.primary{background:var(--primary); color:#fff; box-shadow:0 4px 12px rgba(10,89,247,.18)}
+.toolrow .chip.on{background:var(--primary); color:var(--on_primary)}
+.toolrow .chip.primary{background:var(--primary); color:var(--on_primary); box-shadow:0 4px 12px rgba(10,89,247,.18)}
 .search.lib-search{margin-top:12px; height:44px; border-radius:14px; padding:0 10px 0 13px}
 /* 悬浮加号已移入 Dock 的 .fabrow（App 口径：它是 dockBar 的一行，仅库页出现） */
 .drag-hint{margin:10px 2px 8px}
@@ -709,7 +709,7 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .cvthumb img{width:100%; height:64px; object-fit:cover; display:block; border-radius:10px}
 .cvthumb.on{box-shadow:0 0 0 2px var(--primary)}
 .cvck{position:absolute; top:5px; right:5px; width:18px; height:18px; border-radius:9px; background:var(--primary);
-  color:#fff; font-size:11px; font-style:normal; line-height:18px; text-align:center}
+  color:var(--on_primary); font-size:11px; font-style:normal; line-height:18px; text-align:center}
 .cvalbum{display:block; width:100%; height:46px; margin-top:18px; border-radius:12px; background:var(--blue_bg);
   color:var(--primary); font-size:14px; font-weight:500; text-align:center; line-height:46px; cursor:pointer}
 .cvreset{display:block; width:100%; margin-top:14px; border:0; background:transparent; padding:0; cursor:pointer;
@@ -827,7 +827,7 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .dfoot{position:sticky; bottom:0; z-index:5; width:100%; background:var(--app_bg);
   padding:10px 16px calc(26px + env(safe-area-inset-bottom,0px))}
 .duse{display:block; width:100%; height:46px; border:0; border-radius:23px; background:var(--primary);
-  color:#fff; font-family:inherit; font-size:16px; cursor:pointer}
+  color:var(--on_primary); font-family:inherit; font-size:16px; cursor:pointer}
 .duse.locked{background:var(--purple)}
 .dlocked-hint{font-size:11px; color:var(--text_ter); text-align:center; width:100%; margin-top:6px}
 /* MdLite（App utils/MdLite：h 19/16/15 Bold · code 11 等宽 · li • 14 primary · quote 13 左 3px 主色边 · p 14 lh22） */
@@ -853,7 +853,7 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .fill-in:focus{border-color:var(--primary)}
 .fill-b{display:flex; gap:8px; width:100%; margin-top:16px}
 .fill-b .btn{flex:1; height:40px; border-radius:20px; font-size:14px; border:0; background:var(--app_bg); color:var(--text_sub)}
-.fill-b .btn.primary{background:var(--primary); color:#fff}
+.fill-b .btn.primary{background:var(--primary); color:var(--on_primary)}
 
 /* ── 编辑 / 新建（App PromptEditPage） ── */
 .ewrap{padding:0 12px}
@@ -866,7 +866,7 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .etype-group{display:flex; background:var(--card); border-radius:10px; flex:0 0 auto; padding:0}
 .etchip{border:0; background:transparent; cursor:pointer; font-family:inherit; font-size:13px;
   color:var(--text_sub); border-radius:8px; padding:6px 12px}
-.etchip.on.prompt{background:var(--primary); color:#fff}
+.etchip.on.prompt{background:var(--primary); color:var(--on_primary)}
 .etchip.on.skill{background:var(--purple); color:#fff}
 .esel{flex:0 0 auto; max-width:46%; background:var(--card); border:1px solid var(--line); border-radius:10px;
   padding:9px 10px; font-family:inherit; font-size:13px; color:var(--text_sub); outline:none; cursor:pointer}
@@ -974,9 +974,9 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .imp-item-ty{display:flex; gap:6px; margin-top:7px; margin-left:20px}
 .tychip{border:0; cursor:pointer; font-family:inherit; font-size:11px; border-radius:7px; padding:3px 9px;
   background:var(--fill_bg); color:var(--text_sub)}
-.tychip.on.prompt{background:var(--primary); color:#fff}
+.tychip.on.prompt{background:var(--primary); color:var(--on_primary)}
 .tychip.on.skill{background:var(--purple); color:#fff}
-.imp-go{width:100%; height:48px; border:0; border-radius:14px; background:var(--primary); color:#fff;
+.imp-go{width:100%; height:48px; border:0; border-radius:14px; background:var(--primary); color:var(--on_primary);
   font-family:inherit; font-size:15px; cursor:pointer; margin-top:20px}
 .imp-go.dim{background:var(--text_ter)}
 
@@ -988,7 +988,7 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .achip{display:inline-flex; align-items:center; gap:7px; border:1px solid var(--line); background:var(--fill_bg);
   border-radius:14px; padding:7px 13px; margin:10px 8px 0 0; cursor:pointer; font-family:inherit;
   font-size:13px; color:var(--text_sub); flex:0 0 auto}
-.achip.on{background:var(--primary); border-color:var(--primary); color:#fff}
+.achip.on{background:var(--primary); border-color:var(--primary); color:var(--on_primary)}
 .achip .bmark{width:18px; height:18px; flex:0 0 18px; border-radius:5px}
 .amanual{display:flex; align-items:center; width:100%; margin-top:16px; gap:8px}
 .amanual > span{font-size:11px; color:var(--text_ter); flex:1; min-width:0}
@@ -1104,7 +1104,7 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .ctype{flex:1; min-width:0; border:0; border-radius:14px; padding:9px 4px; cursor:pointer; font-family:inherit;
   font-size:12px; background:var(--fill_bg); color:var(--text_sub); text-align:center;
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.ctype.on{background:var(--primary); color:#fff; font-weight:500}
+.ctype.on{background:var(--primary); color:var(--on_primary); font-weight:500}
 .cest{width:100%; padding:12px 15px; border-radius:14px; background:var(--blue_bg); margin-top:12px}
 .cest-t{font-size:13px; font-weight:500; color:var(--primary)}
 .cest-s{font-size:10px; color:var(--text_ter); margin-top:4px}
@@ -1241,8 +1241,8 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .prrow.gender{margin-top:12px}
 .prgender{border:0; border-radius:14px; padding:6px 14px; cursor:pointer; font-family:inherit;
   font-size:13px; background:var(--fill_bg); color:var(--text_sub); flex:0 0 auto}
-.prgender.on{background:var(--primary); color:#fff}
-.prsave{width:100%; height:46px; border:0; border-radius:23px; background:var(--primary); color:#fff;
+.prgender.on{background:var(--primary); color:var(--on_primary)}
+.prsave{width:100%; height:46px; border:0; border-radius:23px; background:var(--primary); color:var(--on_primary);
   font-family:inherit; font-size:15px; cursor:pointer; margin-top:24px}
 .prlogout{width:100%; border:0; background:transparent; cursor:pointer; font-family:inherit;
   font-size:14px; color:var(--warn); padding:14px; margin-top:8px; text-align:center}
@@ -1257,12 +1257,12 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
   padding:8px 16px 8px 14px; flex:0 0 auto}
 .regnone{border:0; border-radius:18px; padding:8px 14px; cursor:pointer; font-family:inherit;
   font-size:13px; background:var(--fill_bg); color:var(--text_sub); flex:0 0 auto}
-.regnone.on{background:var(--primary); color:#fff}
+.regnone.on{background:var(--primary); color:var(--on_primary)}
 .reglist{display:flex; flex-wrap:wrap; gap:8px; width:100%; margin-top:14px; overflow-y:auto;
   flex:1; min-height:0; align-content:flex-start}
 .regchip{border:0; border-radius:16px; padding:8px 14px; cursor:pointer; font-family:inherit;
   font-size:13px; background:var(--fill_bg); color:var(--text_main); flex:0 0 auto}
-.regchip.on{background:var(--primary); color:#fff}
+.regchip.on{background:var(--primary); color:var(--on_primary)}
 
 /* ══════════ 深色主题（App common/Theme.ets 三档：跟随系统/浅色/深色） ══════════ */
 /* 色值逐条对齐 app resources/dark/element/color.json */
@@ -1302,7 +1302,7 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .pbtns{display:flex; gap:8px; margin-top:10px}
 .pb{height:36px; border:0; border-radius:18px; padding:0 16px; cursor:pointer; font-family:inherit;
   font-size:13px; color:var(--primary); background:var(--blue_bg)}
-.pb.main{flex:1; color:#fff; background:var(--primary); font-size:13.5px; font-weight:500}
+.pb.main{flex:1; color:var(--on_primary); background:var(--primary); font-size:13.5px; font-weight:500}
 
 html.dark{
   --app_bg:#121212; --card:#1E1E1E;
@@ -1357,323 +1357,28 @@ body.insub #dock{display:none !important}
 /* 2026-10-19 类型切换图例：蓝色对话气泡 = Prompt，紫色闪电 = Skill */
 .libtseg button svg{width:10px;height:10px;vertical-align:-1px;margin-right:3px}
 
-/* ══════════ 沉浸玻璃风格（2026-10-21，「我的 → 界面风格」可切换；默认仍是经典） ══════════
-   参考系统搜索页：①整页一层连续背景（封面图模糊 + 压暗），不再「上一截封面 + 下面灰底」；
-   ②卡片是半透明玻璃 + 背景模糊 + 细亮边；③同类内容合进一张大圆角面板，行间细线；
-   ④几乎不用强调色，选中态用白底深字；⑤大号粗体分区标题，主字白、副字半透明。 */
-html.glass{
-  --app_bg:transparent; --card:rgba(255,255,255,.10);
-  --primary:#FFFFFF; --text_main:#FFFFFF; --text_sub:rgba(255,255,255,.72); --text_ter:rgba(255,255,255,.50);
-  --line:rgba(255,255,255,.12); --fill_bg:rgba(255,255,255,.08); --blue_bg:rgba(255,255,255,.14);
-  --purple_bg:rgba(255,255,255,.14);
-  --glass_blur:saturate(1.5) blur(24px);
-}
-html.glass body{background:#0B1220}
-#glassbg{position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none}
-#glassbg img{position:absolute; inset:-60px; width:calc(100% + 120px); height:calc(100% + 120px); object-fit:cover;
-  filter:blur(46px) saturate(1.25); transform:scale(1.05)}
-#glassbg i{position:absolute; inset:0; background:linear-gradient(180deg,rgba(6,12,24,.38),rgba(6,12,24,.62) 60%,rgba(6,12,24,.74))}
-html.glass #app{z-index:1}
-/* 玻璃材质：卡片、面板、搜索框、胶囊 */
-html.glass .card,html.glass .pgroup,html.glass .search,html.glass .cchip,html.glass .calc,html.glass .cmpentry,
-html.glass .sheet,html.glass .cmpbar,html.glass .libtseg,html.glass #side{
-  background:var(--card); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur);
-  border:1px solid rgba(255,255,255,.10); border-top-color:rgba(255,255,255,.18); box-shadow:none}
-html.glass #side{border-width:0 1px 0 0; background:rgba(255,255,255,.06)}
-html.glass .sheet{background:rgba(30,36,48,.82)}
-html.glass .navbtn.on{background:rgba(255,255,255,.14); color:#fff}
-html.glass .navbtn img{filter:brightness(0) invert(1); opacity:.85}
-html.glass .brand .bi,html.glass .brand .bz{color:#fff}
-/* 封面不再单独成块：背景已是整页封面 */
-html.glass .cover > img,html.glass .cover .scrim,html.glass .cover .fade,
-html.glass .mcover > img,html.glass .mcover .scrim,html.glass .mcover .fade{display:none}
-html.glass .cover,html.glass .mcover{background:transparent}
-html.glass .gbtn{background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.18)}
-html.glass .libwrap .search.lib-search{margin-top:-24px; height:48px; border-radius:24px}
-html.glass .search input{color:#fff}
-html.glass .search input::placeholder{color:rgba(255,255,255,.55)}
-html.glass .search svg{stroke:rgba(255,255,255,.7)}
-/* 分类胶囊：未选玻璃，选中白底深字（不用蓝） */
-html.glass .cchip{color:rgba(255,255,255,.8)}
-html.glass .cchip.on{background:#fff; border-color:#fff; color:#0B1220}
-html.glass .apchip.on{background:#fff; color:#0B1220}
-html.glass .apoff{opacity:.4; pointer-events:none}
-html.glass .libtseg .slider{background:rgba(255,255,255,.9); box-shadow:none}
-html.glass .libtseg button.on{color:#0B1220}
-html.glass .libtseg button svg path{fill:currentColor}
-/* 库列表：大号分区标题 + 一整块玻璃面板 */
+/* 库列表分组容器与拆分标题（经典风格下的默认表现；沉浸玻璃的样式在 glass.css） */
 .pgtitle{display:none}
 .pgroup{display:flex; flex-direction:column; gap:10px}
-html.glass .pgtitle{display:block; font-size:24px; font-weight:800; color:#fff; letter-spacing:-.3px; margin:10px 4px 12px}
-html.glass .pgroup{gap:0; border-radius:28px; overflow:hidden}
-html.glass .plist .pcard{background:transparent; border:0; border-radius:0; padding:16px 18px; position:relative}
-html.glass .plist .pcard + .pcard::before{content:""; position:absolute; top:0; left:78px; right:18px; height:1px; background:rgba(255,255,255,.10)}
-html.glass .plist .pcard.open{background:rgba(255,255,255,.06)}
-html.glass .plist .prow{gap:16px; align-items:center}
-html.glass .plist .pbadge{width:44px; height:44px; flex:0 0 44px; border-radius:13px; margin-top:0;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 4px 14px rgba(0,0,0,.25)}
-html.glass .plist .pbadge svg{width:20px; height:20px}
-html.glass .plist .ptitle{font-size:16.5px; font-weight:700}
-html.glass .plist .pabs{color:rgba(255,255,255,.6); margin-top:4px}
-html.glass .plist .pmeta{display:none}
-html.glass .pexp{padding-left:60px}
-html.glass .pvrow input{background:rgba(255,255,255,.10); color:#fff}
-html.glass .pb{background:rgba(255,255,255,.14); color:#fff}
-html.glass .pb.main{background:#fff; color:#0B1220}
-html.glass .pexp .pvrow span{color:rgba(255,255,255,.7)}
-html.glass .grouptitle{font-size:20px; font-weight:800; color:#fff; padding:22px 4px 10px}
-html.glass .rdiv{background:rgba(255,255,255,.10)}
-html.glass .subhdr{background:rgba(10,16,28,.55); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
-html.glass input,html.glass select,html.glass textarea{background:rgba(255,255,255,.08); color:#fff; border-color:rgba(255,255,255,.14)}
-html.glass .search input{background:transparent; border:0}
-
-/* ══════════ 沉浸玻璃 v2（2026-10-21）：对照系统搜索页逐项收紧 ══════════ */
-/* 经典风格：副标题仍拼在标题里，单独一行的副标题不出现 */
 .pts{font-weight:inherit}
-.psub{display:none}
-/* ① 背景：光斑网格 + 细颗粒，有明暗层次；模糊减轻、压暗减轻 */
-#glassbg img{filter:blur(22px) saturate(1.2); opacity:.55}
-#glassbg.photo img{opacity:1}
-#glassbg .mesh{position:absolute; inset:-10%;
-  background:
-    radial-gradient(42% 32% at 78% 12%, color-mix(in srgb, var(--g2) 70%, transparent), transparent 70%),
-    radial-gradient(55% 40% at 10% 38%, color-mix(in srgb, var(--g4) 75%, transparent), transparent 72%),
-    radial-gradient(60% 45% at 85% 70%, color-mix(in srgb, var(--g1) 80%, transparent), transparent 72%),
-    radial-gradient(50% 35% at 25% 95%, color-mix(in srgb, var(--g2) 45%, transparent), transparent 70%),
-    linear-gradient(170deg, var(--g3), color-mix(in srgb, var(--g1) 45%, var(--g3)) 55%, var(--g3));
-  filter:blur(18px)}
-#glassbg.photo .mesh{display:none}
-#glassbg .grain{position:absolute; inset:0; opacity:.07; mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
-#glassbg i{background:linear-gradient(180deg,rgba(4,8,18,.30),rgba(4,8,18,.16) 40%,rgba(4,8,18,.42))}
-/* ② 材质：更亮更干净的半透明白，去掉描边，只留顶部一丝高光 */
-html.glass{--card:rgba(255,255,255,.15); --glass_blur:saturate(1.6) blur(30px)}
-html.glass .card,html.glass .pgroup,html.glass .search,html.glass .calc,html.glass .cmpentry,
-html.glass .cmpbar,html.glass .libtseg{border:0; box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
-/* ③ 头部做减法：分类胶囊变轻（无底无框，只有选中白底），去掉行尾提示 */
-html.glass .cchip{background:transparent; border:0; -webkit-backdrop-filter:none; backdrop-filter:none;
-  color:rgba(255,255,255,.66); font-weight:600; padding:7px 13px}
-html.glass .cchip.on{background:rgba(255,255,255,.92); color:#0B1220}
-html.glass .cathint{display:none}
-html.glass .libwrap .search.lib-search{height:52px; border-radius:26px; padding:0 18px; margin-top:-22px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.18), inset 0 0 0 1px rgba(255,255,255,.10)}
-html.glass .search input{font-size:16px; font-weight:500}
-html.glass .libcover h1{font-size:34px; font-weight:800}
-/* ④ 分区：粗体大标题 + 计数 + 面板；组间大留白 */
-html.glass .pgsec{margin-top:26px}
-html.glass .pgsec:first-child{margin-top:12px}
-html.glass .pghead{display:flex; align-items:center; gap:8px; margin:0 6px 12px}
-html.glass .pgtitle{display:inline; font-size:23px; font-weight:800; letter-spacing:-.2px; color:#fff; margin:0}
-html.glass .pgcount{font-size:13px; font-weight:600; color:rgba(255,255,255,.45); margin-top:5px; flex:1}
-html.glass .pghead .libtseg{margin-left:0}
-html.glass .pgroup{border-radius:30px}
-/* ⑤ 行：标题按冒号拆开，主标题大号粗体完整显示，副标题一行；图标按题材配色 */
-html.glass .plist .pcard{padding:18px 20px}
-html.glass .plist .pcard + .pcard::before{left:86px; right:20px; background:rgba(255,255,255,.09)}
-html.glass .plist .prow{gap:18px}
-html.glass .pts{display:none}
-html.glass .plist .ptitle{font-size:19px; font-weight:800; letter-spacing:-.2px; line-height:1.3}
-html.glass .psub{display:block; font-size:13.5px; font-weight:500; color:rgba(255,255,255,.66); margin-top:3px;
-  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-html.glass .pcard.hassub .pabs{display:none}
-html.glass .pcard.open .pabs{display:-webkit-box}
-html.glass .plist .pabs{font-size:13.5px; font-weight:500; color:rgba(255,255,255,.62)}
-html.glass .plist .pbadge{width:48px; height:48px; flex:0 0 48px; border-radius:14px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.35), inset 0 -8px 16px rgba(0,0,0,.10), 0 6px 16px rgba(0,0,0,.22)}
-html.glass .plist .pbadge svg{width:21px; height:21px}
-html.glass .pcard[data-tone="teal"] .pbadge{background:linear-gradient(150deg,#5FD3C0,#1E8E86)}
-html.glass .pcard[data-tone="violet"] .pbadge{background:linear-gradient(150deg,#B59CFF,#6A4CE0)}
-html.glass .pcard[data-tone="indigo"] .pbadge{background:linear-gradient(150deg,#7FA2FF,#3955D6)}
-html.glass .pcard[data-tone="amber"] .pbadge{background:linear-gradient(150deg,#FFD27A,#E08A2C)}
-html.glass .pcard[data-tone="coral"] .pbadge{background:linear-gradient(150deg,#FFA48C,#E0574A)}
-html.glass .pcard[data-tone="green"] .pbadge{background:linear-gradient(150deg,#9BE58A,#3C9E4E)}
-html.glass .pcard[data-tone="rose"] .pbadge{background:linear-gradient(150deg,#FFB0CF,#D45A8C)}
-html.glass .pcard[data-tone="cyan"] .pbadge{background:linear-gradient(150deg,#86E3FF,#2B95D0)}
-html.glass .pcard[data-tone="slate"] .pbadge{background:linear-gradient(150deg,#C7D0DE,#6B7890)}
-html.glass .pstar svg{opacity:.55}
-html.glass .plist .pcard .pabs{display:none}
-html.glass .plist .pcard.open .pabs{display:-webkit-box}
-html.glass .pgmore{position:relative; display:flex; align-items:center; justify-content:space-between; width:100%;
-  border:0; background:transparent; color:rgba(255,255,255,.78); font:600 14px/1 inherit; font-family:inherit;
-  padding:17px 22px 18px 86px; cursor:pointer; text-align:left}
-html.glass .pgmore::before{content:""; position:absolute; top:0; left:86px; right:20px; height:1px; background:rgba(255,255,255,.09)}
-html.glass .pgmore span{font-size:20px; color:rgba(255,255,255,.5)}
-
-/* ══════════ 沉浸玻璃 · 墨色（2026-10-21）：去掉界面上所有颜色，只剩黑白灰；彩色只留给内容本身 ══════════ */
-html.glass{--card:rgba(255,255,255,.13); --text_sub:rgba(255,255,255,.66); --text_ter:rgba(255,255,255,.42)}
-html.glass body{background:#0A0B0D}
-#glassbg img{filter:grayscale(1) blur(22px); opacity:.35}
-#glassbg.photo img{filter:grayscale(.85) blur(22px) brightness(.8); opacity:1}
-#glassbg i{background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.18) 40%,rgba(0,0,0,.45))}
-#glassbg .grain{opacity:.09}
-/* 图标：Prompt 白底黑符号，Skill 黑底白符号 —— 靠明暗区分类型，不靠颜色 */
-html.glass .pcard[data-tone] .pbadge{background:linear-gradient(160deg,#FFFFFF,#D9DCE1);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 6px 16px rgba(0,0,0,.30)}
-html.glass .pcard[data-tone] .pbadge svg path{fill:#111316}
-html.glass .pcard[data-tone] .pbadge.skill{background:linear-gradient(160deg,#2A2D33,#0B0C0E);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.16), inset 0 0 0 1px rgba(255,255,255,.10), 0 6px 16px rgba(0,0,0,.35)}
-html.glass .pcard[data-tone] .pbadge.skill svg path{fill:#FFFFFF}
-html.glass .pmember{background:rgba(255,255,255,.9); color:#111316}
-/* Dock / ＋ / 我的：去蓝，选中白底黑图标 */
-html.glass .pill,html.glass .dockfab,html.glass .orb{background:rgba(255,255,255,.12);
-  border-color:rgba(255,255,255,.18) rgba(255,255,255,.10) rgba(255,255,255,.06) rgba(255,255,255,.10); box-shadow:0 6px 18px rgba(0,0,0,.35)}
-html.glass .pill .ib .bg,html.glass .orb .circle{background:#FFFFFF}
-html.glass .pill img,html.glass .orb img{filter:brightness(0) invert(1); opacity:.75}
-html.glass .pill .it.on img,html.glass .orb.on img{filter:brightness(0); opacity:1}
-html.glass .pill .lb,html.glass .orb .lb{color:rgba(255,255,255,.6)}
-html.glass .pill .it.on .lb{color:#fff; font-weight:600}
-html.glass .orb.on .lb{color:#111316}
-html.glass .dockfab{color:#fff}
-html.glass .dockblob{background:rgba(255,255,255,.14)}
-/* 分类行：右端渐隐，被截断的胶囊变成「还能往右滑」的暗示，而不是生硬切断 */
-html.glass .catrow{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);
-  mask-image:linear-gradient(90deg,#000 82%,transparent)}
-html.glass .libquota{color:rgba(255,255,255,.55)}
-html.glass .gbtn{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.14)}
-/* 其他页的彩色强调也收成黑白 */
-html.glass .apchip{background:rgba(255,255,255,.08); color:rgba(255,255,255,.75)}
-html.glass .seg{background:rgba(255,255,255,.08)}
-html.glass .seg .slider{background:#fff}
-html.glass .seg button.on{color:#111316}
-
-/* ══ 玻璃感（2026-10-21）：背景要有纹理，面板才「透」得出来 ══ */
-#glassbg img{inset:0; width:100%; height:100%; filter:blur(1.5px); opacity:1; transform:none}
-#glassbg.photo img{filter:grayscale(.85) blur(6px) brightness(.75)}
-#glassbg .mesh{display:none}
-#glassbg .grain{opacity:.05}
-#glassbg i{background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,0) 35%,rgba(0,0,0,.18))}
-html.glass{--card:rgba(255,255,255,.09); --glass_blur:blur(26px) saturate(1.4) brightness(1.18)}
-html.glass .pgroup,html.glass .card,html.glass .calc,html.glass .cmpentry,html.glass .cmpbar{
-  background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.07));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.20), inset 0 -1px 0 rgba(255,255,255,.04), 0 10px 30px rgba(0,0,0,.18)}
-html.glass .libwrap .search.lib-search,html.glass .search{
-  background:rgba(255,255,255,.10);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.18), inset 0 0 0 1px rgba(255,255,255,.14)}
-html.glass .plist .pcard + .pcard::before,html.glass .pgmore::before{background:rgba(255,255,255,.12)}
-#glassbg:not(.photo) img{filter:blur(4px) brightness(.92) contrast(.92)}
-
-/* ══ 沉浸玻璃尺寸校准（2026-10-21，按用户真机截图与系统搜索页同屏宽逐项对比） ══
-   条目标题 / 分区标题收小、行高收紧；图标略放大；星标与右上角圆钮放大；背景提亮让玻璃之间看得见景 */
-#glassbg:not(.photo) img{filter:blur(4px) brightness(1.3) contrast(.95)}
-#glassbg i{background:linear-gradient(180deg,rgba(0,0,0,.22),rgba(0,0,0,0) 35%,rgba(0,0,0,.10))}
-html.glass .pgroup,html.glass .card,html.glass .calc,html.glass .cmpentry,html.glass .cmpbar{
-  background:rgba(255,255,255,.12); box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
-html.glass .pgroup{border-radius:26px}
-html.glass .libcover h1{font-size:30px}
-html.glass .gbtn{width:40px; height:40px; flex:0 0 40px; border-radius:20px}
-html.glass .gbtn svg{width:19px; height:19px}
-html.glass .libwrap .search.lib-search{height:46px; border-radius:23px}
-html.glass .search input{font-size:15px}
-html.glass .pgsec{margin-top:24px}
-html.glass .pghead{margin:0 4px 10px}
-html.glass .pgtitle{font-size:19px; font-weight:800}
-html.glass .pgcount{font-size:12px; margin-top:3px}
-html.glass .plist .pcard{padding:13px 16px 13px 14px}
-html.glass .plist .prow{gap:14px}
-html.glass .plist .pbadge{width:52px; height:52px; flex:0 0 52px; border-radius:15px}
-html.glass .plist .pbadge svg{width:22px; height:22px}
-html.glass .plist .ptitle{font-size:16px; font-weight:700; letter-spacing:0; line-height:1.3}
-html.glass .psub,html.glass .plist .pabs{font-size:12.5px; margin-top:2px}
-html.glass .plist .pcard + .pcard::before,html.glass .pgmore::before{left:80px; right:16px}
-html.glass .pgmore{padding:15px 18px 16px 80px; font-size:13.5px}
-html.glass .pexp{padding-left:66px}
-html.glass .pstar{padding:6px 2px 6px 10px}
-html.glass .pstar svg{width:22px; height:22px; opacity:1; stroke:rgba(255,255,255,.82)}
-html.glass .pstar.on svg{stroke:#FFD666; fill:#FFD666}
-html.glass .pstar.on svg path{fill:#FFD666}
-#glassbg.photo img{filter:grayscale(.35) blur(6px) brightness(.8)}
-
-/* ══ 沉浸玻璃 · 通透版（2026-10-21，用户：「放开做，要和截图接近」） ══
-   截图之所以通透：①背景是有色彩有形状的夜海照片；②玻璃只是一层很薄的白（约 14%），
-   模糊适中（能隐约看见背后的人影和浪），不提亮、不发灰；③没有描边，只有极淡的顶光。 */
-html.glass{--card:rgba(255,255,255,.14); --glass_blur:blur(18px) saturate(1.7);
-  --text_sub:rgba(255,255,255,.68); --text_ter:rgba(255,255,255,.48)}
-html.glass body{background:#07111D}
-#glassbg:not(.photo) img{filter:none}
-#glassbg.photo img{filter:blur(3px) saturate(1.05) brightness(.85)}
-#glassbg i{background:linear-gradient(180deg,rgba(3,8,16,.55),rgba(3,8,16,.10) 30%,rgba(3,8,16,0) 60%,rgba(3,8,16,.25))}
-#glassbg .grain{opacity:.04}
-html.glass .pgroup,html.glass .card,html.glass .calc,html.glass .cmpentry,html.glass .cmpbar{
-  background:rgba(255,255,255,.14); box-shadow:inset 0 1px 0 rgba(255,255,255,.10)}
-html.glass .libwrap .search.lib-search,html.glass .search{background:rgba(255,255,255,.12);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
-html.glass .cchip.on{background:rgba(255,255,255,.9)}
-html.glass .gbtn,html.glass .pill,html.glass .dockfab,html.glass .orb{background:rgba(255,255,255,.14)}
-html.glass .plist .pcard + .pcard::before,html.glass .pgmore::before{background:rgba(255,255,255,.10)}
-html.glass .libtseg{background:rgba(255,255,255,.12)}
-/* 字号再收一档（华为浏览器默认会把网页文字放大约两成，真机上看起来仍比截图大） */
-html.glass .plist .ptitle{font-size:15px}
-html.glass .psub,html.glass .plist .pabs{font-size:12px}
-html.glass .pgtitle{font-size:18px}
-
-html.glass{-webkit-text-size-adjust:100%; text-size-adjust:100%}
-html.glass .plist .ptitle{font-size:calc(15px / var(--tz,1))}
-html.glass .psub,html.glass .plist .pabs{font-size:calc(12px / var(--tz,1))}
-html.glass .pgtitle{font-size:calc(18px / var(--tz,1))}
-html.glass .pgcount{font-size:calc(12px / var(--tz,1))}
-html.glass .libcover h1{font-size:calc(30px / var(--tz,1))}
-html.glass .libquota{font-size:calc(12px / var(--tz,1))}
-html.glass .search input{font-size:calc(15px / var(--tz,1))}
-html.glass .cchip{font-size:calc(13px / var(--tz,1))}
-html.glass .pgmore{font-size:calc(13.5px / var(--tz,1))}
-html.glass .libtseg button{font-size:calc(11px / var(--tz,1))}
-/* 按参考截图实测（换算到 412 宽 CSS 像素）：分区标题≈21、条目标题≈18、副标题≈14、图标≈60、行高≈88 */
-html.glass .plist .ptitle{font-size:calc(17.5px / var(--tz,1))}
-html.glass .psub,html.glass .plist .pabs{font-size:calc(13.5px / var(--tz,1))}
-html.glass .pgtitle{font-size:calc(21px / var(--tz,1))}
-html.glass .plist .pcard{padding:16px 16px 16px 14px}
-html.glass .plist .pbadge{width:58px; height:58px; flex:0 0 58px; border-radius:16px}
-html.glass .plist .pbadge svg{width:24px; height:24px}
-html.glass .plist .pcard + .pcard::before,html.glass .pgmore::before{left:86px}
-html.glass .pgmore{padding-left:86px}
-html.glass .pexp{padding-left:72px}
-
-/* ══════════ 沉浸玻璃 v3（2026-10-21）：按参考截图逐像素实测重写（412 宽 CSS 像素） ══════════
-   面板 ≈ 17% 白、无高光无描边、不加饱和；搜索框 44 高 ≈ 20% 白 + 细亮边；行高 92、图标 60 平面；
-   标题 19 粗、分区 22 粗；背景大轮廓柔焦、无细纹。 */
-html.glass{--glass_blur:blur(22px); --card:rgba(255,255,255,.17)}
-#glassbg:not(.photo) img{filter:blur(7px) saturate(.8)}
-#glassbg .grain{display:none}
-#glassbg i{background:linear-gradient(180deg,rgba(4,12,24,.55),rgba(4,12,24,.12) 28%,rgba(4,12,24,.05) 55%,rgba(4,12,24,.30))}
-html.glass .pgroup,html.glass .card,html.glass .calc,html.glass .cmpentry,html.glass .cmpbar{
-  background:rgba(255,255,255,.17); box-shadow:none; border:0}
-html.glass .pgroup{border-radius:24px}
-html.glass .libwrap .search.lib-search{height:44px; border-radius:22px; margin:-26px 18px 0; padding:0 16px;
-  background:rgba(255,255,255,.20); box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.26)}
-html.glass .search svg{width:19px; height:19px; stroke:rgba(255,255,255,.75)}
-html.glass .search input{font-size:calc(17px / var(--tz,1)); font-weight:400}
-html.glass .libquota{display:none}
-html.glass .libcover{--cover_h:96px}
-html.glass .libcover h1{font-size:calc(28px / var(--tz,1))}
-html.glass .gbtn{width:40px; height:40px; flex:0 0 40px; background:rgba(255,255,255,.17); border:0}
-html.glass .gbtn svg{width:21px; height:21px}
-html.glass .gbtn svg *{stroke:#fff; stroke-width:2}
-html.glass .catrow{padding-left:18px; margin-top:14px}
-html.glass .cchip{font-size:calc(14px / var(--tz,1)); padding:7px 14px; font-weight:500}
-html.glass .page.libpage{padding-left:18px; padding-right:18px}
-html.glass .pgsec{margin-top:26px}
-html.glass .pgsec:first-child{margin-top:16px}
-html.glass .pghead{margin:0 2px 12px}
-html.glass .pgtitle{font-size:calc(22px / var(--tz,1)); font-weight:800; letter-spacing:0}
-html.glass .pgcount{display:none}
-html.glass .plist .pcard{padding:16px 13px 16px 14px; min-height:92px; display:flex; flex-direction:column; justify-content:center}
-html.glass .plist .prow{gap:14px; align-items:center}
-html.glass .plist .pbadge{width:60px; height:60px; flex:0 0 60px; border-radius:15px; box-shadow:none !important}
-html.glass .pcard[data-tone] .pbadge{background:#F2F3F5}
-html.glass .pcard[data-tone] .pbadge.skill{background:#121417; box-shadow:inset 0 0 0 1px rgba(255,255,255,.14) !important}
-html.glass .plist .pbadge svg{width:34px; height:34px}
-html.glass .plist .ptitle{font-size:calc(19px / var(--tz,1)); font-weight:700; line-height:1.3}
-html.glass .psub{font-size:calc(14.5px / var(--tz,1)); font-weight:500; color:rgba(255,255,255,.62); margin-top:3px}
-html.glass .plist .pcard + .pcard::before,html.glass .pgmore::before{left:88px; right:13px; background:rgba(255,255,255,.10)}
-html.glass .pgmore{padding:18px 16px 19px 88px; font-size:calc(15px / var(--tz,1)); color:rgba(255,255,255,.72)}
-html.glass .pexp{padding-left:74px}
-/* 星标：原图形只占框的 65% 且线细 → 放大图形本身、加粗线条，可见尺寸 ≈ 21 */
-html.glass .pstar{padding:4px 0 4px 10px}
-html.glass .pstar svg{width:24px; height:24px; overflow:visible; stroke:#FFFFFF}
-html.glass .pstar svg path{transform:scale(1.32); transform-origin:12px 12px; stroke-width:1.55}
-html.glass .pstar.on svg{stroke:#FFD666}
-/* 底部导航更薄更透 */
-html.glass .pill,html.glass .dockfab,html.glass .orb{background:rgba(255,255,255,.17); box-shadow:none; border-color:transparent}
-/* 背景按实测取色校准：顶部深海军蓝 ≈ (13,26,42)，中段面板间隙 ≈ (39,60,80) */
-#glassbg:not(.photo) img{filter:blur(7px) saturate(1.25) brightness(1.22)}
-#glassbg i{background:linear-gradient(180deg,rgba(2,10,22,.80) 0%,rgba(2,10,22,.45) 14%,rgba(2,10,22,0) 40%,rgba(2,10,22,0) 70%,rgba(2,10,22,.25))}
+.pcard .psub{display:none}
+/* 行内 Markdown（两种风格共用） */
+.md-p b,.md-li b{font-weight:700; color:var(--text_main)}
+.md-lb{font-weight:700}
+.md-ic{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.92em; background:var(--fill_bg); border-radius:5px; padding:1px 5px}
+.md-var{color:var(--primary); background:var(--blue_bg); border-radius:6px; padding:1px 6px; font-weight:600}
+.md-stage{margin-top:14px !important}
+.ddel2{display:none}
+.md-li .md-var{color:var(--primary)}
+.catsec-t{font-size:13px; color:var(--text_ter); padding:16px 16px 6px}
+.catrow-n{font-size:12px; color:var(--text_ter); margin-left:auto}
+.catempty{font-size:13px; color:var(--text_ter); padding:4px 16px 8px}
+/* 2026-10-22 修复：属性行原来是 block，三列数值竖着叠成一列 */
+.cmpattr{display:flex; align-items:flex-start}
+.cmpattr .cmplabel{padding-top:2px}
+/* 2026-10-22：桌面已有侧栏导航，底部药丸 + 「我的」圆重复 → 宽屏只留「＋」 */
+@media (min-width:861px){ .dockrow{display:none} }
+/* 2026-10-22：宽屏内容区限宽居中（对齐 App Layout.side 的 720 上限），不再整屏拉长 */
+@media (min-width:861px){
+  #content{padding-left:max(0px, calc((100% - 760px) / 2)); padding-right:max(0px, calc((100% - 760px) / 2))}
+}
