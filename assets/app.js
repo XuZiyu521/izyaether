@@ -46,20 +46,21 @@ const WEB = {
 /* 2026-10-21 界面风格 */
 (function () {
   const add = {
-    'zh-CN': ['界面风格', '经典', '沉浸玻璃', '沉浸玻璃下固定为深色'],
-    'zh-TW': ['介面風格', '經典', '沉浸玻璃', '沉浸玻璃下固定為深色'],
-    'en-US': ['Style', 'Classic', 'Glass', 'Glass style is always dark'],
-    'ja-JP': ['スタイル', 'クラシック', 'ガラス', 'ガラスは常にダーク'],
-    'ko-KR': ['스타일', '클래식', '글래스', '글래스는 항상 다크'],
-    'de-DE': ['Stil', 'Klassisch', 'Glas', 'Glas ist immer dunkel'],
-    'es-ES': ['Estilo', 'Clásico', 'Cristal', 'Cristal siempre es oscuro'],
-    'fr-FR': ['Style', 'Classique', 'Verre', 'Le style verre est toujours sombre'],
-    'ru-RU': ['Стиль', 'Классика', 'Стекло', 'Стекло всегда тёмное']
+    'zh-CN': ['界面风格', '经典', '沉浸玻璃', '沉浸玻璃下固定为深色', '查看全部 {0} 条'],
+    'zh-TW': ['介面風格', '經典', '沉浸玻璃', '沉浸玻璃下固定為深色', '查看全部 {0} 條'],
+    'en-US': ['Style', 'Classic', 'Glass', 'Glass style is always dark', 'See all {0}'],
+    'ja-JP': ['スタイル', 'クラシック', 'ガラス', 'ガラスは常にダーク', 'すべて表示（{0}）'],
+    'ko-KR': ['스타일', '클래식', '글래스', '글래스는 항상 다크', '{0}개 모두 보기'],
+    'de-DE': ['Stil', 'Klassisch', 'Glas', 'Glas ist immer dunkel', 'Alle {0} anzeigen'],
+    'es-ES': ['Estilo', 'Clásico', 'Cristal', 'Cristal siempre es oscuro', 'Ver los {0}'],
+    'fr-FR': ['Style', 'Classique', 'Verre', 'Le style verre est toujours sombre', 'Voir les {0}'],
+    'ru-RU': ['Стиль', 'Классика', 'Стекло', 'Стекло всегда тёмное', 'Показать все ({0})']
   };
   Object.keys(add).forEach(function (l) {
     WEB[l] = WEB[l] || {};
     WEB[l]['web.style'] = add[l][0]; WEB[l]['web.style.classic'] = add[l][1];
     WEB[l]['web.style.glass'] = add[l][2]; WEB[l]['web.style.darkonly'] = add[l][3];
+    WEB[l]['web.style.more'] = add[l][4];
   });
 })();
 function guessLang() {
@@ -257,6 +258,14 @@ function coverImgUrl() {
   const p = store.get(LS.profile, {});
   return (p.coverCustom && p.coverImg) ? p.coverImg : 'assets/img/cover_' + n + '.jpg';
 }
+const GLASS_PAL = {
+  1: ['#2F5FD0', '#9DBBFF', '#0E1A38', '#5B8CFF'],
+  2: ['#5A3FD0', '#C2A6FF', '#130E2E', '#8C6BFF'],
+  3: ['#17806A', '#8FE3CC', '#08211D', '#3FB89A'],
+  4: ['#B8652A', '#F6CC8A', '#2A1709', '#E0954F'],
+  5: ['#4D5E78', '#B9C6DA', '#11161F', '#7A8CA8'],
+  6: ['#A2486C', '#F5B3CC', '#2A0F1C', '#D47498']
+};
 function applyTheme() {
   const m = store.get(LS.theme, 'light');
   const glass = store.get(LS.style, 'classic') === 'glass';
@@ -270,12 +279,19 @@ function applyTheme() {
     if (!bg) {
       bg = document.createElement('div');
       bg.id = 'glassbg';
-      bg.innerHTML = '<img alt=""><i></i>';
+      bg.innerHTML = '<img alt=""><b class="mesh"></b><b class="grain"></b><i></i>';
       document.body.insertBefore(bg, document.body.firstChild);
     }
     const img = bg.querySelector('img');
     const url = coverImgUrl();
     if (img.getAttribute('src') !== url) img.setAttribute('src', url);
+    /* 预设封面是纯渐变、没有纹理：叠一层同色系的光斑网格 + 细颗粒，模拟照片背景的明暗层次；自定义照片不叠 */
+    const pf = store.get(LS.profile, {});
+    const custom = !!(pf.coverCustom && pf.coverImg);
+    const pal = GLASS_PAL[store.get(LS.cover, 1)] || GLASS_PAL[1];
+    bg.classList.toggle('photo', custom);
+    bg.style.setProperty('--g1', pal[0]); bg.style.setProperty('--g2', pal[1]);
+    bg.style.setProperty('--g3', pal[2]); bg.style.setProperty('--g4', pal[3]);
   } else if (bg) {
     bg.remove();
   }
@@ -562,11 +578,48 @@ function libTopRow(n) {
   const types = ['all', 'prompt', 'skill'];
   return `<div class="libtoprow">
     <span class="ltr-t">${esc(hint ? t('price.reorder.hint') : t('lib.count', n))}</span>
-    ${(skillCount > 0 || S.libType !== 'all') ? `<span class="libtseg">
-      <span class="slider" style="transform:translateX(${types.indexOf(S.libType) * 100}%)"></span>
-      ${types.map(function (ty) { const ic = ty === 'skill' ? IC.zapW(10).replace('#FFFFFF', '#7B5CFF') : (ty === 'prompt' ? IC.promptW(10, '#0A59F7') : ''); return `<button data-type="${ty}" class="${S.libType === ty ? 'on' : ''}">${ic}${esc(t('lib.type.' + ty))}</button>`; }).join('')}
-    </span>` : ''}
+    ${libTypeSeg()}
   </div>`;
+}
+function isGlass() { return document.documentElement.classList.contains('glass'); }
+/* 类型小分段（经典放在列表顶行右侧；沉浸玻璃放在第一个分区标题右侧） */
+function libTypeSeg() {
+  const skillCount = allPrompts().filter(function (p) { return p.type === 'skill'; }).length;
+  if (!(skillCount > 0 || S.libType !== 'all')) return '';
+  const types = ['all', 'prompt', 'skill'];
+  const glass = isGlass();
+  return `<span class="libtseg">
+      <span class="slider" style="transform:translateX(${types.indexOf(S.libType) * 100}%)"></span>
+      ${types.map(function (ty) {
+        const ic = ty === 'skill' ? (glass ? IC.zapW(10) : IC.zapW(10).replace('#FFFFFF', '#7B5CFF')) : (ty === 'prompt' ? IC.promptW(10, glass ? '#FFFFFF' : '#0A59F7') : '');
+        return `<button data-type="${ty}" class="${S.libType === ty ? 'on' : ''}">${ic}${esc(t('lib.type.' + ty))}</button>`;
+      }).join('')}
+    </span>`;
+}
+/* 沉浸玻璃 v2（2026-10-21）：参考系统搜索页「最佳匹配 / 文件」的节奏 ——
+ * 「全部」且无搜索时按题材分组：粗体大分区标题 + 一块玻璃面板（几行一组，组间大留白）；
+ * 选了分类 / 搜索时只有一组，标题就是当前筛选名。分组内顺序沿用库页顺序。 */
+function glassSections(list) {
+  const groups = [];
+  const byKey = {};
+  const grouped = S.cat === '' && !S.q;
+  list.forEach(function (p) {
+    const k = grouped ? (p.fav ? '__fav__' : (p.category || '')) : '__one__';
+    if (!byKey[k]) { byKey[k] = []; groups.push(k); }
+    byKey[k].push(p);
+  });
+  const one = S.cat === '__recent__' ? t('lib.recent') : S.cat === '__builtin__' ? t('lib.cat.builtinCat') : S.cat ? catLabel(S.cat) : t('lib.cat.all');
+  const CAP = 4;   /* 分组时每组只露 4 行，其余收进「查看全部」—— 面板短、组间留白，才有参考图的节奏 */
+  return groups.map(function (k, i) {
+    const title = k === '__one__' ? one : k === '__fav__' ? t('lib.fav') : catLabel(k);
+    const all = byKey[k];
+    const cut = grouped && k !== '__fav__' && all.length > CAP;
+    const rows = cut ? all.slice(0, CAP) : all;
+    return `<section class="pgsec">
+      <div class="pghead"><span class="pgtitle">${esc(title)}</span><span class="pgcount">${all.length}</span>${i === 0 ? libTypeSeg() : ''}</div>
+      <div class="pgroup">${rows.map(promptCard).join('')}${cut ? `<button class="pgmore" data-more="${esc(k)}">${esc(t('web.style.more', all.length))}<span>›</span></button>` : ''}</div>
+    </section>`;
+  }).join('');
 }
 function paintPrompts() {
   const chips = document.getElementById('cats');
@@ -617,15 +670,20 @@ function paintPrompts() {
       <div class="e2">${esc(t(k + '.sub'))}</div></div>`;
     return;
   }
-  /* 卡片包在一个 .pgroup 里：经典风格下它只是普通竖排；沉浸玻璃下是一整块大玻璃面板，行间细线分隔 */
-  const gt = S.cat === '' ? t('lib.cat.all') : S.cat === '__recent__' ? t('lib.recent') : S.cat === '__builtin__' ? t('lib.cat.builtinCat') : catLabel(S.cat);
-  box.innerHTML = libTopRow(list.length) + `<div class="pgtitle">${esc(gt)}</div><div class="pgroup">` + list.map(promptCard).join('') + '</div>';
+  if (isGlass()) {
+    box.innerHTML = glassSections(list);
+  } else {
+    box.innerHTML = libTopRow(list.length) + '<div class="pgroup">' + list.map(promptCard).join('') + '</div>';
+  }
   bindCardDrag(box);
   box.querySelectorAll('.libtseg button').forEach(function (b) {
     b.onclick = function () { S.libType = b.dataset.type; paintPrompts(); };
   });
   box.querySelectorAll('[data-fav]').forEach(function (b) { b.onclick = function (e) { e.stopPropagation(); favToggle(b.dataset.fav); }; });
   bindCardTap(box, list);
+  box.querySelectorAll('[data-more]').forEach(function (b) {
+    b.onclick = function () { S.cat = b.dataset.more; paintPrompts(); document.getElementById('content').scrollTop = 0; };
+  });
 }
 /* App onCardRelease：Skill（长工作流）→ 进详情；Prompt → 原地展开（填变量 / 复制 / 发送），再点收起。同一时间只展开一张 */
 function bindCardTap(box, list) {
@@ -673,6 +731,14 @@ function previewOf(content) {
   }
   return out.length > 0 ? out.join(' ') : String(content || '');
 }
+/* 标题按第一个冒号拆成「主标题 + 副标题」：沉浸玻璃下主标题大号粗体、副标题单独一行，避免满屏省略号 */
+function splitTitle(title) {
+  const m = /^(.{2,24}?)\s*([：:])\s*(.+)$/.exec(String(title || ''));
+  return m ? { main: m[1], sep: m[2], sub: m[3] } : { main: String(title || ''), sep: '', sub: '' };
+}
+/* 沉浸玻璃的图标配色按题材区分（经典风格仍按类型蓝 / 紫） */
+const TONES = { '科研论文': 'teal', 'AI 前沿': 'violet', '改代码': 'indigo', '职场': 'amber', '写作': 'coral', '学习': 'green', '生活': 'rose', '翻译': 'cyan' };
+function toneOf(p) { return TONES[p.category || ''] || 'slate'; }
 function promptCard(p) {
   const isSkill = p.type === 'skill';
   const fav = !!p.fav;
@@ -683,11 +749,13 @@ function promptCard(p) {
   parts.push(p.builtin && srcShort(p) ? srcShort(p) : t('lib.used', p.useCount || 0) + ' · ' + daysAgoIn(p.lastUsedAt));
   if (vars.length) parts.push(t('lib.card.vars', vars.length));
   const lock = PAYWALL_ENABLED && isSkill && p.builtin && proStatus() !== 2;
-  return `<div class="pcard ${open ? 'open' : ''}" draggable="${open ? 'false' : 'true'}" data-id="${esc(p.id)}">
+  const tt = splitTitle(p.title);
+  return `<div class="pcard ${open ? 'open' : ''} ${tt.sub ? 'hassub' : ''}" data-tone="${esc(toneOf(p))}" draggable="${open ? 'false' : 'true'}" data-id="${esc(p.id)}">
     <div class="prow">
       <span class="pbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW(14) : IC.promptW(14)}</span>
       <div class="ptxt">
-        <div class="ptitle"><span>${esc(p.title)}</span>${lock ? `<i class="pmember">${esc(t('detail.member'))}</i>` : ''}</div>
+        <div class="ptitle"><span>${esc(tt.main)}${tt.sub ? `<b class="pts">${esc(tt.sep + tt.sub)}</b>` : ''}</span>${lock ? `<i class="pmember">${esc(t('detail.member'))}</i>` : ''}</div>
+        <div class="psub">${esc(tt.sub || previewOf(p.content || '').replace(/^【[^】]{1,8}】\s*/, '').slice(0, 80))}</div>
         ${p.content ? `<div class="pabs ${open ? 'l3' : ''}">${esc(previewOf(p.content).slice(0, 240))}</div>` : ''}
         <div class="pmeta">${esc(parts.join(' · '))}</div>
       </div>
