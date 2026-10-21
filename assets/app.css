@@ -1498,3 +1498,40 @@ html.glass .pgmore{position:relative; display:flex; align-items:center; justify-
   padding:17px 22px 18px 86px; cursor:pointer; text-align:left}
 html.glass .pgmore::before{content:""; position:absolute; top:0; left:86px; right:20px; height:1px; background:rgba(255,255,255,.09)}
 html.glass .pgmore span{font-size:20px; color:rgba(255,255,255,.5)}
+
+/* ══════════ 沉浸玻璃 · 墨色（2026-10-21）：去掉界面上所有颜色，只剩黑白灰；彩色只留给内容本身 ══════════ */
+html.glass{--card:rgba(255,255,255,.13); --text_sub:rgba(255,255,255,.66); --text_ter:rgba(255,255,255,.42)}
+html.glass body{background:#0A0B0D}
+#glassbg img{filter:grayscale(1) blur(22px); opacity:.35}
+#glassbg.photo img{filter:grayscale(.85) blur(22px) brightness(.8); opacity:1}
+#glassbg i{background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.18) 40%,rgba(0,0,0,.45))}
+#glassbg .grain{opacity:.09}
+/* 图标：Prompt 白底黑符号，Skill 黑底白符号 —— 靠明暗区分类型，不靠颜色 */
+html.glass .pcard[data-tone] .pbadge{background:linear-gradient(160deg,#FFFFFF,#D9DCE1);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 6px 16px rgba(0,0,0,.30)}
+html.glass .pcard[data-tone] .pbadge svg path{fill:#111316}
+html.glass .pcard[data-tone] .pbadge.skill{background:linear-gradient(160deg,#2A2D33,#0B0C0E);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16), inset 0 0 0 1px rgba(255,255,255,.10), 0 6px 16px rgba(0,0,0,.35)}
+html.glass .pcard[data-tone] .pbadge.skill svg path{fill:#FFFFFF}
+html.glass .pmember{background:rgba(255,255,255,.9); color:#111316}
+/* Dock / ＋ / 我的：去蓝，选中白底黑图标 */
+html.glass .pill,html.glass .dockfab,html.glass .orb{background:rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.18) rgba(255,255,255,.10) rgba(255,255,255,.06) rgba(255,255,255,.10); box-shadow:0 6px 18px rgba(0,0,0,.35)}
+html.glass .pill .ib .bg,html.glass .orb .circle{background:#FFFFFF}
+html.glass .pill img,html.glass .orb img{filter:brightness(0) invert(1); opacity:.75}
+html.glass .pill .it.on img,html.glass .orb.on img{filter:brightness(0); opacity:1}
+html.glass .pill .lb,html.glass .orb .lb{color:rgba(255,255,255,.6)}
+html.glass .pill .it.on .lb{color:#fff; font-weight:600}
+html.glass .orb.on .lb{color:#111316}
+html.glass .dockfab{color:#fff}
+html.glass .dockblob{background:rgba(255,255,255,.14)}
+/* 分类行：右端渐隐，被截断的胶囊变成「还能往右滑」的暗示，而不是生硬切断 */
+html.glass .catrow{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);
+  mask-image:linear-gradient(90deg,#000 82%,transparent)}
+html.glass .libquota{color:rgba(255,255,255,.55)}
+html.glass .gbtn{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.14)}
+/* 其他页的彩色强调也收成黑白 */
+html.glass .apchip{background:rgba(255,255,255,.08); color:rgba(255,255,255,.75)}
+html.glass .seg{background:rgba(255,255,255,.08)}
+html.glass .seg .slider{background:#fff}
+html.glass .seg button.on{color:#111316}

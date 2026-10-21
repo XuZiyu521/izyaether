@@ -258,6 +258,7 @@ function coverImgUrl() {
   const p = store.get(LS.profile, {});
   return (p.coverCustom && p.coverImg) ? p.coverImg : 'assets/img/cover_' + n + '.jpg';
 }
+const GLASS_INK = ['#3A3F47', '#8A919C', '#0A0B0D', '#5A616C'];
 const GLASS_PAL = {
   1: ['#2F5FD0', '#9DBBFF', '#0E1A38', '#5B8CFF'],
   2: ['#5A3FD0', '#C2A6FF', '#130E2E', '#8C6BFF'],
@@ -288,7 +289,8 @@ function applyTheme() {
     /* 预设封面是纯渐变、没有纹理：叠一层同色系的光斑网格 + 细颗粒，模拟照片背景的明暗层次；自定义照片不叠 */
     const pf = store.get(LS.profile, {});
     const custom = !!(pf.coverCustom && pf.coverImg);
-    const pal = GLASS_PAL[store.get(LS.cover, 1)] || GLASS_PAL[1];
+    /* 2026-10-21 墨色版：界面自身不带颜色（参考系统搜索页的黑白），预设封面一律用墨灰光晕，不再取封面色 */
+    const pal = GLASS_INK;
     bg.classList.toggle('photo', custom);
     bg.style.setProperty('--g1', pal[0]); bg.style.setProperty('--g2', pal[1]);
     bg.style.setProperty('--g3', pal[2]); bg.style.setProperty('--g4', pal[3]);
