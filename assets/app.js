@@ -46,21 +46,22 @@ const WEB = {
 /* 2026-10-21 界面风格 */
 (function () {
   const add = {
-    'zh-CN': ['界面风格', '经典', '沉浸玻璃', '沉浸玻璃下固定为深色', '查看全部 {0} 条'],
-    'zh-TW': ['介面風格', '經典', '沉浸玻璃', '沉浸玻璃下固定為深色', '查看全部 {0} 條'],
-    'en-US': ['Style', 'Classic', 'Glass', 'Glass style is always dark', 'See all {0}'],
-    'ja-JP': ['スタイル', 'クラシック', 'ガラス', 'ガラスは常にダーク', 'すべて表示（{0}）'],
-    'ko-KR': ['스타일', '클래식', '글래스', '글래스는 항상 다크', '{0}개 모두 보기'],
-    'de-DE': ['Stil', 'Klassisch', 'Glas', 'Glas ist immer dunkel', 'Alle {0} anzeigen'],
-    'es-ES': ['Estilo', 'Clásico', 'Cristal', 'Cristal siempre es oscuro', 'Ver los {0}'],
-    'fr-FR': ['Style', 'Classique', 'Verre', 'Le style verre est toujours sombre', 'Voir les {0}'],
-    'ru-RU': ['Стиль', 'Классика', 'Стекло', 'Стекло всегда тёмное', 'Показать все ({0})']
+    'zh-CN': ['界面风格', '经典', '沉浸玻璃', '沉浸玻璃下固定为深色', '查看全部 {0} 条', '图片太大，换一张试试'],
+    'zh-TW': ['介面風格', '經典', '沉浸玻璃', '沉浸玻璃下固定為深色', '查看全部 {0} 條', '圖片太大，換一張試試'],
+    'en-US': ['Style', 'Classic', 'Glass', 'Glass style is always dark', 'See all {0}', 'Image too large, try another'],
+    'ja-JP': ['スタイル', 'クラシック', 'ガラス', 'ガラスは常にダーク', 'すべて表示（{0}）', '画像が大きすぎます'],
+    'ko-KR': ['스타일', '클래식', '글래스', '글래스는 항상 다크', '{0}개 모두 보기', '이미지가 너무 큽니다'],
+    'de-DE': ['Stil', 'Klassisch', 'Glas', 'Glas ist immer dunkel', 'Alle {0} anzeigen', 'Bild zu groß'],
+    'es-ES': ['Estilo', 'Clásico', 'Cristal', 'Cristal siempre es oscuro', 'Ver los {0}', 'Imagen demasiado grande'],
+    'fr-FR': ['Style', 'Classique', 'Verre', 'Le style verre est toujours sombre', 'Voir les {0}', 'Image trop lourde'],
+    'ru-RU': ['Стиль', 'Классика', 'Стекло', 'Стекло всегда тёмное', 'Показать все ({0})', 'Слишком большое изображение']
   };
   Object.keys(add).forEach(function (l) {
     WEB[l] = WEB[l] || {};
     WEB[l]['web.style'] = add[l][0]; WEB[l]['web.style.classic'] = add[l][1];
     WEB[l]['web.style.glass'] = add[l][2]; WEB[l]['web.style.darkonly'] = add[l][3];
     WEB[l]['web.style.more'] = add[l][4];
+    WEB[l]['web.cover.tooBig'] = add[l][5];
   });
 })();
 function guessLang() {
@@ -764,7 +765,7 @@ function promptCard(p) {
         ${p.content ? `<div class="pabs ${open ? 'l3' : ''}">${esc(previewOf(p.content).slice(0, 240))}</div>` : ''}
         <div class="pmeta">${esc(parts.join(' · '))}</div>
       </div>
-      <button class="pstar" data-fav="${esc(p.id)}">${IC.star(fav)}</button>
+      <button class="pstar ${fav ? 'on' : ''}" data-fav="${esc(p.id)}">${IC.star(fav)}</button>
     </div>
     ${open ? `<div class="pexp">
       ${vars.map(function (v) { return `<label class="pvrow"><span>${esc(v)}</span><input data-var="${esc(v)}" value="${esc(S.expVals[v] || '')}" placeholder="${esc(t('detail.fill.hint', v))}"></label>`; }).join('')}
@@ -1660,11 +1661,29 @@ function openCover() {
   if (cf) cf.onchange = function () {
     const f = cf.files && cf.files[0];
     if (!f) return;
+    /* 2026-10-21 修复：手机原图常有几 MB，直接存进 localStorage（约 5MB 上限）会静默失败 → 封面根本没存上。
+       先用 canvas 缩到长边 1600、JPEG 0.82 再存；仍存不下就提示 */
     const rd = new FileReader();
     rd.onload = function () {
-      const pp = store.get(LS.profile, {});
-      pp.coverCustom = true; pp.coverImg = rd.result;
-      store.set(LS.profile, pp); closeMask(); render();
+      const im = new Image();
+      im.onload = function () {
+        const k = Math.min(1, 1600 / Math.max(im.width, im.height));
+        const cv = document.createElement('canvas');
+        cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k);
+        cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height);
+        const data = cv.toDataURL('image/jpeg', 0.82);
+        const pp = store.get(LS.profile, {});
+        pp.coverCustom = true; pp.coverImg = data;
+        try {
+          localStorage.setItem(LS.profile, JSON.stringify(pp));
+        } catch (e) {
+          toast(t('web.cover.tooBig'));
+          return;
+        }
+        closeMask(); render();
+      };
+      im.onerror = function () { toast(t('web.cover.tooBig')); };
+      im.src = rd.result;
     };
     rd.readAsDataURL(f);
   };

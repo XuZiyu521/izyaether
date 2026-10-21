@@ -1551,3 +1551,34 @@ html.glass .libwrap .search.lib-search,html.glass .search{
   box-shadow:inset 0 1px 0 rgba(255,255,255,.18), inset 0 0 0 1px rgba(255,255,255,.14)}
 html.glass .plist .pcard + .pcard::before,html.glass .pgmore::before{background:rgba(255,255,255,.12)}
 #glassbg:not(.photo) img{filter:blur(4px) brightness(.92) contrast(.92)}
+
+/* ══ 沉浸玻璃尺寸校准（2026-10-21，按用户真机截图与系统搜索页同屏宽逐项对比） ══
+   条目标题 / 分区标题收小、行高收紧；图标略放大；星标与右上角圆钮放大；背景提亮让玻璃之间看得见景 */
+#glassbg:not(.photo) img{filter:blur(4px) brightness(1.3) contrast(.95)}
+#glassbg i{background:linear-gradient(180deg,rgba(0,0,0,.22),rgba(0,0,0,0) 35%,rgba(0,0,0,.10))}
+html.glass .pgroup,html.glass .card,html.glass .calc,html.glass .cmpentry,html.glass .cmpbar{
+  background:rgba(255,255,255,.12); box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+html.glass .pgroup{border-radius:26px}
+html.glass .libcover h1{font-size:30px}
+html.glass .gbtn{width:40px; height:40px; flex:0 0 40px; border-radius:20px}
+html.glass .gbtn svg{width:19px; height:19px}
+html.glass .libwrap .search.lib-search{height:46px; border-radius:23px}
+html.glass .search input{font-size:15px}
+html.glass .pgsec{margin-top:24px}
+html.glass .pghead{margin:0 4px 10px}
+html.glass .pgtitle{font-size:19px; font-weight:800}
+html.glass .pgcount{font-size:12px; margin-top:3px}
+html.glass .plist .pcard{padding:13px 16px 13px 14px}
+html.glass .plist .prow{gap:14px}
+html.glass .plist .pbadge{width:52px; height:52px; flex:0 0 52px; border-radius:15px}
+html.glass .plist .pbadge svg{width:22px; height:22px}
+html.glass .plist .ptitle{font-size:16px; font-weight:700; letter-spacing:0; line-height:1.3}
+html.glass .psub,html.glass .plist .pabs{font-size:12.5px; margin-top:2px}
+html.glass .plist .pcard + .pcard::before,html.glass .pgmore::before{left:80px; right:16px}
+html.glass .pgmore{padding:15px 18px 16px 80px; font-size:13.5px}
+html.glass .pexp{padding-left:66px}
+html.glass .pstar{padding:6px 2px 6px 10px}
+html.glass .pstar svg{width:22px; height:22px; opacity:1; stroke:rgba(255,255,255,.82)}
+html.glass .pstar.on svg{stroke:#FFD666; fill:#FFD666}
+html.glass .pstar.on svg path{fill:#FFD666}
+#glassbg.photo img{filter:grayscale(.35) blur(6px) brightness(.8)}
