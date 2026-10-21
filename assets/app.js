@@ -230,7 +230,8 @@ const stars = n => '★'.repeat(Math.max(0, Math.min(5, n))) + '☆'.repeat(Math
 function brandMark(group, size) {
   const key = BRAND.fromGroup[group] || group;
   const logo = BRAND.logo[key];
-  if (logo) return `<span class="bmark" style="width:${size}px;height:${size}px"><img src="assets/img/${logo}.png" alt="${esc(group)}"></span>`;
+  /* 2026-10-22：统一用 bn/ 下归一化过的图标（同尺寸满铺圆角方块：自带底色的裁边铺满，透明字形配白底居中） */
+  if (logo) return `<span class="bmark logo" style="width:${size}px;height:${size}px"><img src="assets/img/bn/${logo}.png" alt="${esc(group)}"></span>`;
   /* 没有 Logo 也没有字标的厂商（如 Qoder）退回首字母，不再是一块空白 */
   const mark = BRAND.mark[key] || BRAND.mark[group] || String(group || '?').charAt(0).toUpperCase();
   return `<span class="bmark" style="width:${size}px;height:${size}px;font-size:${Math.round(size * 0.42)}px">${esc(mark)}</span>`;

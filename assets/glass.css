@@ -668,3 +668,5 @@ html.glass .cmpsum-row em{font-size:calc(14px / var(--tz,1)); color:#fff; font-w
 html.glass .cmpnote-h b{font-size:calc(15.5px / var(--tz,1)); font-weight:700; color:#fff}
 html.glass .cmpnote-h .bmark{width:26px; height:26px; flex:0 0 26px; background:#fff}
 html.glass .cmpnote p,html.glass .cmpnote div:not(.cmpnote-h){font-size:calc(14px / var(--tz,1)); color:rgba(255,255,255,.72); line-height:1.6}
+html.glass .bmark.logo{background:transparent !important; box-shadow:0 2px 8px rgba(0,0,0,.18)}
+html.glass .region.cn{display:none}   /* 绝大多数都是国内可用 → 只标出「海外」的，默认不打标 */
