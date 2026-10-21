@@ -1627,3 +1627,53 @@ html.glass .plist .pbadge svg{width:24px; height:24px}
 html.glass .plist .pcard + .pcard::before,html.glass .pgmore::before{left:86px}
 html.glass .pgmore{padding-left:86px}
 html.glass .pexp{padding-left:72px}
+
+/* ══════════ 沉浸玻璃 v3（2026-10-21）：按参考截图逐像素实测重写（412 宽 CSS 像素） ══════════
+   面板 ≈ 17% 白、无高光无描边、不加饱和；搜索框 44 高 ≈ 20% 白 + 细亮边；行高 92、图标 60 平面；
+   标题 19 粗、分区 22 粗；背景大轮廓柔焦、无细纹。 */
+html.glass{--glass_blur:blur(22px); --card:rgba(255,255,255,.17)}
+#glassbg:not(.photo) img{filter:blur(7px) saturate(.8)}
+#glassbg .grain{display:none}
+#glassbg i{background:linear-gradient(180deg,rgba(4,12,24,.55),rgba(4,12,24,.12) 28%,rgba(4,12,24,.05) 55%,rgba(4,12,24,.30))}
+html.glass .pgroup,html.glass .card,html.glass .calc,html.glass .cmpentry,html.glass .cmpbar{
+  background:rgba(255,255,255,.17); box-shadow:none; border:0}
+html.glass .pgroup{border-radius:24px}
+html.glass .libwrap .search.lib-search{height:44px; border-radius:22px; margin:-26px 18px 0; padding:0 16px;
+  background:rgba(255,255,255,.20); box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.26)}
+html.glass .search svg{width:19px; height:19px; stroke:rgba(255,255,255,.75)}
+html.glass .search input{font-size:calc(17px / var(--tz,1)); font-weight:400}
+html.glass .libquota{display:none}
+html.glass .libcover{--cover_h:96px}
+html.glass .libcover h1{font-size:calc(28px / var(--tz,1))}
+html.glass .gbtn{width:40px; height:40px; flex:0 0 40px; background:rgba(255,255,255,.17); border:0}
+html.glass .gbtn svg{width:21px; height:21px}
+html.glass .gbtn svg *{stroke:#fff; stroke-width:2}
+html.glass .catrow{padding-left:18px; margin-top:14px}
+html.glass .cchip{font-size:calc(14px / var(--tz,1)); padding:7px 14px; font-weight:500}
+html.glass .page.libpage{padding-left:18px; padding-right:18px}
+html.glass .pgsec{margin-top:26px}
+html.glass .pgsec:first-child{margin-top:16px}
+html.glass .pghead{margin:0 2px 12px}
+html.glass .pgtitle{font-size:calc(22px / var(--tz,1)); font-weight:800; letter-spacing:0}
+html.glass .pgcount{display:none}
+html.glass .plist .pcard{padding:16px 13px 16px 14px; min-height:92px; display:flex; flex-direction:column; justify-content:center}
+html.glass .plist .prow{gap:14px; align-items:center}
+html.glass .plist .pbadge{width:60px; height:60px; flex:0 0 60px; border-radius:15px; box-shadow:none !important}
+html.glass .pcard[data-tone] .pbadge{background:#F2F3F5}
+html.glass .pcard[data-tone] .pbadge.skill{background:#121417; box-shadow:inset 0 0 0 1px rgba(255,255,255,.14) !important}
+html.glass .plist .pbadge svg{width:34px; height:34px}
+html.glass .plist .ptitle{font-size:calc(19px / var(--tz,1)); font-weight:700; line-height:1.3}
+html.glass .psub{font-size:calc(14.5px / var(--tz,1)); font-weight:500; color:rgba(255,255,255,.62); margin-top:3px}
+html.glass .plist .pcard + .pcard::before,html.glass .pgmore::before{left:88px; right:13px; background:rgba(255,255,255,.10)}
+html.glass .pgmore{padding:18px 16px 19px 88px; font-size:calc(15px / var(--tz,1)); color:rgba(255,255,255,.72)}
+html.glass .pexp{padding-left:74px}
+/* 星标：原图形只占框的 65% 且线细 → 放大图形本身、加粗线条，可见尺寸 ≈ 21 */
+html.glass .pstar{padding:4px 0 4px 10px}
+html.glass .pstar svg{width:24px; height:24px; overflow:visible; stroke:#FFFFFF}
+html.glass .pstar svg path{transform:scale(1.32); transform-origin:12px 12px; stroke-width:1.55}
+html.glass .pstar.on svg{stroke:#FFD666}
+/* 底部导航更薄更透 */
+html.glass .pill,html.glass .dockfab,html.glass .orb{background:rgba(255,255,255,.17); box-shadow:none; border-color:transparent}
+/* 背景按实测取色校准：顶部深海军蓝 ≈ (13,26,42)，中段面板间隙 ≈ (39,60,80) */
+#glassbg:not(.photo) img{filter:blur(7px) saturate(1.25) brightness(1.22)}
+#glassbg i{background:linear-gradient(180deg,rgba(2,10,22,.80) 0%,rgba(2,10,22,.45) 14%,rgba(2,10,22,0) 40%,rgba(2,10,22,0) 70%,rgba(2,10,22,.25))}

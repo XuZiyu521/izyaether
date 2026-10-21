@@ -601,6 +601,7 @@ function libTopRow(n) {
 function isGlass() { return document.documentElement.classList.contains('glass'); }
 /* 类型小分段（经典放在列表顶行右侧；沉浸玻璃放在第一个分区标题右侧） */
 function libTypeSeg() {
+  if (isGlass()) return '';
   const skillCount = allPrompts().filter(function (p) { return p.type === 'skill'; }).length;
   if (!(skillCount > 0 || S.libType !== 'all')) return '';
   const types = ['all', 'prompt', 'skill'];
@@ -651,6 +652,15 @@ function paintPrompts() {
       const on = S.cat === k || (x === '' && S.cat === '');
       return `<button class="cchip ${on ? 'on' : ''}" data-cat="${esc(k)}">${esc(label(x))}</button>`;
     }).join('');
+    /* 沉浸玻璃：类型筛选并进分类行末尾（不再单独一条小分段控件） */
+    if (isGlass()) {
+      chips.innerHTML += ['prompt', 'skill'].map(function (ty) {
+        return `<button class="cchip ctype ${S.libType === ty ? 'on' : ''}" data-ctype="${ty}">${esc(t('lib.type.' + ty))}</button>`;
+      }).join('');
+      chips.querySelectorAll('[data-ctype]').forEach(function (b) {
+        b.onclick = function () { S.libType = S.libType === b.dataset.ctype ? 'all' : b.dataset.ctype; paintPrompts(); };
+      });
+    }
     chips.querySelectorAll('[data-cat]').forEach(function (b) {
       b.onclick = function () { S.cat = b.dataset.cat === '' ? '' : b.dataset.cat; paintPrompts(); };
     });
@@ -772,7 +782,7 @@ function promptCard(p) {
       <span class="pbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW(14) : IC.promptW(14)}</span>
       <div class="ptxt">
         <div class="ptitle"><span>${esc(tt.main)}${tt.sub ? `<b class="pts">${esc(tt.sep + tt.sub)}</b>` : ''}</span>${lock ? `<i class="pmember">${esc(t('detail.member'))}</i>` : ''}</div>
-        <div class="psub">${esc(tt.sub || previewOf(p.content || '').replace(/^【[^】]{1,8}】\s*/, '').slice(0, 80))}</div>
+        <div class="psub">${esc(tt.sub || (realCatLabel(p) + ' · ' + (isSkill ? 'Skill' : 'Prompt')))}</div>
         ${p.content ? `<div class="pabs ${open ? 'l3' : ''}">${esc(previewOf(p.content).slice(0, 240))}</div>` : ''}
         <div class="pmeta">${esc(parts.join(' · '))}</div>
       </div>
