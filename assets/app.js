@@ -276,6 +276,17 @@ function applyTheme() {
   root.classList.toggle('dark', dark);
   /* 沉浸玻璃：封面图模糊压暗后铺满整页当背景，所有卡片改半透明玻璃（参考系统搜索页的质感） */
   root.classList.toggle('glass', glass);
+  /* 浏览器「字体大小」放大补偿（2026-10-21）：华为浏览器等会把网页文字整体放大约 25%，
+     沉浸玻璃要和系统界面比例一致 → 实测放大倍数，写进 --tz，玻璃样式的字号除以它 */
+  if (glass && !root.style.getPropertyValue('--tz')) {
+    const pr = document.createElement('span');
+    pr.style.cssText = 'position:absolute;visibility:hidden;font-size:100px;line-height:1;white-space:nowrap';
+    pr.textContent = '国';
+    document.body.appendChild(pr);
+    const tz = Math.max(1, Math.min(2, pr.getBoundingClientRect().height / 100));
+    pr.remove();
+    root.style.setProperty('--tz', tz.toFixed(3));
+  }
   let bg = document.getElementById('glassbg');
   if (glass) {
     if (!bg) {
@@ -288,7 +299,7 @@ function applyTheme() {
     /* 玻璃要有东西可透：预设封面是纯渐变，模糊后仍是一片平色，玻璃感出不来 → 换成程序生成的黑白夜海纹理；
        用户自己的照片封面照常用（去色 + 轻模糊） */
     const pf0 = store.get(LS.profile, {});
-    const url = (pf0.coverCustom && pf0.coverImg) ? pf0.coverImg : 'assets/img/glass_scene.jpg';
+    const url = (pf0.coverCustom && pf0.coverImg) ? pf0.coverImg : 'assets/img/glass_sea.jpg';
     if (img.getAttribute('src') !== url) img.setAttribute('src', url);
     /* 预设封面是纯渐变、没有纹理：叠一层同色系的光斑网格 + 细颗粒，模拟照片背景的明暗层次；自定义照片不叠 */
     const pf = store.get(LS.profile, {});
