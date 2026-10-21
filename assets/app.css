@@ -1356,3 +1356,73 @@ body.insub #dock{display:none !important}
 
 /* 2026-10-19 类型切换图例：蓝色对话气泡 = Prompt，紫色闪电 = Skill */
 .libtseg button svg{width:10px;height:10px;vertical-align:-1px;margin-right:3px}
+
+/* ══════════ 沉浸玻璃风格（2026-10-21，「我的 → 界面风格」可切换；默认仍是经典） ══════════
+   参考系统搜索页：①整页一层连续背景（封面图模糊 + 压暗），不再「上一截封面 + 下面灰底」；
+   ②卡片是半透明玻璃 + 背景模糊 + 细亮边；③同类内容合进一张大圆角面板，行间细线；
+   ④几乎不用强调色，选中态用白底深字；⑤大号粗体分区标题，主字白、副字半透明。 */
+html.glass{
+  --app_bg:transparent; --card:rgba(255,255,255,.10);
+  --primary:#FFFFFF; --text_main:#FFFFFF; --text_sub:rgba(255,255,255,.72); --text_ter:rgba(255,255,255,.50);
+  --line:rgba(255,255,255,.12); --fill_bg:rgba(255,255,255,.08); --blue_bg:rgba(255,255,255,.14);
+  --purple_bg:rgba(255,255,255,.14);
+  --glass_blur:saturate(1.5) blur(24px);
+}
+html.glass body{background:#0B1220}
+#glassbg{position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none}
+#glassbg img{position:absolute; inset:-60px; width:calc(100% + 120px); height:calc(100% + 120px); object-fit:cover;
+  filter:blur(46px) saturate(1.25); transform:scale(1.05)}
+#glassbg i{position:absolute; inset:0; background:linear-gradient(180deg,rgba(6,12,24,.38),rgba(6,12,24,.62) 60%,rgba(6,12,24,.74))}
+html.glass #app{z-index:1}
+/* 玻璃材质：卡片、面板、搜索框、胶囊 */
+html.glass .card,html.glass .pgroup,html.glass .search,html.glass .cchip,html.glass .calc,html.glass .cmpentry,
+html.glass .sheet,html.glass .cmpbar,html.glass .libtseg,html.glass #side{
+  background:var(--card); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur);
+  border:1px solid rgba(255,255,255,.10); border-top-color:rgba(255,255,255,.18); box-shadow:none}
+html.glass #side{border-width:0 1px 0 0; background:rgba(255,255,255,.06)}
+html.glass .sheet{background:rgba(30,36,48,.82)}
+html.glass .navbtn.on{background:rgba(255,255,255,.14); color:#fff}
+html.glass .navbtn img{filter:brightness(0) invert(1); opacity:.85}
+html.glass .brand .bi,html.glass .brand .bz{color:#fff}
+/* 封面不再单独成块：背景已是整页封面 */
+html.glass .cover > img,html.glass .cover .scrim,html.glass .cover .fade,
+html.glass .mcover > img,html.glass .mcover .scrim,html.glass .mcover .fade{display:none}
+html.glass .cover,html.glass .mcover{background:transparent}
+html.glass .gbtn{background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.18)}
+html.glass .libwrap .search.lib-search{margin-top:-24px; height:48px; border-radius:24px}
+html.glass .search input{color:#fff}
+html.glass .search input::placeholder{color:rgba(255,255,255,.55)}
+html.glass .search svg{stroke:rgba(255,255,255,.7)}
+/* 分类胶囊：未选玻璃，选中白底深字（不用蓝） */
+html.glass .cchip{color:rgba(255,255,255,.8)}
+html.glass .cchip.on{background:#fff; border-color:#fff; color:#0B1220}
+html.glass .apchip.on{background:#fff; color:#0B1220}
+html.glass .apoff{opacity:.4; pointer-events:none}
+html.glass .libtseg .slider{background:rgba(255,255,255,.9); box-shadow:none}
+html.glass .libtseg button.on{color:#0B1220}
+html.glass .libtseg button svg path{fill:currentColor}
+/* 库列表：大号分区标题 + 一整块玻璃面板 */
+.pgtitle{display:none}
+.pgroup{display:flex; flex-direction:column; gap:10px}
+html.glass .pgtitle{display:block; font-size:24px; font-weight:800; color:#fff; letter-spacing:-.3px; margin:10px 4px 12px}
+html.glass .pgroup{gap:0; border-radius:28px; overflow:hidden}
+html.glass .plist .pcard{background:transparent; border:0; border-radius:0; padding:16px 18px; position:relative}
+html.glass .plist .pcard + .pcard::before{content:""; position:absolute; top:0; left:78px; right:18px; height:1px; background:rgba(255,255,255,.10)}
+html.glass .plist .pcard.open{background:rgba(255,255,255,.06)}
+html.glass .plist .prow{gap:16px; align-items:center}
+html.glass .plist .pbadge{width:44px; height:44px; flex:0 0 44px; border-radius:13px; margin-top:0;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 4px 14px rgba(0,0,0,.25)}
+html.glass .plist .pbadge svg{width:20px; height:20px}
+html.glass .plist .ptitle{font-size:16.5px; font-weight:700}
+html.glass .plist .pabs{color:rgba(255,255,255,.6); margin-top:4px}
+html.glass .plist .pmeta{display:none}
+html.glass .pexp{padding-left:60px}
+html.glass .pvrow input{background:rgba(255,255,255,.10); color:#fff}
+html.glass .pb{background:rgba(255,255,255,.14); color:#fff}
+html.glass .pb.main{background:#fff; color:#0B1220}
+html.glass .pexp .pvrow span{color:rgba(255,255,255,.7)}
+html.glass .grouptitle{font-size:20px; font-weight:800; color:#fff; padding:22px 4px 10px}
+html.glass .rdiv{background:rgba(255,255,255,.10)}
+html.glass .subhdr{background:rgba(10,16,28,.55); -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass input,html.glass select,html.glass textarea{background:rgba(255,255,255,.08); color:#fff; border-color:rgba(255,255,255,.14)}
+html.glass .search input{background:transparent; border:0}

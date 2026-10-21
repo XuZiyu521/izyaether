@@ -9,7 +9,8 @@ const LS = {
   trash: 'izy.trash', cats: 'izy.cats', cover: 'izy.cover', theme: 'izy.theme',
   profile: 'izy.profile', follow: 'izy.follow', alert: 'izy.alert', order: 'izy.order',
   hidden: 'izy.hidden_builtin',
-  usage: 'izy.usage', bfav: 'izy.bfav'   /* 内置条目的使用统计 / 收藏（内置条目不入 prompts 表，单独记） */
+  usage: 'izy.usage', bfav: 'izy.bfav',
+  style: 'izy.style'   /* 界面风格：classic 经典 / glass 沉浸玻璃（2026-10-21） */   /* 内置条目的使用统计 / 收藏（内置条目不入 prompts 表，单独记） */
 };
 const S = {
   lang: 'zh-CN', page: 'library', sub: '', arg: '', q: '', priceTab: 'api',
@@ -42,6 +43,25 @@ const WEB = {
   'fr-FR': { 'web.login.title': 'Se connecter', 'web.login.hint': 'Après la connexion, abonnement et prompts sont synchronisés entre appareils (les clés API ne sont jamais envoyées)', 'web.login.email': 'Adresse e-mail', 'web.login.code': 'Code de vérification', 'web.login.send': 'Envoyer le code', 'web.login.sent': 'Code envoyé', 'web.login.submit': 'Se connecter', 'web.login.err': 'Échec de la connexion — vérifiez le courriel et le code', 'web.logout': 'Se déconnecter', 'web.sync.on': 'Synchronisation cloud activée', 'web.sync.off': 'Non connecté — les données restent sur cet appareil', 'web.sync.ok': 'Synchronisé', 'web.sync.fail': 'Échec de la synchronisation', 'web.sort': 'Trier', 'web.copied': 'Copié', 'web.proxy': 'Un proxy est nécessaire', 'web.needOrg': 'ID d organisation', 'web.cover': 'Couverture', 'web.cover.preset': 'Couverture {0}', 'web.count': '{0} éléments', 'web.light': 'Clair', 'web.dark': 'Sombre', 'web.system': 'Suivre le système', 'web.back': 'Retour', 'web.fav.only': 'Favoris uniquement', 'web.trash.entry': 'Corbeille', 'web.drag.hint': 'Maintenez une carte pour la déplacer', 'web.limit.prompt': 'Gratuit : {0} prompts personnels maximum', 'web.limit.cat': 'Gratuit : {0} catégories maximum', 'web.clip.code': 'Code de partage détecté — importer « {0} » ?', 'web.clip.text': 'Le presse-papier contient {0} caractères — créer un prompt ?', 'web.sub.trash': 'Corbeille', 'web.sub.import': 'Importer', 'web.sub.cats': 'Catégories', 'web.sub.detail': 'Détail', 'web.sub.new': 'Nouveau prompt', 'web.sub.edit': 'Modifier', 'web.sub.addkey': 'Ajouter une clé', 'web.sub.qdetail': 'Détail du compte', 'web.sub.vguide': 'Guide de connexion', 'web.sub.calc': 'Calculateur de coût', 'web.sub.compare': 'Comparer les modèles', 'web.sub.profile': 'Profil', 'web.plans': 'Comparer les offres', 'web.plans.free': 'Gratuit', 'web.theme': 'Apparence', 'web.avatar': 'Avatar', 'web.avatar.app': ' icône de l app', 'web.export.json': 'Exporter en JSON', 'web.export.ok': 'Enregistré dans les téléchargements', 'web.compare': 'Comparer', 'web.compare.pick': 'Choisissez des modèles (4 max)', 'web.compare.need2': 'Choisissez au moins 2 modèles', 'web.compare.exit': 'Quitter la comparaison', 'web.compare.start': 'Lancer', 'web.follow': 'Suivre', 'web.follow.limit': 'Gratuit : un seul modèle suivi', 'web.savings': 'Carnet d économies', 'web.savings.paid': 'Paiement à l usage', 'web.savings.sub': 'Avec abonnement', 'web.savings.saved': 'Économisé ce mois', 'web.alert': 'Alerte de solde', 'web.alert.th': 'Surligner sous {0}', 'web.month': 'Dépense du mois', 'web.total': 'Solde total', 'web.badge.low': '{0} comptes bas', 'web.badge.fail': '{0} en échec', 'web.mask.key': 'Clé (masquée)', 'web.retry': 'Réessayer', 'web.open.console': 'Ouvrir la console', 'web.restored': 'Restauré', 'web.confirm.del': 'Supprimer définitivement ? Irréversible', 'web.album': 'Choisir dans les photos', 'web.need.key': 'Saisissez d abord une clé', 'web.need.name': 'Titre et texte obligatoires', 'web.save.ok': 'Enregistré', 'web.import.paste': 'Coller le texte', 'web.import.file': 'Choisir un fichier', 'web.import.manual': 'Créer à la main', 'web.import.split': 'Découpe intelligente', 'web.import.run': 'Importer {0}', 'web.import.done': 'Importé {0}', 'web.import.busy': 'Traitement…', 'web.vg.manual': 'Ces fournisseurs affichent l usage dans leur console', 'web.calc.run': 'Calculer', 'web.calc.cheapest': 'Le moins cher', 'web.calc.quality': 'Meilleure qualité', 'web.calc.code': 'Copier le code', 'web.calc.empty': 'Remplissez les champs puis calculez', 'web.calc.tokens': 'Tokens estimés', 'web.qd.trend': 'Évolution du solde', 'web.qd.recent': 'Derniers relevés', 'web.qd.nodata': 'Pas encore de données — actualisez', 'web.cmp.lowest': 'Le plus bas', 'web.cmp.longest': 'Le plus long', 'web.cmp.highest': 'Le plus élevé', 'web.cats.new': 'Nouvelle catégorie', 'web.cats.rename': 'Renommer', 'web.cats.del': 'Supprimer', 'web.cats.hint': 'Supprimer une catégorie conserve ses prompts (sans catégorie)', 'web.trash.restore': 'Restaurer', 'web.trash.empty': 'La corbeille est vide', 'web.trash.keep': 'Les éléments sont gardés 7 jours', 'web.trash.all': 'Tout restaurer', 'web.trash.clear': 'Vider', 'web.detail.vars': 'Variables', 'web.detail.use': 'Utiliser', 'web.detail.copy': 'Copier le texte', 'web.detail.share': 'Partager', 'web.detail.note': 'Note', 'web.detail.source': 'Source', 'web.edit.title': 'Titre', 'web.edit.body': 'Texte', 'web.edit.type': 'Type', 'web.edit.cat': 'Catégorie', 'web.edit.model': 'Modèle cible', 'web.edit.tags': 'Tags', 'web.edit.note': 'Note', 'web.edit.var': 'Variables détectées', 'web.edit.paste': 'Coller depuis le presse-papier', 'web.edit.suggest': 'Tags suggérés', 'web.key.local': 'La clé reste dans ce navigateur. Les demandes de solde partent directement du navigateur vers le fournisseur, sans passer par les serveurs izyAether, et ne sont pas synchronisées dans le cloud' },
   'ru-RU': { 'web.login.title': 'Войти', 'web.login.hint': 'После входа подписка и свои промпты синхронизируются между устройствами (API-ключи не загружаются)', 'web.login.email': 'Электронная почта', 'web.login.code': 'Код подтверждения', 'web.login.send': 'Отправить код', 'web.login.sent': 'Код отправлен', 'web.login.submit': 'Войти', 'web.login.err': 'Не удалось войти — проверьте почту и код', 'web.logout': 'Выйти', 'web.sync.on': 'Облачная синхронизация включена', 'web.sync.off': 'Вы не вошли — данные остаются на этом устройстве', 'web.sync.ok': 'Синхронизировано', 'web.sync.fail': 'Ошибка синхронизации', 'web.sort': 'Сортировка', 'web.copied': 'Скопировано', 'web.proxy': 'Нужен прокси', 'web.needOrg': 'ID организации', 'web.cover': 'Обложка', 'web.cover.preset': 'Обложка {0}', 'web.count': '{0} шт.', 'web.light': 'Светлая', 'web.dark': 'Тёмная', 'web.system': 'Как в системе', 'web.back': 'Назад', 'web.fav.only': 'Только избранные', 'web.trash.entry': 'Корзина', 'web.drag.hint': 'Удерживайте карточку для сортировки', 'web.limit.prompt': 'Бесплатно: максимум {0} своих промптов', 'web.limit.cat': 'Бесплатно: максимум {0} категорий', 'web.clip.code': 'Найден код общего доступа — импортировать «{0}»?', 'web.clip.text': 'В буфере {0} символов — создать промпт?', 'web.sub.trash': 'Корзина', 'web.sub.import': 'Импорт', 'web.sub.cats': 'Категории', 'web.sub.detail': 'Подробнее', 'web.sub.new': 'Новый промпт', 'web.sub.edit': 'Изменить', 'web.sub.addkey': 'Добавить ключ', 'web.sub.qdetail': 'Детали аккаунта', 'web.sub.vguide': 'Инструкция', 'web.sub.calc': 'Калькулятор', 'web.sub.compare': 'Сравнение моделей', 'web.sub.profile': 'Профиль', 'web.plans': 'Сравнить планы', 'web.plans.free': 'Бесплатно', 'web.theme': 'Оформление', 'web.avatar': 'Аватар', 'web.avatar.app': ' иконка приложения', 'web.export.json': 'Экспорт JSON', 'web.export.ok': 'Сохранено в загрузки', 'web.compare': 'Сравнить', 'web.compare.pick': 'Выберите модели (до 4)', 'web.compare.need2': 'Минимум 2 модели', 'web.compare.exit': 'Выйти из сравнения', 'web.compare.start': 'Начать', 'web.follow': 'Отслеживать', 'web.follow.limit': 'Бесплатно можно отслеживать только 1 модель', 'web.savings': 'Журнал экономии', 'web.savings.paid': 'По факту', 'web.savings.sub': 'С подпиской', 'web.savings.saved': 'Сэкономлено за месяц', 'web.alert': 'Оповещение о балансе', 'web.alert.th': 'Подсвечивать ниже {0}', 'web.month': 'Расход за месяц', 'web.total': 'Всего баланс', 'web.badge.low': '{0} аккаунтов с низким балансом', 'web.badge.fail': '{0} с ошибкой', 'web.mask.key': 'Ключ (скрыт)', 'web.retry': 'Повторить', 'web.open.console': 'Открыть консоль', 'web.restored': 'Восстановлено', 'web.confirm.del': 'Удалить навсегда? Это необратимо', 'web.album': 'Выбрать из фото', 'web.need.key': 'Сначала введите ключ', 'web.need.name': 'Заголовок и текст обязательны', 'web.save.ok': 'Сохранено', 'web.import.paste': 'Вставить текст', 'web.import.file': 'Выбрать файл', 'web.import.manual': 'Создать вручную', 'web.import.split': 'Авто-разбор', 'web.import.run': 'Импортировать {0}', 'web.import.done': 'Импортировано {0}', 'web.import.busy': 'Обработка…', 'web.vg.manual': 'Эти поставщики показывают расход в своей консоли', 'web.calc.run': 'Рассчитать', 'web.calc.cheapest': 'Самая дешёвая', 'web.calc.quality': 'Лучшее качество', 'web.calc.code': 'Скопировать код', 'web.calc.empty': 'Заполните поля и рассчитайте', 'web.calc.tokens': 'Оценка токенов', 'web.qd.trend': 'Динамика баланса', 'web.qd.recent': 'Последние записи', 'web.qd.nodata': 'Данных нет — обновите', 'web.cmp.lowest': 'Минимум', 'web.cmp.longest': 'Максимум', 'web.cmp.highest': 'Максимум', 'web.cats.new': 'Новая категория', 'web.cats.rename': 'Переименовать', 'web.cats.del': 'Удалить', 'web.cats.hint': 'При удалении категории промпты остаются без категории', 'web.trash.restore': 'Восстановить', 'web.trash.empty': 'Корзина пуста', 'web.trash.keep': 'Хранится 7 дней', 'web.trash.all': 'Восстановить все', 'web.trash.clear': 'Очистить', 'web.detail.vars': 'Переменные', 'web.detail.use': 'Использовать', 'web.detail.copy': 'Копировать текст', 'web.detail.share': 'Поделиться', 'web.detail.note': 'Заметка', 'web.detail.source': 'Источник', 'web.edit.title': 'Заголовок', 'web.edit.body': 'Текст', 'web.edit.type': 'Тип', 'web.edit.cat': 'Категория', 'web.edit.model': 'Целевая модель', 'web.edit.tags': 'Теги', 'web.edit.note': 'Заметка', 'web.edit.var': 'Найденные переменные', 'web.edit.paste': 'Вставить из буфера', 'web.edit.suggest': 'Рекомендуемые теги', 'web.key.local': 'Ключ хранится только в этом браузере. Запросы баланса идут из браузера напрямую к провайдеру, минуя серверы izyAether, и не синхронизируются с облаком' }
 };
+/* 2026-10-21 界面风格 */
+(function () {
+  const add = {
+    'zh-CN': ['界面风格', '经典', '沉浸玻璃', '沉浸玻璃下固定为深色'],
+    'zh-TW': ['介面風格', '經典', '沉浸玻璃', '沉浸玻璃下固定為深色'],
+    'en-US': ['Style', 'Classic', 'Glass', 'Glass style is always dark'],
+    'ja-JP': ['スタイル', 'クラシック', 'ガラス', 'ガラスは常にダーク'],
+    'ko-KR': ['스타일', '클래식', '글래스', '글래스는 항상 다크'],
+    'de-DE': ['Stil', 'Klassisch', 'Glas', 'Glas ist immer dunkel'],
+    'es-ES': ['Estilo', 'Clásico', 'Cristal', 'Cristal siempre es oscuro'],
+    'fr-FR': ['Style', 'Classique', 'Verre', 'Le style verre est toujours sombre'],
+    'ru-RU': ['Стиль', 'Классика', 'Стекло', 'Стекло всегда тёмное']
+  };
+  Object.keys(add).forEach(function (l) {
+    WEB[l] = WEB[l] || {};
+    WEB[l]['web.style'] = add[l][0]; WEB[l]['web.style.classic'] = add[l][1];
+    WEB[l]['web.style.glass'] = add[l][2]; WEB[l]['web.style.darkonly'] = add[l][3];
+  });
+})();
 function guessLang() {
   const n = (navigator.language || 'zh-CN');
   if (LANGS.some(function (x) { return x[0] === n; })) return n;
@@ -232,10 +252,33 @@ function coverHTML(title, sub, fade) {
     <div class="ttl">${title ? `<h1>${esc(title)}</h1>` : ''}${sub ? `<div class="sub">${esc(sub)}</div>` : ''}</div>
   </div>`;
 }
+function coverImgUrl() {
+  const n = store.get(LS.cover, 1);
+  const p = store.get(LS.profile, {});
+  return (p.coverCustom && p.coverImg) ? p.coverImg : 'assets/img/cover_' + n + '.jpg';
+}
 function applyTheme() {
   const m = store.get(LS.theme, 'light');
-  const dark = m === 'dark' || (m === 'system' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
-  document.documentElement.classList.toggle('dark', dark);
+  const glass = store.get(LS.style, 'classic') === 'glass';
+  const dark = glass || m === 'dark' || (m === 'system' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+  const root = document.documentElement;
+  root.classList.toggle('dark', dark);
+  /* 沉浸玻璃：封面图模糊压暗后铺满整页当背景，所有卡片改半透明玻璃（参考系统搜索页的质感） */
+  root.classList.toggle('glass', glass);
+  let bg = document.getElementById('glassbg');
+  if (glass) {
+    if (!bg) {
+      bg = document.createElement('div');
+      bg.id = 'glassbg';
+      bg.innerHTML = '<img alt=""><i></i>';
+      document.body.insertBefore(bg, document.body.firstChild);
+    }
+    const img = bg.querySelector('img');
+    const url = coverImgUrl();
+    if (img.getAttribute('src') !== url) img.setAttribute('src', url);
+  } else if (bg) {
+    bg.remove();
+  }
 }
 
 /* ══════════ 路由 ══════════ */
@@ -355,6 +398,7 @@ syncShellH();
 /* ══════════ 渲染 ══════════ */
 const BINDER = { manual: 'bindManual', detail: 'bindDetail', edit: 'bindEdit', cats: 'bindCats', trash: 'bindTrash', import: 'bindImport', addkey: 'bindAddKey', qdetail: 'bindQDetail', vguide: 'bindVGuide', calc: 'bindCalc', compare: 'bindCompare', profile: 'bindProfile' };
 function render() {
+  if (document.documentElement.classList.contains('glass')) applyTheme();   /* 换封面后玻璃背景跟着换 */
   /* boot 的数据 fetch 未完成时不渲染（hashchange 可能早于 boot 触发，见 ERR: I18N is not defined） */
   if (!S.ready) return;
   const r = parseHash();
@@ -573,7 +617,9 @@ function paintPrompts() {
       <div class="e2">${esc(t(k + '.sub'))}</div></div>`;
     return;
   }
-  box.innerHTML = libTopRow(list.length) + list.map(promptCard).join('');
+  /* 卡片包在一个 .pgroup 里：经典风格下它只是普通竖排；沉浸玻璃下是一整块大玻璃面板，行间细线分隔 */
+  const gt = S.cat === '' ? t('lib.cat.all') : S.cat === '__recent__' ? t('lib.recent') : S.cat === '__builtin__' ? t('lib.cat.builtinCat') : catLabel(S.cat);
+  box.innerHTML = libTopRow(list.length) + `<div class="pgtitle">${esc(gt)}</div><div class="pgroup">` + list.map(promptCard).join('') + '</div>';
   bindCardDrag(box);
   box.querySelectorAll('.libtseg button').forEach(function (b) {
     b.onclick = function () { S.libType = b.dataset.type; paintPrompts(); };
@@ -1463,6 +1509,13 @@ function viewMine() {
           <span class="val">${esc((LANGS.filter(function (x) { return x[0] === S.lang; })[0] || [])[1] || S.lang)}</span>${IC.chevR2()}</div>
         <div class="rdiv"></div>
         <div class="approw">
+          <div class="apt">${esc(t('web.style'))}</div>
+          <div class="apchips">${[['classic', t('web.style.classic')], ['glass', t('web.style.glass')]].map(function (x) {
+            return `<button class="apchip ${store.get(LS.style, 'classic') === x[0] ? 'on' : ''}" data-style="${x[0]}">${esc(x[1])}</button>`;
+          }).join('')}</div>
+        </div>
+        <div class="rdiv"></div>
+        <div class="approw ${store.get(LS.style, 'classic') === 'glass' ? 'apoff' : ''}">
           <div class="apt">${esc(t('mine.appearance'))}</div>
           <div class="apchips">${[['system', t('mine.theme.system')], ['light', t('mine.theme.light')], ['dark', t('mine.theme.dark')]].map(function (x) {
             return `<button class="apchip ${store.get(LS.theme, 'light') === x[0] ? 'on' : ''}" data-theme="${x[0]}">${esc(x[1])}</button>`;
@@ -1492,6 +1545,9 @@ function viewMine() {
 function bindMine() {
   document.querySelectorAll('[data-theme]').forEach(function (b) {
     b.onclick = function () { store.set(LS.theme, b.dataset.theme); applyTheme(); render(); };
+  });
+  document.querySelectorAll('[data-style]').forEach(function (b) {
+    b.onclick = function () { store.set(LS.style, b.dataset.style); applyTheme(); render(); };
   });
   const pr = document.getElementById('profileRow');
   if (pr) pr.onclick = function () {
