@@ -1385,3 +1385,89 @@ body.insub #dock{display:none !important}
 /* 品牌图标：归一化图本身就是满铺圆角方块，外框不再加底色 / 内边距 */
 .bmark.logo{background:transparent !important; padding:0; overflow:hidden; border-radius:23%}
 .bmark.logo img{width:100%; height:100%; object-fit:cover; border-radius:0}
+
+/* ══ 锦囊页 2026-10-22（对齐 App：页头固定只滚列表 / 分组目录 / 推荐 / 组内长按拖动 / 整理分组） ══ */
+.libwrap{height:100%; display:flex; flex-direction:column}
+.libfix{flex:0 0 auto; position:relative; z-index:3}
+.libscroll{flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior-y:contain}
+.pgroup{gap:8px}
+/* 左侧类型方块与右侧收藏星按整块文字上下居中 */
+.plist .prow{align-items:center}
+.plist .pbadge{margin-top:0}
+.lsechead{display:flex; align-items:center; height:40px; margin:4px 0 0; cursor:pointer; -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent}
+.lsechead.open{margin:12px 0 6px}
+.lsechead.first{margin-top:0}
+.lst{font-size:16px; font-weight:700; color:var(--text_main); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.lsn{font-size:12px; color:var(--text_ter); margin-left:6px; flex:0 0 auto}
+/* 展开箭头：只留箭头本身（宽口、略粗、浅灰），展开时带一点回弹转半圈 */
+.lsarrow{margin-left:auto; width:32px; height:32px; flex:0 0 32px; display:flex; align-items:center; justify-content:center;
+  color:var(--text_ter); transition:transform 420ms cubic-bezier(.34,1.56,.64,1)}
+.lsechead.open .lsarrow{transform:rotate(180deg)}
+.secmodetop .secdone{margin-left:auto; border:0; cursor:pointer; font-family:inherit; background:var(--primary); color:var(--on_primary);
+  border-radius:14px; padding:5px 14px; font-size:13px; font-weight:500}
+.secrows{display:flex; flex-direction:column; gap:8px}
+.secrow{display:flex; align-items:center; height:52px; padding:0 14px 0 16px; border-radius:16px; background:var(--card); border:1px solid var(--line)}
+.secrow .lst{font-size:15px; font-weight:500}
+.secrow .lsn{margin-left:auto; margin-right:12px}
+.grip{display:flex; flex-direction:column; gap:3px}
+.grip i{display:block; width:16px; height:2px; border-radius:1px; background:var(--text_ter)}
+/* 拖动：拿起 = 放大 + 投影（圆角与卡片一致）；邻卡弹簧让位；松手 280ms 减速滑到落点 */
+.pcard,.secrow,.vcard{-webkit-user-select:none; user-select:none; -webkit-touch-callout:none}
+.dragctx > .pcard,.dragctx > .secrow,.dragctx > .vcard{transition:transform 260ms cubic-bezier(.25,.9,.3,1)}
+.dragctx > .lifted{position:relative; z-index:20; transition:box-shadow 200ms ease; box-shadow:0 10px 22px rgba(10,89,247,.25)}
+.dragctx > .dropping{position:relative; z-index:20; transition:transform 280ms cubic-bezier(.2,0,0,1), box-shadow 200ms ease}
+/* 导入页来源卡的两行说明（文案里带换行） */
+.imp-src-txt i{white-space:pre-line}
+
+/* ══ 经典封面 2026-10-22（对齐 App CoverBackdrop）：S 形长渐隐 + 下半截渐进虚化 + 向下多画 56px，不再一刀切 ══ */
+:root{--bgrgb:241,243,245}
+html.dark{--bgrgb:18,18,18}
+.cover.tail{height:calc(var(--cover_h) + 56px); margin-bottom:-56px}
+.cover.tail + *,.libfix > .catrow{position:relative; z-index:1}
+.cover .scrim,.mcover .scrim{height:72px;
+  background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,.18) 55%,rgba(0,0,0,0) 100%)}
+.cover .fblur,.mcover .fblur{position:absolute; left:0; right:0; bottom:0; height:55%; pointer-events:none;
+  -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 75%); mask-image:linear-gradient(180deg,transparent,#000 75%)}
+.cover .fade,.mcover .fade{height:max(var(--cover_fade),50%);
+  background:linear-gradient(180deg,rgba(var(--bgrgb),0) 0%,rgba(var(--bgrgb),.04) 20%,rgba(var(--bgrgb),.16) 38%,rgba(var(--bgrgb),.40) 55%,
+    rgba(var(--bgrgb),.66) 70%,rgba(var(--bgrgb),.87) 84%,rgba(var(--bgrgb),.97) 93%,rgb(var(--bgrgb)) 100%)}
+html.dark .cover .fade,html.dark .mcover .fade{background:linear-gradient(180deg,rgba(var(--bgrgb),0) 0%,rgba(var(--bgrgb),.04) 20%,rgba(var(--bgrgb),.16) 38%,rgba(var(--bgrgb),.40) 55%,
+    rgba(var(--bgrgb),.66) 70%,rgba(var(--bgrgb),.87) 84%,rgba(var(--bgrgb),.97) 93%,rgb(var(--bgrgb)) 100%)}
+html.glass .cover.tail{height:var(--cover_h); margin-bottom:0}
+html.glass .fblur{display:none}
+
+.sorthint .sortreset{margin-left:auto; border:0; background:transparent; color:var(--primary); font-family:inherit; font-size:11px; cursor:pointer; padding:4px 0}
+
+/* ══ 比价页 2026-10-22（对齐 App）：计算器输入卡 + 仅国内可用 ══ */
+.calc2{position:relative; z-index:1; margin-top:-36px; padding:12px 14px; border-radius:18px; background:var(--card);
+  border:1.5px solid var(--primary); box-shadow:0 4px 16px rgba(10,89,247,.10)}
+.c2h{font-size:11px; color:var(--text_ter)}
+.c2in{width:100%; height:36px; border:0 !important; background:transparent !important; box-shadow:none !important; padding:0 !important;
+  font-size:14px; color:var(--text_main); font-family:inherit; outline:none}
+.c2picks{display:flex; gap:7px}
+.c2picks:empty{display:none}
+.c2pick{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; border:0; cursor:pointer; font-family:inherit;
+  padding:8px 6px 8px 9px; border-radius:12px; background:var(--app_bg); margin-top:6px}
+.c2pick i{font-style:normal; font-size:10.5px; color:var(--text_sub)}
+.c2pick b{font-size:16px; font-weight:700; color:var(--text_main); margin-top:2px}
+.c2pick b.pri{color:var(--primary)}
+.c2pick em{font-style:normal; font-size:9.5px; color:var(--text_ter); margin-top:1px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.c2foot{display:flex; justify-content:flex-end; margin-top:8px}
+.c2cta{border:0; background:transparent; cursor:pointer; font-family:inherit; font-size:12.5px; font-weight:500; color:var(--primary); padding:0}
+.cnrow{display:flex; align-items:center; margin-top:10px}
+.cnchip{border:0; cursor:pointer; font-family:inherit; font-size:12px; color:var(--text_sub); background:var(--card); border-radius:13px; padding:5px 12px}
+.cnchip.on{background:var(--primary); color:var(--on_primary)}
+.cnrow .unit{margin-left:auto; font-size:11px; color:var(--text_ter)}
+html.glass .calc2{border:0; box-shadow:none; -webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .c2pick{background:rgba(255,255,255,.10)}
+
+/* 我的：统计三格（App statsRow：数字 20 粗 + 说明 11，圆角 14，点了跳到对应页） */
+.mstats{display:flex; gap:10px; margin-top:14px}
+.mstat{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; border:0; cursor:pointer; font-family:inherit;
+  padding:10px 8px 10px 12px; border-radius:14px; background:var(--card); text-align:left}
+.mstat b{font-size:20px; font-weight:700; color:var(--text_main)}
+.mstat i{font-style:normal; font-size:11px; color:var(--text_sub); margin-top:2px}
+html.glass .mstat{-webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
+html.glass .mstat b{font-size:calc(22px / var(--tz,1))}
+html.glass .mstat i{font-size:calc(13px / var(--tz,1))}

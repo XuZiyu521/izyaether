@@ -183,7 +183,7 @@ function bindDetail() {
   const doShare = function (kind) {
     const code = packCode(p);
     let share = '【' + p.title + '】(' + (p.targetModel || '通用') + ')\n\n' + (p.content || '');
-    if (code) share += '\n\n————\n把整段复制进 App「库」页即可一键导入：\n' + code;
+    if (code) share += '\n\n————\n把整段复制进 App「锦囊」页即可一键导入：\n' + code;
     if (kind === 'image') {
       /* 分享长图依赖原生组件截图（网页做不到的 7 项之一）→ 复制文本兜底 */
       copyText(share);

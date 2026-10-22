@@ -15,7 +15,8 @@ const LS = {
 const S = {
   lang: 'zh-CN', page: 'library', sub: '', arg: '', q: '', priceTab: 'api',
   libType: 'all', favOnly: false, cmpOn: false, cmpIds: [], open: {}, cat: '',
-  manualOpen: false, expId: '', expVals: {}
+  manualOpen: false, expId: '', expVals: {},
+  anchor: '', anchorLock: 0, secMode: false, calcText: '', cnOnly: false   /* 锦囊页：分类行目录高亮 / 整理分组模式 */
 };
 const LANGS = [
   ['zh-CN', '简体中文'], ['zh-TW', '繁體中文'], ['en-US', 'English'],
@@ -253,9 +254,10 @@ function coverHTML(title, sub, fade) {
   const n = store.get(LS.cover, 1);
   const p = store.get(LS.profile, {});
   const img = (p.coverCustom && p.coverImg) ? p.coverImg : 'assets/img/cover_' + n + '.jpg';
-  return `<div class="cover" style="--cover_fade:${fade || 48}px">
+  /* tail：封面向下多画 56px（不占布局，压在第一张卡后面），渐隐带才能放长、照片慢慢化开（App CoverBackdrop.tail） */
+  return `<div class="cover tail" style="--cover_fade:${fade || 48}px">
     <img src="${esc(img)}" alt="">
-    <div class="scrim"></div><div class="fade"></div>
+    <div class="scrim"></div><div class="fblur"></div><div class="fade"></div>
     <div class="ttl">${title ? `<h1>${esc(title)}</h1>` : ''}${sub ? `<div class="sub">${esc(sub)}</div>` : ''}</div>
   </div>`;
 }
@@ -264,15 +266,6 @@ function coverImgUrl() {
   const p = store.get(LS.profile, {});
   return (p.coverCustom && p.coverImg) ? p.coverImg : 'assets/img/cover_' + n + '.jpg';
 }
-const GLASS_INK = ['#3A3F47', '#8A919C', '#0A0B0D', '#5A616C'];
-const GLASS_PAL = {
-  1: ['#2F5FD0', '#9DBBFF', '#0E1A38', '#5B8CFF'],
-  2: ['#5A3FD0', '#C2A6FF', '#130E2E', '#8C6BFF'],
-  3: ['#17806A', '#8FE3CC', '#08211D', '#3FB89A'],
-  4: ['#B8652A', '#F6CC8A', '#2A1709', '#E0954F'],
-  5: ['#4D5E78', '#B9C6DA', '#11161F', '#7A8CA8'],
-  6: ['#A2486C', '#F5B3CC', '#2A0F1C', '#D47498']
-};
 function applyTheme() {
   const m = store.get(LS.theme, 'light');
   const glass = store.get(LS.style, 'classic') === 'glass';
@@ -297,26 +290,54 @@ function applyTheme() {
     if (!bg) {
       bg = document.createElement('div');
       bg.id = 'glassbg';
-      bg.innerHTML = '<img alt=""><b class="mesh"></b><b class="grain"></b><i></i>';
+      bg.innerHTML = '<img class="sharp" alt=""><img class="soft" alt=""><i></i>';
       document.body.insertBefore(bg, document.body.firstChild);
     }
-    const img = bg.querySelector('img');
-    /* 玻璃要有东西可透：预设封面是纯渐变，模糊后仍是一片平色，玻璃感出不来 → 换成程序生成的黑白夜海纹理；
-       用户自己的照片封面照常用（去色 + 轻模糊） */
-    const pf0 = store.get(LS.profile, {});
-    const url = (pf0.coverCustom && pf0.coverImg) ? pf0.coverImg : 'assets/img/glass_sea.jpg';
-    if (img.getAttribute('src') !== url) img.setAttribute('src', url);
-    /* 预设封面是纯渐变、没有纹理：叠一层同色系的光斑网格 + 细颗粒，模拟照片背景的明暗层次；自定义照片不叠 */
-    const pf = store.get(LS.profile, {});
-    const custom = !!(pf.coverCustom && pf.coverImg);
-    /* 2026-10-21 墨色版：界面自身不带颜色（参考系统搜索页的黑白），预设封面一律用墨灰光晕，不再取封面色 */
-    const pal = GLASS_INK;
-    bg.classList.toggle('photo', custom);
-    bg.style.setProperty('--g1', pal[0]); bg.style.setProperty('--g2', pal[1]);
-    bg.style.setProperty('--g3', pal[2]); bg.style.setProperty('--g4', pal[3]);
+    /* 2026-10-22（与 App GlassBackdrop 同步）：背景就是当前封面（预设或自己的照片），不再固定夜海；
+       上部保持清晰通透，往下逐渐模糊；压暗程度按封面亮度自适应 */
+    const url = coverImgUrl();
+    bg.querySelectorAll('img').forEach(function (im) { if (im.getAttribute('src') !== url) im.setAttribute('src', url); });
+    measureTone(url, bg);
   } else if (bg) {
     bg.remove();
   }
+}
+/* 封面亮度（App CoverTone）：按铺满屏幕时实际露出的那块，缩成 16×32 分三段算平均亮度
+   （顶部 14% = 状态栏 + 页标题 / 14%~45% = 页头下方 / 其余），每段压暗到白字读得清的目标亮度为止 */
+const TONE_CACHE = {};
+function measureTone(url, bg) {
+  const apply = function (lum) {
+    const target = [0.32, 0.30, 0.26], lo = [0.10, 0.16, 0.22];
+    lum.forEach(function (l, z) {
+      const a = Math.min(0.72, Math.max(lo[z], l > 0 ? 1 - target[z] / l : lo[z]));
+      bg.style.setProperty('--s' + z, a.toFixed(3));
+    });
+  };
+  const key = url + '|' + Math.round(innerWidth / innerHeight * 100);
+  if (TONE_CACHE[key]) { apply(TONE_CACHE[key]); return; }
+  const img = new Image();
+  img.onload = function () {
+    try {
+      const W = 16, H = 32, vw = innerWidth || 400, vh = innerHeight || 800;
+      const sc = Math.max(vw / img.naturalWidth, vh / img.naturalHeight);
+      const sw = vw / sc, sh = vh / sc;
+      const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+      const cx = cv.getContext('2d');
+      cx.drawImage(img, (img.naturalWidth - sw) / 2, (img.naturalHeight - sh) / 2, sw, sh, 0, 0, W, H);
+      const px = cx.getImageData(0, 0, W, H).data;
+      const sum = [0, 0, 0], cnt = [0, 0, 0];
+      for (let y = 0; y < H; y++) {
+        const z = y < H * 0.14 ? 0 : (y < H * 0.45 ? 1 : 2);
+        for (let x = 0; x < W; x++) {
+          const i = (y * W + x) * 4;
+          sum[z] += (0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255; cnt[z]++;
+        }
+      }
+      TONE_CACHE[key] = sum.map(function (v, z) { return cnt[z] ? v / cnt[z] : 0.5; });
+      apply(TONE_CACHE[key]);
+    } catch (e) { /* 读不到像素就用默认压暗 */ }
+  };
+  img.src = url;
 }
 
 /* ══════════ 路由 ══════════ */
@@ -340,13 +361,9 @@ function buildChrome() {
   const items = NAV.filter(x => x.dock === 1);
   const mine = NAV.filter(x => x.dock === 2)[0];
   const on = p => S.page === p ? ' on' : '';
-  /* App Index.dockBar：Column[ （库页才有的）＋行 → 主行（玻璃药丸 252 + 间隔 12 + 独立圆 62）]
-     ＋钮只在 currentIndex===0（库页）出现，且圆心与「我的」圆心对齐 */
+  /* App Index.dockBar：玻璃药丸 252 + 间隔 12 + 独立圆 62。「＋」已移到锦囊页右上角（2026-10-22，与 App 一致） */
   document.getElementById('dock').innerHTML =
     `<div class="dockcol">
-      ${S.page === 'library' ? `<div class="fabrow">
-        <button class="dockfab" id="goImport" aria-label="${esc(t('common.add'))}"><span>+</span></button>
-      </div>` : ''}
       <div class="dockrow">
         <div class="pill">${items.map(x =>
       `<button class="it${on(x.p)}" data-p="${x.p}">
@@ -567,47 +584,49 @@ function libQuota(selfCount, built) {
   else txt += t('lib.quota.selfOf', selfCount, LIMIT_PROMPT);
   return { txt: txt, full: full };
 }
+/* ══════════ 锦囊页（2026-10-22 与 App LibraryPage 同一套：分组 / 推荐 / 目录式展开 / 分类行当目录 / 组内长按拖动） ══════════ */
+const SEC_ALL = '__all__', SEC_FAV = '__fav__', SEC_REC = '__rec__', SEC_MODE = '__secs__', TOPIC_P = 'topic:';
+const LS_LIB = { open: 'izy.lib_open', rec: 'izy.lib_rec', recPos: 'izy.lib_recpos' };
+function libOpenSecs() { return store.get(LS_LIB.open, [SEC_REC, SEC_FAV]); }
+function libRecIds() { return store.get(LS_LIB.rec, DATA.defaultRecommend || []); }
+function libRecPos() { return store.get(LS_LIB.recPos, 0); }
 function viewLibrary() {
   const self = selfPrompts();
   const built = (DATA.builtinPrompts || []).length;
   const q = libQuota(self.length, built);
   const trashCount = store.get(LS.trash, []).length;
-  const n = store.get(LS.cover, 1);
-  const pf = store.get(LS.profile, {});
-  const img = (pf.coverCustom && pf.coverImg) ? pf.coverImg : 'assets/img/cover_' + n + '.jpg';
-  /* App LibraryPage.header（2026-10-19）：封面背景 + 白字标题 / 额度 + 玻璃圆钮；搜索框压在渐隐带上 */
+  const white = function (s) { return s.replace(/stroke="[^"]*"/g, 'stroke="#FFFFFF"'); };
+  /* App LibraryPage：页头（封面 + 标题 + 回收站 / ＋ / 收藏）、搜索、分类行固定，只有下面的列表滚动 */
   return `<div class="libwrap">
-    <div class="cover libcover"><img src="${esc(img)}" alt=""><div class="scrim"></div><div class="fade"></div>
-      <div class="libtop">
-        <div class="lt-l"><h1>${esc(t('tab.library'))}</h1>
-          <div class="libquota ${q.full ? 'full' : ''}"><span>${esc(q.txt)}</span>${q.full ? `<button class="upgrade" id="goPro">${esc(t('lib.pro.upgrade'))}</button>` : ''}</div></div>
-        ${isGlass() ? `<button class="gbtn" id="goImport" aria-label="+">${IC.plus()}</button>` : ''}
-        <button class="gbtn ${isGlass() ? 'hide' : ''}" id="goTrash" aria-label="${esc(t('web.trash.entry'))}">${IC.trashL().replace(/stroke="[^"]*"/g, 'stroke="#FFFFFF"')}${trashCount ? `<i class="badge">${trashCount > 99 ? '99+' : trashCount}</i>` : ''}</button>
-        <button class="gbtn ${S.favOnly ? 'on' : ''}" id="favOnly" aria-label="${esc(t('lib.fav'))}">${IC.star(S.favOnly).replace(/#98A1A9/g, '#FFFFFF').replace(/#F5A623/g, '#FFD666')}</button>
+    <div class="libfix">
+      <div class="cover libcover tail"><img src="${esc(coverImgUrl())}" alt=""><div class="scrim"></div><div class="fblur"></div><div class="fade"></div>
+        <div class="libtop">
+          <div class="lt-l"><h1>${esc(t('tab.library'))}</h1>
+            <div class="libquota ${q.full ? 'full' : ''}"><span>${esc(q.txt)}</span>${q.full ? `<button class="upgrade" id="goPro">${esc(t('lib.pro.upgrade'))}</button>` : ''}</div></div>
+          <button class="gbtn" id="goTrash" aria-label="${esc(t('web.trash.entry'))}">${white(IC.trashL())}${trashCount ? `<i class="badge">${trashCount > 99 ? '99+' : trashCount}</i>` : ''}</button>
+          <button class="gbtn" id="goImport" aria-label="+">${white(IC.plus())}</button>
+          <button class="gbtn ${S.favOnly ? 'on' : ''}" id="favOnly" aria-label="${esc(t('lib.fav'))}">${IC.star(S.favOnly).replace(/#98A1A9/g, '#FFFFFF').replace(/#F5A623/g, '#FFD666')}</button>
+        </div>
       </div>
+      <div class="search lib-search">${IC.searchL()}<input type="search" id="q" value="${esc(S.q)}" placeholder="${esc(t('lib.search'))}">
+        ${S.q ? `<span class="clear" id="qc">${IC.close()}</span>` : ''}</div>
+      <div class="catrow" id="catrow"><span class="catinner" id="cats"></span><span class="cathint">${esc(t('lib.cat.hint'))}</span></div>
     </div>
-    <div class="search lib-search">${IC.searchL()}<input type="search" id="q" value="${esc(S.q)}" placeholder="${esc(t('lib.search'))}">
-      ${S.q ? `<span class="clear" id="qc">${IC.close()}</span>` : ''}</div>
-    <div class="catrow"><span class="catinner" id="cats"></span><span class="cathint">${esc(t('lib.cat.hint'))}</span></div>
-    <div class="page libpage"><div id="list" class="plist"></div></div>
+    <div class="libscroll" id="libscroll"><div class="page libpage"><div id="list" class="plist"></div></div></div>
   </div>`;
 }
-/* App LibraryPage.listTopRow（2026-10-18）：左 = 拖动提示（只在从未拖过且无筛选时）或「共 N 条」；
- * 右 = 类型小分段（库里有 Skill 才出现；已选中某类型时保留，避免筛选生效但控件消失） */
 function libHasFilter() { return !!(S.cat || S.q || S.favOnly || S.libType !== 'all'); }
+function libGrouped() { return S.cat === '' && !String(S.q || '').trim() && !S.favOnly && S.libType === 'all'; }
 function libTopRow(n) {
-  const skillCount = allPrompts().filter(function (p) { return p.type === 'skill'; }).length;
   const hint = n > 1 && !libHasFilter() && store.get(LS.order, []).length === 0;
-  const types = ['all', 'prompt', 'skill'];
   return `<div class="libtoprow">
-    <span class="ltr-t">${esc(hint ? t('price.reorder.hint') : t('lib.count', n))}</span>
+    <span class="ltr-t">${esc(hint ? t(libGrouped() ? 'lib.group.hint' : 'price.reorder.hint') : t('lib.count', n))}</span>
     ${libTypeSeg()}
   </div>`;
 }
 function isGlass() { return document.documentElement.classList.contains('glass'); }
-/* 类型小分段（经典放在列表顶行右侧；沉浸玻璃放在第一个分区标题右侧） */
+/* 类型小分段（列表顶行右侧；经典与玻璃同一个控件） */
 function libTypeSeg() {
-  if (isGlass()) return '';
   const skillCount = allPrompts().filter(function (p) { return p.type === 'skill'; }).length;
   if (!(skillCount > 0 || S.libType !== 'all')) return '';
   const types = ['all', 'prompt', 'skill'];
@@ -620,64 +639,37 @@ function libTypeSeg() {
       }).join('')}
     </span>`;
 }
-/* 沉浸玻璃 v2（2026-10-21）：参考系统搜索页「最佳匹配 / 文件」的节奏 ——
- * 「全部」且无搜索时按题材分组：粗体大分区标题 + 一块玻璃面板（几行一组，组间大留白）；
- * 选了分类 / 搜索时只有一组，标题就是当前筛选名。分组内顺序沿用库页顺序。 */
-function glassSections(list) {
-  const groups = [];
-  const byKey = {};
-  const grouped = S.cat === '' && !S.q;
-  list.forEach(function (p) {
-    const k = grouped ? (p.fav ? '__fav__' : (p.category || '')) : '__one__';
-    if (!byKey[k]) { byKey[k] = []; groups.push(k); }
-    byKey[k].push(p);
+/* 排序：收藏优先，其余按用户顺序（没拖过用 defaultOrder），都不在表里的按最近使用 */
+function libSort(list) {
+  const order = libOrder();
+  return list.sort(function (a, b) {
+    const fa = a.fav ? 0 : 1, fb = b.fav ? 0 : 1;
+    if (fa !== fb) return fa - fb;
+    const oa = order.indexOf(a.id), ob = order.indexOf(b.id);
+    if (oa >= 0 && ob >= 0) return oa - ob;
+    if (oa >= 0) return 1;
+    if (ob >= 0) return -1;
+    return (b.lastUsedAt || b.createdAt || 0) - (a.lastUsedAt || a.createdAt || 0);
   });
-  const one = S.cat === '__recent__' ? t('lib.recent') : S.cat === '__builtin__' ? t('lib.cat.builtinCat') : S.cat ? catLabel(S.cat) : t('lib.cat.all');
-  const CAP = 4;   /* 分组时每组只露 4 行，其余收进「查看全部」—— 面板短、组间留白，才有参考图的节奏 */
-  return groups.map(function (k, i) {
-    const title = k === '__one__' ? one : k === '__fav__' ? t('lib.fav') : catLabel(k);
-    const all = byKey[k];
-    const cut = grouped && k !== '__fav__' && all.length > CAP;
-    const rows = cut ? all.slice(0, CAP) : all;
-    return `<section class="pgsec">
-      <div class="pghead"><span class="pgtitle">${esc(title)}</span>${cut ? `<button class="pgmorelink" data-more="${esc(k)}">${esc(t('web.style.all', all.length))}${IC.chevR2()}</button>` : ''}</div>
-      <div class="pgroup">${rows.map(promptCard).join('')}</div>
-    </section>`;
-  }).join('');
 }
-function paintPrompts() {
-  const chips = document.getElementById('cats');
-  if (chips) {
-    const c = libCats();
-    // App categoryRow：「全部」+「内置精选」+ 题材分类 + 分类表其余；行尾挂长按管理提示
-    const order = ['', '__recent__', '__builtin__'].concat(c.all.filter(function (x) { return x !== '__builtin__'; }));
-    const label = function (x) { return x === '__recent__' ? t('lib.recent') : x === '__builtin__' ? t('lib.cat.builtinCat') : (x === '' ? t('lib.cat.all') : catLabel(x)); };
-    const key = function (x) { return x; };
-    chips.innerHTML = order.map(function (x) {
-      const k = key(x);
-      const on = S.cat === k || (x === '' && S.cat === '');
-      return `<button class="cchip ${on ? 'on' : ''}" data-cat="${esc(k)}">${esc(label(x))}</button>`;
-    }).join('');
-    /* 沉浸玻璃：类型筛选并进分类行末尾（不再单独一条小分段控件） */
-    if (isGlass()) {
-      chips.innerHTML += ['prompt', 'skill'].map(function (ty) {
-        return `<button class="cchip ctype ${S.libType === ty ? 'on' : ''}" data-ctype="${ty}">${esc(t('lib.type.' + ty))}</button>`;
-      }).join('');
-      chips.querySelectorAll('[data-ctype]').forEach(function (b) {
-        b.onclick = function () { S.libType = S.libType === b.dataset.ctype ? 'all' : b.dataset.ctype; paintPrompts(); };
-      });
-    }
-    chips.querySelectorAll('[data-cat]').forEach(function (b) {
-      b.onclick = function () { S.cat = b.dataset.cat === '' ? '' : b.dataset.cat; paintPrompts(); };
-    });
-  }
-  const box = document.getElementById('list');
-  if (!box) return;
+function libFiltered() {
   let list = allPrompts();
   const recent = S.cat === '__recent__';
   if (recent) list = list.filter(function (p) { return p.lastUsedAt > 0; });
   else if (S.cat === '__builtin__') list = list.filter(function (p) { return p.builtin; });
-  else if (S.cat) list = list.filter(function (p) { return (p.category || '') === S.cat; });
+  else if (S.cat === SEC_REC) {
+    const rec = libRecIds();
+    list = list.filter(function (p) { return rec.indexOf(p.id) >= 0; }).sort(function (a, b) { return rec.indexOf(a.id) - rec.indexOf(b.id); });
+    return applyLibFilters(list);
+  } else if (S.cat.indexOf(TOPIC_P) === 0) {
+    const tp = S.cat.substring(TOPIC_P.length);
+    list = list.filter(function (p) { return realCatLabel(p) === tp; });
+  } else if (S.cat) list = list.filter(function (p) { return (p.category || '') === S.cat; });
+  list = applyLibFilters(list);
+  if (recent) return list.sort(function (a, b) { return b.lastUsedAt - a.lastUsedAt; });
+  return libSort(list);
+}
+function applyLibFilters(list) {
   if (S.libType !== 'all') list = list.filter(function (p) { return (p.type || 'prompt') === S.libType; });
   if (S.favOnly) list = list.filter(function (p) { return p.fav; });
   if (S.q) {
@@ -687,49 +679,196 @@ function paintPrompts() {
       return terms.some(function (w) { return hay.indexOf(w) >= 0; });
     });
   }
-  const order = libOrder();
-  if (recent) list.sort(function (a, b) { return b.lastUsedAt - a.lastUsedAt; });
-  else list.sort(function (a, b) {
-    const fa = a.fav ? 0 : 1, fb = b.fav ? 0 : 1;
-    if (fa !== fb) return fa - fb;
-    const oa = order.indexOf(a.id), ob = order.indexOf(b.id);
-    if (oa >= 0 && ob >= 0) return oa - ob;
-    return (b.lastUsedAt || b.createdAt || 0) - (a.lastUsedAt || a.createdAt || 0);
+  return list;
+}
+/* 分组：收藏组固定最前；推荐组在收藏之后第 recPos 个；题材组的先后 = 在用户顺序里第一次出现的位置，组内保持用户顺序 */
+function libSections(list) {
+  const out = [], at = {};
+  list.forEach(function (p) {
+    const k = p.fav ? SEC_FAV : realCatLabel(p);
+    if (at[k] === undefined) { at[k] = out.length; out.push({ key: k, title: k === SEC_FAV ? t('lib.fav') : k, items: [] }); }
+    out[at[k]].items.push(p);
   });
-  if (!list.length) {
-    // App 空态三态：收藏空 / 有筛选无结果 / 无数据
-    const k = S.favOnly ? 'lib.fav.empty' : (S.q || S.cat || S.libType !== 'all' ? 'lib.empty.filtered' : 'lib.empty.none');
-    box.innerHTML = `<div class="empty"><div class="e1">${esc(t(k))}</div>
-      <div class="e2">${esc(t(k + '.sub'))}</div></div>`;
+  let head = 0;
+  if (at[SEC_FAV] !== undefined) { const f = out.splice(at[SEC_FAV], 1)[0]; out.unshift(f); head = 1; }
+  const rec = libRecIds();
+  const byId = {};
+  list.forEach(function (p) { byId[p.id] = p; });
+  const recItems = rec.map(function (id) { return byId[id]; }).filter(Boolean);
+  if (recItems.length) out.splice(head + Math.max(0, Math.min(libRecPos(), out.length - head)), 0, { key: SEC_REC, title: t('lib.group.rec'), items: recItems });
+  return out;
+}
+/* 分组先后（不受筛选影响：用全部条目算），分类行的题材胶囊按它排 */
+function libTopicOrder() {
+  return libSections(libSort(allPrompts())).filter(function (s) { return s.key !== SEC_FAV; }).map(function (s) { return s.key; });
+}
+function chipLabel(x) {
+  if (x === '') return t('lib.cat.all');
+  if (x === '__recent__') return t('lib.recent');
+  if (x === '__builtin__') return t('lib.cat.builtinCat');
+  if (x === SEC_REC) return t('lib.group.rec');
+  if (x.indexOf(TOPIC_P) === 0) return x.substring(TOPIC_P.length);
+  return catLabel(x);
+}
+/* 分类行：筛选项（全部 / 最近用过 / 内置精选）在前，题材胶囊按下面分组的先后排；有分组没分类的题材补一个胶囊 */
+function libChipList() {
+  const c = libCats();
+  const topics = c.all.filter(function (x) { return x !== '__builtin__'; });
+  const order = libTopicOrder();
+  const have = topics.map(chipLabel);
+  order.forEach(function (k) {
+    if (k === SEC_REC) topics.push(SEC_REC);
+    else if (have.indexOf(k) < 0) topics.push(TOPIC_P + k);
+  });
+  const rank = function (x) { const i = order.indexOf(x === SEC_REC ? SEC_REC : chipLabel(x)); return i < 0 ? order.length + topics.indexOf(x) : i; };
+  topics.sort(function (a, b) { return rank(a) - rank(b); });
+  return ['', '__recent__', '__builtin__'].concat(topics);
+}
+function chipOn(x) { return libGrouped() ? (S.anchor || '') === x : S.cat === x; }
+function chipOfSec(key) {
+  if (!key || key === SEC_FAV) return '';
+  if (key === SEC_REC) return SEC_REC;
+  const list = libChipList();
+  for (let i = 0; i < list.length; i++) if (list[i] !== '' && list[i] !== '__recent__' && list[i] !== '__builtin__' && chipLabel(list[i]) === key) return list[i];
+  return '';
+}
+function onChip(x) {
+  S.expId = ''; S.secMode = false;
+  const filterOnly = x === '__recent__' || x === '__builtin__';
+  const canGroup = !String(S.q || '').trim() && !S.favOnly && S.libType === 'all';
+  if (x === '' || (!filterOnly && canGroup)) {
+    const changed = S.cat !== '';
+    S.cat = ''; S.anchor = x; S.anchorLock = Date.now() + 900;
+    if (changed) paintPrompts(); else paintChips();
+    jumpToSec(x);
     return;
   }
-  if (isGlass()) {
-    box.innerHTML = glassSections(list);
-  } else {
-    box.innerHTML = libTopRow(list.length) + '<div class="pgroup">' + list.map(promptCard).join('') + '</div>';
+  S.cat = x; paintPrompts();
+  const sc = document.getElementById('libscroll'); if (sc) sc.scrollTop = 0;
+}
+function secTopIn(sc, el) { return el.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop; }
+function jumpToSec(x) {
+  const sc = document.getElementById('libscroll');
+  if (!sc) return;
+  S.anchorLock = Date.now() + 900;
+  if (x === '') { sc.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  const key = x === SEC_REC ? SEC_REC : chipLabel(x);
+  if (libOpenSecs().indexOf(key) < 0) { toggleSec(key, true); }
+  requestAnimationFrame(function () {
+    const el = sc.querySelector('.lsec[data-sec="' + CSS.escape(key) + '"]');
+    if (el) sc.scrollTo({ top: Math.max(0, secTopIn(sc, el) - 4), behavior: 'smooth' });
+  });
+}
+/* 列表滚动：当前所在的组 → 分类行高亮，高亮项滚出视野时把分类行带过去 */
+function syncAnchor() {
+  if (!libGrouped() || S.secMode || DRAG.on || Date.now() < (S.anchorLock || 0)) return;
+  const sc = document.getElementById('libscroll');
+  if (!sc) return;
+  let best = '';
+  sc.querySelectorAll('.lsec').forEach(function (el) { if (secTopIn(sc, el) <= sc.scrollTop + 24) best = el.dataset.sec; });
+  const c = chipOfSec(best);
+  if (c !== (S.anchor || '')) { S.anchor = c; paintChips(true); }
+}
+function paintChips(reveal) {
+  const chips = document.getElementById('cats');
+  if (!chips) return;
+  chips.innerHTML = libChipList().map(function (x) {
+    return `<button class="cchip ${chipOn(x) ? 'on' : ''}" data-cat="${esc(x)}">${esc(chipLabel(x))}</button>`;
+  }).join('');
+  chips.querySelectorAll('[data-cat]').forEach(function (b) { b.onclick = function () { onChip(b.dataset.cat); }; });
+  const row = document.getElementById('catrow');
+  const on = chips.querySelector('.cchip.on');
+  if (row && on) {
+    if (reveal) row.scrollTo({ left: Math.max(0, on.offsetLeft - 40), behavior: 'smooth' });
+    else if (on.offsetLeft < row.scrollLeft || on.offsetLeft + on.offsetWidth > row.scrollLeft + row.clientWidth) row.scrollLeft = Math.max(0, on.offsetLeft - 40);
   }
-  bindCardDrag(box);
+}
+function toggleSec(key, open) {
+  const cur = libOpenSecs();
+  const want = open !== undefined ? open : cur.indexOf(key) < 0;
+  if (want === (cur.indexOf(key) >= 0)) return;
+  store.set(LS_LIB.open, want ? cur.concat([key]) : cur.filter(function (k) { return k !== key; }));
+  S.expId = '';
+  paintPrompts();
+}
+const DISCLOSE = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9.5L12 15.5L19 9.5"/></svg>';
+function secHeadHTML(s, first) {
+  const open = libOpenSecs().indexOf(s.key) >= 0;
+  return `<div class="lsechead ${open ? 'open' : ''} ${first ? 'first' : ''}" data-head="${esc(s.key)}">
+    <span class="lst">${esc(s.title)}</span><span class="lsn">${s.items.length}</span><span class="lsarrow">${DISCLOSE}</span></div>`;
+}
+function paintPrompts() {
+  paintChips();
+  const box = document.getElementById('list');
+  if (!box) return;
+  const list = libFiltered();
+  if (!list.length) {
+    const k = S.favOnly ? 'lib.fav.empty' : (S.q || S.cat || S.libType !== 'all' ? 'lib.empty.filtered' : 'lib.empty.none');
+    box.innerHTML = `<div class="empty"><div class="e1">${esc(t(k))}</div><div class="e2">${esc(t(k + '.sub'))}</div></div>`;
+    return;
+  }
+  const grouped = libGrouped();
+  if (grouped && S.secMode) {
+    const secs = libSections(list).filter(function (s) { return s.key !== SEC_FAV; });
+    box.innerHTML = `<div class="libtoprow secmodetop"><span class="ltr-t">${esc(t('lib.group.sort'))}</span><button class="secdone" id="secDone">${esc(t('lib.group.done'))}</button></div>
+      <div class="secrows">${secs.map(function (s) {
+        return `<div class="secrow" data-key="${esc(s.key)}"><span class="lst">${esc(s.title)}</span><span class="lsn">${s.items.length}</span><span class="grip"><i></i><i></i><i></i></span></div>`;
+      }).join('')}</div>`;
+    document.getElementById('secDone').onclick = function () { S.secMode = false; S.anchor = ''; paintPrompts(); const sc = document.getElementById('libscroll'); if (sc) sc.scrollTop = 0; };
+    attachDrag(box.querySelector('.secrows'), '.secrow', function (keys) { commitSecs(keys); });
+    return;
+  }
+  let html = libTopRow(list.length);
+  if (grouped) {
+    const open = libOpenSecs();
+    html += libSections(list).map(function (s, i) {
+      return `<section class="lsec" data-sec="${esc(s.key)}">${secHeadHTML(s, i === 0)}
+        ${open.indexOf(s.key) >= 0 ? `<div class="pgroup" data-sec="${esc(s.key)}">${s.items.map(function (p) { return promptCard(p, s.key); }).join('')}</div>` : ''}</section>`;
+    }).join('');
+  } else {
+    html += `<div class="pgroup" data-sec="${SEC_ALL}">${list.map(function (p) { return promptCard(p, SEC_ALL); }).join('')}</div>`;
+  }
+  box.innerHTML = html;
   box.querySelectorAll('.libtseg button').forEach(function (b) {
     b.onclick = function () { S.libType = b.dataset.type; paintPrompts(); };
   });
   box.querySelectorAll('[data-fav]').forEach(function (b) { b.onclick = function (e) { e.stopPropagation(); favToggle(b.dataset.fav); }; });
   bindCardTap(box, list);
-  box.querySelectorAll('[data-more]').forEach(function (b) {
-    b.onclick = function () { S.cat = b.dataset.more; paintPrompts(); document.getElementById('content').scrollTop = 0; };
+  box.querySelectorAll('.pgroup[data-sec]').forEach(function (g) {
+    const sec = g.dataset.sec;
+    attachDrag(g, '.pcard', function (ids) { commitCards(sec, ids); });
+  });
+  /* 组标题：点 = 展开 / 收起；长按 = 整理分组（收藏组固定最前，不参与） */
+  box.querySelectorAll('[data-head]').forEach(function (h) {
+    let timer = null, longed = false;
+    h.addEventListener('pointerdown', function () {
+      longed = false;
+      timer = setTimeout(function () {
+        if (h.dataset.head === SEC_FAV) return;
+        longed = true; S.secMode = true; S.expId = ''; navVibrate(10);
+        const sc = document.getElementById('libscroll'); if (sc) sc.scrollTop = 0;
+        S.anchor = ''; paintPrompts();
+      }, 450);
+    });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) { h.addEventListener(ev, function () { clearTimeout(timer); }); });
+    h.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    h.onclick = function () { if (longed) return; toggleSec(h.dataset.head); };
   });
 }
-/* App onCardRelease：Skill（长工作流）→ 进详情；Prompt → 原地展开（填变量 / 复制 / 发送），再点收起。同一时间只展开一张 */
+/* App onCardRelease：Skill（长工作流）→ 进详情；Prompt → 原地展开（填变量 / 复制 / 发送），再点收起。同一时间只展开一张（按「组|id」区分：推荐组里和题材组里是两张卡） */
 function bindCardTap(box, list) {
   const byId = {};
   list.forEach(function (p) { byId[p.id] = p; });
   box.querySelectorAll('.pcard').forEach(function (el) {
     el.onclick = function (e) {
+      if (Date.now() - DRAG.endedAt < 450) return;
       if (e.target.closest('button,input,.pexp')) return;
       const p = byId[el.dataset.id];
       if (!p) return;
       if (p.type === 'skill') { goHash('library/detail/' + encodeURIComponent(p.id)); return; }
-      if (S.expId !== p.id) S.expVals = {};
-      S.expId = S.expId === p.id ? '' : p.id;
+      const k = el.dataset.sec + '|' + p.id;
+      if (S.expId !== k) S.expVals = {};
+      S.expId = S.expId === k ? '' : k;
       paintPrompts();
     };
   });
@@ -752,8 +891,6 @@ function bindCardTap(box, list) {
     };
   });
 }
-/* Prompt 卡（App PromptCard：徽章 38 渐变 / 标题 16 Bold / 摘要 12 两行 / meta 11 / 变量行 10）
-   ★App 卡片只有「星标 + 点开详情」两个交互，没有编辑/删除按钮（删除只在详情页）★ */
 function previewOf(content) {
   const out = [];
   const lines = String(content || '').split('\n');
@@ -764,38 +901,21 @@ function previewOf(content) {
   }
   return out.length > 0 ? out.join(' ') : String(content || '');
 }
-/* 标题按第一个冒号拆成「主标题 + 副标题」：沉浸玻璃下主标题大号粗体、副标题单独一行，避免满屏省略号 */
-/* 一句话说明的第一小句（到第一个句读为止），作沉浸玻璃的副标题 */
-function shortNote(note) {
-  const n = String(note || '').trim();
-  if (!n) return '';
-  const m = /^(.{4,26}?)[，。；;,.！!？?]/.exec(n);
-  return m ? m[1] : (n.length > 26 ? n.slice(0, 26) : n);
-}
-function splitTitle(title) {
-  const m = /^(.{2,24}?)\s*([：:])\s*(.+)$/.exec(String(title || ''));
-  return m ? { main: m[1], sep: m[2], sub: m[3] } : { main: String(title || ''), sep: '', sub: '' };
-}
-/* 沉浸玻璃的图标配色按题材区分（经典风格仍按类型蓝 / 紫） */
-const TONES = { '科研论文': 'teal', 'AI 前沿': 'violet', '改代码': 'indigo', '职场': 'amber', '写作': 'coral', '学习': 'green', '生活': 'rose', '翻译': 'cyan' };
-function toneOf(p) { return TONES[p.category || ''] || 'slate'; }
-function promptCard(p) {
+/* Prompt 卡（App PromptCard 收紧版：28 类型方块 + 标题 15 + 一行预览 12 + 灰色信息行 10.5 + 收藏星；经典与玻璃同一尺寸） */
+function promptCard(p, sec) {
   const isSkill = p.type === 'skill';
   const fav = !!p.fav;
   const vars = parseVars(p.content || '');
-  const open = !isSkill && S.expId === p.id;
-  /* App PromptCard.metaLine：题材（非「通用」时带适用模型）· 来源（自建则用过 N 次 · 时间）· N 个变量 */
+  const open = !isSkill && S.expId === (sec + '|' + p.id);
   const parts = [realCatLabel(p) + (p.targetModel && p.targetModel !== '通用' ? ' · ' + p.targetModel : '')];
   parts.push(p.builtin && srcShort(p) ? srcShort(p) : t('lib.used', p.useCount || 0) + ' · ' + daysAgoIn(p.lastUsedAt));
   if (vars.length) parts.push(t('lib.card.vars', vars.length));
   const lock = PAYWALL_ENABLED && isSkill && p.builtin && proStatus() !== 2;
-  const tt = splitTitle(p.title);
-  return `<div class="pcard ${open ? 'open' : ''} ${tt.sub ? 'hassub' : ''}" data-tone="${esc(toneOf(p))}" draggable="${open ? 'false' : 'true'}" data-id="${esc(p.id)}">
+  return `<div class="pcard ${open ? 'open' : ''}" data-id="${esc(p.id)}" data-sec="${esc(sec)}">
     <div class="prow">
       <span class="pbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW(14) : IC.promptW(14)}</span>
       <div class="ptxt">
-        <div class="ptitle"><span>${esc(tt.main)}${tt.sub ? `<b class="pts">${esc(tt.sep + tt.sub)}</b>` : ''}</span>${lock ? `<i class="pmember">${esc(t('detail.member'))}</i>` : ''}</div>
-        <div class="psub">${esc(tt.sub || shortNote(p.note) || (vars.length ? t('lib.card.vars', vars.length) : (isSkill ? 'Skill' : 'Prompt')))}</div>
+        <div class="ptitle"><span>${esc(p.title)}</span>${lock ? `<i class="pmember">${esc(t('detail.member'))}</i>` : ''}</div>
         ${p.content ? `<div class="pabs ${open ? 'l3' : ''}">${esc(previewOf(p.content).slice(0, 240))}</div>` : ''}
         <div class="pmeta">${esc(parts.join(' · '))}</div>
       </div>
@@ -827,33 +947,47 @@ function renderVars(content, values) {
     return (val !== undefined && val !== null && String(val).length > 0) ? val : sub;
   });
 }
-function bindCardDrag(box) {
-  let dragId = null;
-  box.querySelectorAll('.pcard').forEach(function (el) {
-    el.ondragstart = function () { dragId = el.dataset.id; };
-    el.ondragenter = function () {
-      if (!dragId || dragId === el.dataset.id) return;
-      const ids = currentOrderIds();
-      const from = ids.indexOf(dragId), to = ids.indexOf(el.dataset.id);
-      if (from < 0 || to < 0) return;
-      ids.splice(to, 0, ids.splice(from, 1)[0]);
-      store.set(LS.order, ids);
-      dragId = null;
-      paintPrompts();
-    };
-    el.ondragover = function (e) { e.preventDefault(); };
-    el.ondragend = function () { dragId = null; };
-  });
-}
-/* 库页顺序：用户拖过就用他自己的；没拖过用开发者在 App 里调好的默认顺序（app-data.json → defaultOrder） */
+/* 库页顺序：用户拖过就用他自己的；没拖过用 App 的默认顺序（app-data.json → defaultOrder） */
 function libOrder() {
   const mine = store.get(LS.order, []);
   return mine.length ? mine : (DATA.defaultOrder || []);
 }
-function currentOrderIds() {
-  const o = libOrder();
-  const all = allPrompts().map(function (p) { return p.id; });
-  return o.concat(all.filter(function (id) { return o.indexOf(id) < 0; }));
+/* 可见条目的新顺序并回完整顺序：可见条目占的那些位置不变，按新顺序依次填回；不在表里的（新建的）放最前 */
+function mergeOrder(visible) {
+  const base = libOrder();
+  const missing = visible.filter(function (id) { return base.indexOf(id) < 0; });
+  const full = missing.concat(base);
+  const vis = {}; visible.forEach(function (id) { vis[id] = 1; });
+  let k = 0;
+  for (let i = 0; i < full.length; i++) if (vis[full[i]]) full[i] = visible[k++];
+  return full;
+}
+function commitCards(sec, ids) {
+  if (sec === SEC_REC) {
+    const rest = libRecIds().filter(function (id) { return ids.indexOf(id) < 0; });
+    store.set(LS_LIB.rec, ids.concat(rest));
+  } else if (sec === SEC_ALL) {
+    store.set(LS.order, mergeOrder(ids));
+  } else {
+    let full = [];
+    libSections(libFiltered()).forEach(function (s) {
+      if (s.key === SEC_REC) return;
+      full = full.concat(s.key === sec ? ids : s.items.map(function (p) { return p.id; }));
+    });
+    store.set(LS.order, mergeOrder(full));
+  }
+  paintPrompts();
+}
+function commitSecs(keys) {
+  const secs = libSections(libFiltered());
+  const byKey = {};
+  let full = [];
+  secs.forEach(function (s) { byKey[s.key] = s.items.map(function (p) { return p.id; }); if (s.key === SEC_FAV) full = full.concat(byKey[s.key]); });
+  const rp = keys.indexOf(SEC_REC);
+  if (rp >= 0) store.set(LS_LIB.recPos, rp);
+  keys.forEach(function (k) { if (k !== SEC_REC) full = full.concat(byKey[k] || []); });
+  store.set(LS.order, mergeOrder(full));
+  paintPrompts();
 }
 function favToggle(id) {
   const mine = selfPrompts();
@@ -903,16 +1037,131 @@ function bindLibrary() {
   const gp = document.getElementById('goPro'); if (gp) gp.onclick = function () { goHash('mine'); setTimeout(openPlans, 60); };
   const gt = document.getElementById('goTrash'); if (gt) gt.onclick = function () { goHash('library/trash'); };
   const gi = document.getElementById('goImport'); if (gi) gi.onclick = function () { goHash('library/import'); };
+  const sc = document.getElementById('libscroll');
+  if (sc) sc.addEventListener('scroll', syncAnchor, { passive: true });
   // App categoryRow 长按 → 分类管理页
   const cr = document.querySelector('.catrow');
   if (cr) {
     let timer = null;
     cr.addEventListener('touchstart', function () { timer = setTimeout(function () { goHash('library/cats'); }, 550); }, { passive: true });
+    cr.addEventListener('touchmove', function () { clearTimeout(timer); }, { passive: true });
     cr.addEventListener('touchend', function () { clearTimeout(timer); });
     cr.addEventListener('mousedown', function () { timer = setTimeout(function () { goHash('library/cats'); }, 550); });
     document.addEventListener('mouseup', function () { clearTimeout(timer); });
   }
   paintPrompts();
+}
+
+/* ══════════ 长按拖动排序（与 App 同一套手感：锦囊页 / 比价页共用） ══════════
+ * 按住 380ms 拿起（放大 + 投影 + 轻震）→ 跟手 → 越过邻卡中线换格（邻卡弹簧让位、轻震一下）
+ * → 松手立刻缩回，同时 280ms 减速滑到落点 → 落定改序。拖到列表上下边缘会自动滚动。 */
+const DRAG = { on: false, endedAt: 0 };
+function navVibrate(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) { /* 不支持就算了 */ } }
+document.addEventListener('touchmove', function (e) { if (DRAG.on) e.preventDefault(); }, { passive: false });
+function scrollerOf(el) {
+  for (let n = el.parentElement; n; n = n.parentElement) {
+    const oy = getComputedStyle(n).overflowY;
+    if ((oy === 'auto' || oy === 'scroll') && n.scrollHeight > n.clientHeight) return n;
+  }
+  return document.getElementById('content');
+}
+function attachDrag(container, sel, onCommit) {
+  if (!container) return;
+  const kids = function () { return Array.prototype.filter.call(container.children, function (c) { return c.matches(sel); }); };
+  kids().forEach(function (el) {
+    el.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    el.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      if (DRAG.on || e.target.closest('button,input,textarea,a,.pexp')) return;
+      const sx = e.clientX, sy = e.clientY;
+      let st = null, lastY = sy, raf = 0;
+      const timer = setTimeout(function () { lift(); }, 380);
+      function lift() {
+        const list = kids();
+        const from = list.indexOf(el);
+        if (from < 0 || list.length < 2) return;
+        const rects = list.map(function (c) { return c.getBoundingClientRect(); });
+        const gap = rects.length > 1 ? rects[1].top - rects[0].bottom : 8;
+        const sc = scrollerOf(container);
+        st = { list: list, from: from, to: from, tops: rects.map(function (r) { return r.top; }), hs: rects.map(function (r) { return r.height; }), gap: gap, sc: sc, s0: sc.scrollTop, dy: 0 };
+        DRAG.on = true;
+        container.classList.add('dragctx');
+        el.classList.add('lifted');
+        navVibrate(10);
+        tick();
+      }
+      function dyNow() { return lastY - sy + (st.sc.scrollTop - st.s0); }
+      function layout() {
+        const f = st.from, t2 = st.to, step = st.hs[f] + st.gap;
+        st.list.forEach(function (c, i) {
+          if (i === f) return;
+          let y = 0;
+          if (f < t2 && i > f && i <= t2) y = -step;
+          if (f > t2 && i >= t2 && i < f) y = step;
+          c.style.transform = y ? 'translateY(' + y + 'px)' : '';
+        });
+      }
+      function place() {
+        st.dy = dyNow();
+        el.style.transform = 'translateY(' + st.dy + 'px) scale(1.03)';
+        const mid = st.tops[st.from] + st.hs[st.from] / 2 + st.dy;
+        let to = st.to;
+        const n = st.list.length;
+        const slotMid = function (i) { return st.tops[i] + st.hs[i] / 2; };
+        while (to < n - 1 && mid > slotMid(to + 1)) to++;
+        while (to > 0 && mid < slotMid(to - 1)) to--;
+        if (to !== st.to) { st.to = to; navVibrate(5); layout(); }
+      }
+      function tick() {
+        if (!st) return;
+        const r = st.sc.getBoundingClientRect();
+        const top = r.top + r.height * 0.18, bot = r.top + r.height * 0.82;
+        let step = 0;
+        if (lastY < top) step = -Math.min(10, (top - lastY) * 0.12);
+        else if (lastY > bot) step = Math.min(10, (lastY - bot) * 0.12);
+        if (step) st.sc.scrollTop += step;
+        place();
+        raf = requestAnimationFrame(tick);
+      }
+      function move(ev) {
+        lastY = ev.clientY;
+        if (!st) { if (Math.abs(ev.clientX - sx) > 10 || Math.abs(ev.clientY - sy) > 10) end(false); return; }
+        ev.preventDefault();
+      }
+      function end(drop) {
+        clearTimeout(timer);
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        window.removeEventListener('pointercancel', up);
+        if (!st) return;
+        cancelAnimationFrame(raf);
+        const f = st.from, t2 = st.to;
+        let target = 0;
+        if (t2 > f) target = st.tops[t2] + st.hs[t2] - st.hs[f] - st.tops[f];
+        if (t2 < f) target = st.tops[t2] - st.tops[f];
+        target -= (st.sc.scrollTop - st.s0);
+        /* 松手：立刻缩回（与滑行同时），280ms 减速滑到落点，到位即落定 */
+        el.classList.remove('lifted');
+        el.classList.add('dropping');
+        el.style.transform = 'translateY(' + (target + (st.sc.scrollTop - st.s0)) + 'px)';
+        const ids = st.list.map(function (c) { return c.dataset.id || c.dataset.key; });
+        const moved = ids.splice(f, 1)[0];
+        ids.splice(t2, 0, moved);
+        const changed = t2 !== f;
+        st = null;
+        setTimeout(function () {
+          DRAG.on = false; DRAG.endedAt = Date.now();
+          container.classList.remove('dragctx');
+          if (changed && drop) onCommit(ids);
+          else { kids().forEach(function (c) { c.style.transform = ''; c.classList.remove('dropping'); }); }
+        }, 290);
+      }
+      function up() { end(true); }
+      window.addEventListener('pointermove', move, { passive: false });
+      window.addEventListener('pointerup', up);
+      window.addEventListener('pointercancel', up);
+    });
+  });
 }
 
 /* ══════════ 分享码（与 app ShareCode 互通：izy://p/ + base64url(JSON)） ══════════ */
@@ -956,7 +1205,9 @@ function hitSub(s, q) {
   return hay.indexOf(q) >= 0;
 }
 function viewPrice() {
-  return coverHTML(t('price.title'), t('price.sub')) + `<div class="page pricepage">
+  const meta = DATA.meta || {};
+  /* App heroHeader：副标题 = N 个模型 · N 个订阅 · 核对日期 */
+  return coverHTML(t('price.title'), t('price.hero.sub', (DATA.apiPrices || []).length, (DATA.subscriptions || []).length, meta.priceUpdatedAt || PRICE_UPDATED_AT)) + `<div class="page pricepage">
     ${calcCard()}
     <div class="segbox">
       <div class="seg ${S.priceTab === 'sub' ? 'tab2' : ''}">
@@ -965,6 +1216,7 @@ function viewPrice() {
         <button data-tab="sub" class="${S.priceTab === 'sub' ? 'on' : ''}">${esc(t('price.tab.sub'))}</button>
       </div>
     </div>
+    <div class="cnrow"><button class="cnchip ${S.cnOnly ? 'on' : ''}" id="cnOnly">${esc(t('price.cn.only'))}</button><span class="unit">${esc(t('price.unit.inout'))}</span></div>
     <div class="search">${IC.search()}<input type="search" id="q" value="${esc(S.q)}" placeholder="${esc(t('price.search.hint'))}">
       ${S.q ? `<span class="clear" id="qc">${IC.close()}</span>` : ''}</div>
     ${S.priceTab === 'api' ? cmpEntry() : ''}
@@ -982,13 +1234,43 @@ function cmpEntry() {
       : `<span class="ce-tip">${esc(t('cmp.tip'))}</span>${IC.chevR()}`}</button>`;
 }
 /* 排序提示条（App sortHint：26 高 / 11 号 / 常态 text_ter） */
+/* 用户拖过 → 「已按你的顺序排列」+ 恢复默认（App PricingPage.sortHint） */
+const LS_PRICE = { api: 'izy.vorder', sub: 'izy.sorder' };
 function sortHint() {
-  return `<div class="sorthint">${esc(t('price.sort.entry'))}</div>`;
+  const custom = store.get(LS_PRICE[S.priceTab === 'api' ? 'api' : 'sub'], []).length > 0;
+  return `<div class="sorthint"><span>${esc(t(custom ? 'price.sort.custom' : 'price.sort.entry'))}</span>${custom ? `<button class="sortreset" id="sortReset">${esc(t('price.sort.reset'))}</button>` : ''}</div>`;
 }
+function applySavedOrder(items, keyOf, saved) {
+  if (!saved.length) return items;
+  return items.slice().sort(function (a, b) {
+    const ia = saved.indexOf(keyOf(a)), ib = saved.indexOf(keyOf(b));
+    return (ia < 0 ? 1e6 : ia) - (ib < 0 ? 1e6 : ib);
+  });
+}
+function subKey(s) { return s.vendor + '|' + s.product; }
+function orderedSubs() { return applySavedOrder(DATA.subscriptions || [], subKey, store.get(LS_PRICE.sub, [])); }
+/* 成本计算器（App calculatorCard 2026-10-19）：页面第一张卡，压在封面渐隐带上；
+ * 写下任务即在下方出现 最省 / 均衡 / 最好 三档答案，点任一格或「完整计算」进计算器页并带上这段描述 */
 function calcCard() {
-  return `<button class="calc" onclick="goHash('price/calc')">
-    <span style="min-width:0"><b>${esc(t('price.calc.title'))}</b><span class="s">${esc(t('price.calc.sub'))}</span></span>
-    <em>${esc(t('price.calc.cta'))}</em></button>`;
+  return `<div class="calc2">
+    <div class="c2h">${esc(t('price.ask.hint'))}</div>
+    <input id="calcQ" class="c2in" placeholder="${esc(t('price.ask.example'))}" value="${esc(S.calcText || '')}">
+    <div class="c2picks" id="calcPicks">${calcPicksHTML()}</div>
+    <div class="c2foot"><button class="c2cta" id="calcGo">${esc(t('price.calc.cta'))}</button></div>
+  </div>`;
+}
+function calcPicksHTML() {
+  const tx = String(S.calcText || '').trim();
+  if (!tx || typeof calcParseTask !== 'function') return '';
+  const spec = calcParseTask(tx, { docs: 1, words: 1000, typeIdx: 2, outWords: 1000 });
+  return calcPicks(spec).slice(0, 3).map(function (p, i) {
+    return `<button class="c2pick" data-calcgo="1"><i>${esc(t(p.keys[0]))}</i><b class="${i === 0 ? 'pri' : ''}">${esc(calcFmtCny(p.r.cost))}</b><em>${esc(p.r.m.name || p.r.m.id)}</em></button>`;
+  }).join('');
+}
+function openCalcWith() {
+  CALC.taskText = S.calcText || '';
+  if (CALC.taskText.trim()) { const spec = calcLiveSpec(); CALC.results = calcCompare(spec); CALC.picks = calcPicks(spec); }
+  goHash('price/calc');
 }
 function cmpBar() {
   const ids = S.cmpIds;
@@ -1007,7 +1289,8 @@ function apiGroups() {
     if (!map[v]) map[v] = { vendor: v, models: [] };
     map[v].models.push(m);
   });
-  return (DATA.vendorOrder || []).map(function (o) { return map[o.vendor]; }).filter(Boolean);
+  const groups = (DATA.vendorOrder || []).map(function (o) { return map[o.vendor]; }).filter(Boolean);
+  return applySavedOrder(groups, function (g) { return g.vendor; }, store.get(LS_PRICE.api, []));
 }
 function regionOf(vendor) {
   const o = (DATA.vendorOrder || []).filter(function (x) { return x.vendor === vendor; })[0];
@@ -1052,7 +1335,7 @@ function cardSub(s) {
     </div>`;
   }).join('');
   const cn = s.cnAvailable === '直连';
-  return `<div class="card vcard" draggable="true" data-v="${esc(s.vendor)}">
+  return `<div class="card vcard" data-id="${esc(subKey(s))}" data-v="${esc(s.vendor)}">
     <div class="vhead" data-v="${esc(s.vendor)}">
       ${brandMark(s.vendor, 38)}
       <div style="flex:1;min-width:0">
@@ -1068,12 +1351,12 @@ function paintList() {
   const q = S.q.trim().toLowerCase();
   const box = document.getElementById('list');
   if (S.priceTab === 'api') {
-    const groups = apiGroups().filter(function (g) { return hitApi(g, q); });
+    const groups = apiGroups().filter(function (g) { return hitApi(g, q) && (!S.cnOnly || regionOf(g.vendor)); });
     if (!groups.length) { box.innerHTML = `<div class="empty"><div class="e1">${esc(t('price.search.empty'))}</div></div>`; return; }
     box.innerHTML = (S.cmpOn ? '' : sortHint()) + groups.map(function (g) {
       const low = priceRange(g.models);
       const net = regionOf(g.vendor);
-      return `<div class="card vcard" draggable="true" data-v="${esc(g.vendor)}">
+      return `<div class="card vcard" data-id="${esc(g.vendor)}" data-v="${esc(g.vendor)}">
         <div class="vhead" data-v="${esc(g.vendor)}">
           ${brandMark(g.vendor, 38)}
           <div style="flex:1;min-width:0">
@@ -1105,9 +1388,11 @@ function paintList() {
     });
     box.querySelectorAll('[data-follow]').forEach(function (b) { b.onclick = function () { toggleFollow(b.dataset.follow); }; });
     box.querySelectorAll('[data-pick]').forEach(function (b) { b.onclick = function () { togglePick(b.dataset.pick); }; });
-    bindGroupDrag(box);
+    /* 长按拖动排序（与 App 同一套手感）；搜索 / 对比模式下列表是子集或另有用途，不允许拖 */
+    if (!q && !S.cmpOn && !S.cnOnly) attachDrag(box, '.vcard', function (ids) { store.set(LS_PRICE.api, ids); paintList(); });
+    bindSortReset();
   } else {
-    const subs = (DATA.subscriptions || []).filter(function (s) { return hitSub(s, q); });
+    const subs = orderedSubs().filter(function (s) { return hitSub(s, q) && (!S.cnOnly || s.cnAvailable === '直连'); });
     if (!subs.length) { box.innerHTML = `<div class="empty"><div class="e1">${esc(t('price.search.empty'))}</div></div>`; return; }
     box.innerHTML = sortHint() + subs.map(cardSub).join('');
     box.querySelectorAll('.vhead').forEach(function (h) {
@@ -1127,24 +1412,13 @@ function paintList() {
       const ch = c.querySelector('.chev');
       if (ch) ch.classList.toggle('open', !!S.open[c.dataset.v]);
     });
+    if (!q && !S.cnOnly) attachDrag(box, '.vcard', function (ids) { store.set(LS_PRICE.sub, ids); paintList(); });
+    bindSortReset();
   }
 }
-function bindGroupDrag(box) {
-  let drag = null;
-  box.querySelectorAll('.card[draggable]').forEach(function (el) {
-    el.ondragstart = function () { drag = el.dataset.v; };
-    el.ondragenter = function () {
-      if (!drag || drag === el.dataset.v) return;
-      const names = (DATA.vendorOrder || []).map(function (x) { return x.vendor; });
-      const io = names.indexOf(drag), it = names.indexOf(el.dataset.v);
-      if (io < 0 || it < 0) return;
-      DATA.vendorOrder.splice(it, 0, DATA.vendorOrder.splice(io, 1)[0]);
-      drag = null;
-      paintList();
-    };
-    el.ondragover = function (e) { e.preventDefault(); };
-    el.ondragend = function () { drag = null; };
-  });
+function bindSortReset() {
+  const r = document.getElementById('sortReset');
+  if (r) r.onclick = function () { store.set(LS_PRICE[S.priceTab === 'api' ? 'api' : 'sub'], []); paintList(); };
 }
 function toggleFollow(id) {
   const list = store.get(LS.follow, []);
@@ -1167,6 +1441,12 @@ function togglePick(id) {
   render();
 }
 function bindPrice() {
+  const cq = document.getElementById('calcQ');
+  if (cq) cq.oninput = function () { S.calcText = cq.value; const b = document.getElementById('calcPicks'); if (b) { b.innerHTML = calcPicksHTML(); b.querySelectorAll('[data-calcgo]').forEach(function (x) { x.onclick = openCalcWith; }); } };
+  document.querySelectorAll('[data-calcgo]').forEach(function (x) { x.onclick = openCalcWith; });
+  const cg0 = document.getElementById('calcGo'); if (cg0) cg0.onclick = openCalcWith;
+  const cn = document.getElementById('cnOnly');
+  if (cn) cn.onclick = function () { S.cnOnly = !S.cnOnly; S.open = {}; cn.classList.toggle('on', S.cnOnly); paintList(); };
   const q = document.getElementById('q');
   if (q) q.oninput = function () { S.q = q.value; S.open = {}; paintList(); };
   const qc = document.getElementById('qc');
@@ -1589,7 +1869,7 @@ function viewMine() {
   return `<div class="minewrap">
     <div class="mcover" onclick="openCover()">
       <img src="${(p.coverCustom && p.coverImg) ? esc(p.coverImg) : 'assets/img/cover_' + (coverN || 1) + '.jpg'}" alt="">
-      <span class="scrim"></span><span class="fade"></span>
+      <span class="scrim"></span><span class="fblur"></span><span class="fade"></span>
     </div>
     <div class="prow2" id="profileRow">
       <span class="avatar"><img src="${esc(avatarSrc())}" alt=""></span>
@@ -1601,6 +1881,11 @@ function viewMine() {
       <span class="pgo">${IC.chevR2()}</span>
     </div>
     <div class="page minepage">
+      <div class="mstats">
+        <button class="mstat" onclick="goHash('library')"><b>${allPrompts().length}</b><i>${esc(t('mine.stat.prompts'))}</i></button>
+        <button class="mstat" onclick="goHash('quota')"><b>${store.get(LS.keys, []).length}</b><i>${esc(t('mine.stat.keys'))}</i></button>
+        <button class="mstat" onclick="goHash('quota')"><b>--</b><i>${esc(t('mine.stat.saved'))}</i></button>
+      </div>
       ${PAYWALL_ENABLED ? `<div class="card procard" onclick="openPlans()">
         <div class="pcol">
           <div class="ptitle2 ${proIsFree() ? '' : 'pro'}">${esc(proTitle())}</div>
@@ -1611,7 +1896,7 @@ function viewMine() {
       <div class="grouptitle">${esc(t('mine.pref'))}</div>
       <div class="card setcard">
         <div class="setrow" onclick="openCover()"><span>${esc(t('mine.cover'))}</span>
-          <span class="val">${esc((p.coverCustom && p.coverImg) ? t('mine.cover.custom') : (isGlass() ? t('web.cover.sea') : (coverN + ' / 6')))}</span>${IC.chevR2()}</div>
+          <span class="val">${esc((p.coverCustom && p.coverImg) ? t('mine.cover.custom') : (coverN + ' / 6'))}</span>${IC.chevR2()}</div>
         <div class="rdiv"></div>
         <div class="setrow" onclick="openLang()"><span>${esc(t('mine.language'))}</span>
           <span class="val">${esc((LANGS.filter(function (x) { return x[0] === S.lang; })[0] || [])[1] || S.lang)}</span>${IC.chevR2()}</div>
@@ -1877,8 +2162,8 @@ window.addEventListener('hashchange', function () { render(); });
 
 /* 二级页 / 比价补充文案（i18n.json 未覆盖的键，9 语言） */
 const WEBX = {
-  'zh-CN': { 'lib.title':'库', 'price.from':'起', 'price.tab.all':'全部', 'lib.empty.title':'这里还没有条目', 'lib.empty.sub':'点右下角 + 导入，或切换筛选看看', 'lib.cat.uncat':'未分类', 'lib.detail':'详情', 'quota.verify':'验证', 'quota.add.alias':'备注名', 'price.in':'输入', 'price.out':'输出', 'price.caps':'能力', 'price.quality':'质量', 'price.scenario':'场景', 'price.region':'网络', 'price.calc.words':'每篇字数', 'price.calc.t1':'总结', 'price.calc.t2':'翻译', 'price.calc.t3':'创作', 'price.calc.out':'输出字数', 'profile.gender.m':'男', 'profile.gender.f':'女', 'profile.gender.s':'保密', 'mine.album':'从相册选图' },
-  'zh-TW': { 'lib.title':'庫', 'price.from':'起', 'price.tab.all':'全部', 'lib.empty.title':'這裡還沒有項目', 'lib.empty.sub':'點右下角 + 匯入，或切換篩選看看', 'lib.cat.uncat':'未分類', 'lib.detail':'詳情', 'quota.verify':'驗證', 'quota.add.alias':'備註名', 'price.in':'輸入', 'price.out':'輸出', 'price.caps':'能力', 'price.quality':'品質', 'price.scenario':'場景', 'price.region':'網路', 'price.calc.words':'每篇字數', 'price.calc.t1':'總結', 'price.calc.t2':'翻譯', 'price.calc.t3':'創作', 'price.calc.out':'輸出字數', 'profile.gender.m':'男', 'profile.gender.f':'女', 'profile.gender.s':'保密', 'mine.album':'從相簿選圖' },
+  'zh-CN': { 'lib.title':'锦囊', 'price.from':'起', 'price.tab.all':'全部', 'lib.empty.title':'这里还没有条目', 'lib.empty.sub':'点右上角 + 导入，或切换筛选看看', 'lib.cat.uncat':'未分类', 'lib.detail':'详情', 'quota.verify':'验证', 'quota.add.alias':'备注名', 'price.in':'输入', 'price.out':'输出', 'price.caps':'能力', 'price.quality':'质量', 'price.scenario':'场景', 'price.region':'网络', 'price.calc.words':'每篇字数', 'price.calc.t1':'总结', 'price.calc.t2':'翻译', 'price.calc.t3':'创作', 'price.calc.out':'输出字数', 'profile.gender.m':'男', 'profile.gender.f':'女', 'profile.gender.s':'保密', 'mine.album':'从相册选图' },
+  'zh-TW': { 'lib.title':'錦囊', 'price.from':'起', 'price.tab.all':'全部', 'lib.empty.title':'這裡還沒有項目', 'lib.empty.sub':'點右上角 + 匯入，或切換篩選看看', 'lib.cat.uncat':'未分類', 'lib.detail':'詳情', 'quota.verify':'驗證', 'quota.add.alias':'備註名', 'price.in':'輸入', 'price.out':'輸出', 'price.caps':'能力', 'price.quality':'品質', 'price.scenario':'場景', 'price.region':'網路', 'price.calc.words':'每篇字數', 'price.calc.t1':'總結', 'price.calc.t2':'翻譯', 'price.calc.t3':'創作', 'price.calc.out':'輸出字數', 'profile.gender.m':'男', 'profile.gender.f':'女', 'profile.gender.s':'保密', 'mine.album':'從相簿選圖' },
   'en-US': { 'lib.title':'Library', 'price.from':'from', 'price.tab.all':'All', 'lib.empty.title':'Nothing here yet', 'lib.empty.sub':'Tap + to import, or change filters', 'lib.cat.uncat':'Uncategorized', 'lib.detail':'Detail', 'quota.verify':'Verify', 'quota.add.alias':'Label', 'price.in':'Input', 'price.out':'Output', 'price.caps':'Capabilities', 'price.quality':'Quality', 'price.scenario':'Scenarios', 'price.region':'Network', 'price.calc.words':'Words per doc', 'price.calc.t1':'Summarize', 'price.calc.t2':'Translate', 'price.calc.t3':'Write', 'price.calc.out':'Output words', 'profile.gender.m':'Male', 'profile.gender.f':'Female', 'profile.gender.s':'Private', 'mine.album':'Choose from photos' },
   'ja-JP': { 'lib.title':'ライブラリ', 'price.from':'から', 'price.tab.all':'すべて', 'lib.empty.title':'まだ何もありません', 'lib.empty.sub':'＋から取り込むか、絞り込みを変えてください', 'lib.cat.uncat':'未分類', 'lib.detail':'詳細', 'quota.verify':'検証', 'quota.add.alias':'ラベル', 'price.in':'入力', 'price.out':'出力', 'price.caps':'機能', 'price.quality':'品質', 'price.scenario':'用途', 'price.region':'ネットワーク', 'price.calc.words':'1 件あたりの文字数', 'price.calc.t1':'要約', 'price.calc.t2':'翻訳', 'price.calc.t3':'作成', 'price.calc.out':'出力文字数', 'profile.gender.m':'男性', 'profile.gender.f':'女性', 'profile.gender.s':'非公開', 'mine.album':'写真から選ぶ' },
   'ko-KR': { 'lib.title':'라이브러리', 'price.from':'부터', 'price.tab.all':'전체', 'lib.empty.title':'아직 항목이 없습니다', 'lib.empty.sub':'+ 버튼으로 가져오거나 필터를 바꿔보세요', 'lib.cat.uncat':'미분류', 'lib.detail':'상세', 'quota.verify':'확인', 'quota.add.alias':'라벨', 'price.in':'입력', 'price.out':'출력', 'price.caps':'기능', 'price.quality':'품질', 'price.scenario':'용도', 'price.region':'네트워크', 'price.calc.words':'문서당 글자 수', 'price.calc.t1':'요약', 'price.calc.t2':'번역', 'price.calc.t3':'창작', 'price.calc.out':'출력 글자 수', 'profile.gender.m':'남성', 'profile.gender.f':'여성', 'profile.gender.s':'비공개', 'mine.album':'사진에서 선택' },
