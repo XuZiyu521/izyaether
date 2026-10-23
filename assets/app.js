@@ -250,10 +250,14 @@ function avatarSrc() {
   const i = (typeof p.avatar === 'number' && p.avatar >= 1 && p.avatar <= 6) ? p.avatar : 0;
   return 'assets/img/avatar_' + (i === 0 ? 'default' : i) + '.png';
 }
+/* 内置封面（2026-10-23 换成自绘 6 色）：竖屏用 1080×2340 原版，横屏（电脑）用另画的 2400×1350 横版，
+   否则竖图铺满宽屏只剩中间一条、圆弧被裁掉 */
+function isWide() { return (window.innerWidth || 0) > (window.innerHeight || 0); }
+function presetCoverUrl(n) { return 'assets/img/cover_' + n + (isWide() ? '_w' : '') + '.jpg'; }
 function coverHTML(title, sub, fade) {
   const n = store.get(LS.cover, 1);
   const p = store.get(LS.profile, {});
-  const img = (p.coverCustom && p.coverImg) ? p.coverImg : 'assets/img/cover_' + n + '.jpg';
+  const img = (p.coverCustom && p.coverImg) ? p.coverImg : presetCoverUrl(n);
   /* tail：封面向下多画 56px（不占布局，压在第一张卡后面），渐隐带才能放长、照片慢慢化开（App CoverBackdrop.tail） */
   return `<div class="cover tail" style="--cover_fade:${fade || 48}px">
     <img src="${esc(img)}" alt="">
@@ -264,7 +268,7 @@ function coverHTML(title, sub, fade) {
 function coverImgUrl() {
   const n = store.get(LS.cover, 1);
   const p = store.get(LS.profile, {});
-  return (p.coverCustom && p.coverImg) ? p.coverImg : 'assets/img/cover_' + n + '.jpg';
+  return (p.coverCustom && p.coverImg) ? p.coverImg : presetCoverUrl(n);
 }
 function applyTheme() {
   const m = store.get(LS.theme, 'light');
@@ -307,7 +311,7 @@ function applyTheme() {
 const TONE_CACHE = {};
 function measureTone(url, bg) {
   const apply = function (lum) {
-    const target = [0.32, 0.30, 0.26], lo = [0.10, 0.16, 0.22];
+    const target = [0.32, 0.30, 0.26], lo = [0.06, 0.04, 0.04];   /* 与 App 同步：原下限 0.10/0.16/0.22 会把深色封面压成灰黑 */
     lum.forEach(function (l, z) {
       const a = Math.min(0.72, Math.max(lo[z], l > 0 ? 1 - target[z] / l : lo[z]));
       bg.style.setProperty('--s' + z, a.toFixed(3));
@@ -449,6 +453,17 @@ if (window.visualViewport) {
   window.visualViewport.addEventListener('scroll', syncShellH);
 }
 syncShellH();
+/* 横竖切换（电脑窗口拉宽/拉窄、平板转屏）：换成对应版本的内置封面 */
+let lastWide = isWide();
+window.addEventListener('resize', function () {
+  if (isWide() === lastWide) return;
+  lastWide = isWide();
+  document.querySelectorAll('img[src*="assets/img/cover_"]').forEach(function (im) {
+    const m = im.getAttribute('src').match(/cover_(\d)(_w)?\.jpg/);
+    if (m) im.setAttribute('src', presetCoverUrl(m[1]));
+  });
+  applyTheme();
+});
 
 /* ══════════ 渲染 ══════════ */
 const BINDER = { manual: 'bindManual', detail: 'bindDetail', edit: 'bindEdit', cats: 'bindCats', trash: 'bindTrash', import: 'bindImport', addkey: 'bindAddKey', qdetail: 'bindQDetail', vguide: 'bindVGuide', calc: 'bindCalc', compare: 'bindCompare', profile: 'bindProfile' };
@@ -1868,7 +1883,7 @@ function viewMine() {
   const coverN = (p.coverCustom && p.coverImg) ? null : store.get(LS.cover, 1);
   return `<div class="minewrap">
     <div class="mcover" onclick="openCover()">
-      <img src="${(p.coverCustom && p.coverImg) ? esc(p.coverImg) : 'assets/img/cover_' + (coverN || 1) + '.jpg'}" alt="">
+      <img src="${(p.coverCustom && p.coverImg) ? esc(p.coverImg) : presetCoverUrl(coverN || 1)}" alt="">
       <span class="scrim"></span><span class="fblur"></span><span class="fade"></span>
     </div>
     <div class="prow2" id="profileRow">
@@ -2017,7 +2032,7 @@ function openCover() {
 function coverThumb(n, cur) {
   const on = cur === n;
   return `<button class="cvthumb ${on ? 'on' : ''}" data-cv="${n}">
-    <img src="assets/img/cover_${n}.jpg" alt="">${on ? '<span class="cvck">✓</span>' : ''}</button>`;
+    <img src="${presetCoverUrl(n)}" alt="">${on ? '<span class="cvck">✓</span>' : ''}</button>`;
 }
 /* 语言弹层（App langSheet：9 行，选中行右侧勾） */
 function openLang() {
