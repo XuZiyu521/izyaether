@@ -396,8 +396,9 @@ function buildChrome() {
   document.getElementById('verLine').textContent = 'izyAether v1.0.0 · ' + t('price.sub');
 }
 
-/* ── Dock 跟手反馈（App Index.dockBar）──
-   ① 光团：104×104 圆，#4DFFFFFF(30% 白) blur 28，position x = touchX-64、y = -26，被药丸裁掉；
+/* ── Dock 跟手反馈（App Index.dockBar，2026-10-25 同步）──
+   ① 光团：120×120 径向渐变（中心亮、边缘化开），圆心 = 触点（夹在药丸两端之内，拖到头也跟得上），被药丸裁掉；
+      电脑上鼠标悬停也跟着走（不用系统的方块高亮）；
    ② 跟手放大：scale = 1 + 0.08·exp(-d²/(2·30²))，d = |格心 - touchX|；150ms EaseOut。 */
 function bindDockTouch() {
   const pill = document.querySelector('#dock .pill');
@@ -406,7 +407,7 @@ function bindDockTouch() {
   const paint = function (x) {
     const w = pill.getBoundingClientRect().width;
     const seg = (w - 24) / 3;
-    if (blob) blob.style.transform = 'translateX(' + (x - 64) + 'px)';
+    if (blob) blob.style.transform = 'translateX(' + (Math.max(0, Math.min(w, x)) - 60) + 'px)';
     pill.querySelectorAll('.it').forEach(function (b, i) {
       const d = Math.abs(12 + seg * (i + 0.5) - x);
       b.style.transform = 'scale(' + (1 + 0.08 * Math.exp(-(d * d) / 1800)).toFixed(4) + ')';
@@ -416,17 +417,21 @@ function bindDockTouch() {
     if (blob) { blob.remove(); blob = null; }
     pill.querySelectorAll('.it').forEach(function (b) { b.style.transform = ''; });
   };
-  pill.addEventListener('pointerdown', function (e) {
-    clear();
-    blob = document.createElement('span');
-    blob.className = 'dockblob';
-    pill.appendChild(blob);
+  const start = function (e) {
+    if (!blob) {
+      blob = document.createElement('span');
+      blob.className = 'dockblob';
+      pill.appendChild(blob);
+    }
     paint(e.clientX - pill.getBoundingClientRect().left);
-  });
+  };
+  pill.addEventListener('pointerdown', start);
   pill.addEventListener('pointermove', function (e) {
-    if (blob) paint(e.clientX - pill.getBoundingClientRect().left);
+    if (blob || e.pointerType === 'mouse') start(e);
   });
-  ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) { pill.addEventListener(ev, clear); });
+  /* 触屏松手即灭；鼠标只在移出药丸时灭（悬停期间一直跟着） */
+  pill.addEventListener('pointerup', function (e) { if (e.pointerType !== 'mouse') clear(); });
+  ['pointercancel', 'pointerleave'].forEach(function (ev) { pill.addEventListener(ev, clear); });
 }
 
 /* ── 外壳高度同步（固定式底栏的关键，2026-10-14 改）──
@@ -1889,7 +1894,7 @@ function viewMine() {
       <span class="scrim"></span><span class="fblur"></span><span class="fade"></span>
     </div>
     <div class="prow2" id="profileRow">
-      <span class="avatar"><img src="${esc(avatarSrc())}" alt=""></span>
+      <span class="avatar"><img src="${esc(avatarSrc())}" alt="" onerror="this.onerror=null;this.src='assets/img/avatar_default.png'"></span>
       <div class="ptxt2">
         <div class="pname">${esc(logged ? nick : t('mine.login'))}</div>
         <div class="psub">${esc(logged ? sub2 : t('mine.login.hint'))}</div>

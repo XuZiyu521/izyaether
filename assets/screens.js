@@ -1648,7 +1648,7 @@ SCREENS.profile = function () {
   return `<div class="subpage profile">
     <div class="prtop">${hdrBack40()}<span class="prtop-t">${esc(t('mine.editProfile'))}</span></div>
     <div class="prwrap">
-      <img class="pravatar" src="${esc(avatarSrc())}" alt="">
+      <img class="pravatar" src="${esc(avatarSrc())}" alt="" onerror="this.onerror=null;this.src='assets/img/avatar_default.png'">
       <div class="pravatar-l">${esc(t('profile.avatar'))}</div>
       <div class="avatarow">
         ${[1, 2, 3, 4, 5, 6].map(function (i) {
@@ -1714,15 +1714,16 @@ function bindProfile() {
   const pf = document.getElementById('prFile');
   if (pf) pf.onchange = function () {
     const f = pf.files && pf.files[0];
+    pf.value = '';   // 同一张图再选一次也要触发
     if (!f) return;
-    const rd = new FileReader();
-    rd.onload = function () {
+    openAvatarCrop(f, function (dataUrl) {
       const p = store.get(LS.profile, {});
-      p.avatarCustom = rd.result;
+      p.avatarCustom = dataUrl;
       store.set(LS.profile, p);
+      /* 存不进去（浏览器存储满了）就别假装成功：读回来比对 */
+      if (store.get(LS.profile, {}).avatarCustom !== dataUrl) { toast(t('profile.avatar.fail')); return; }
       render();
-    };
-    rd.readAsDataURL(f);
+    });
   };
   const rg = document.getElementById('prRegion');
   if (rg) rg.onclick = prRegionSheet;
@@ -1739,4 +1740,111 @@ function bindProfile() {
   };
   const out = document.getElementById('prOut');
   if (out) out.onclick = function () { if (window.Cloud) Cloud.signOut(); history.back(); };
+}
+
+
+/* ══════════ 头像框选（App AvatarCropPage，2026-10-25 同步）══════════
+   选图后全屏框选：单指拖动、双指缩放（电脑上滚轮缩放），把要的部分放进圆框，点「完成」。
+   输出统一重新编码成 512×512 JPEG（约几十 KB）——原来整张原图转 base64 存进 localStorage，
+   大照片动辄几 MB，超出浏览器存储上限时静默失败，头像就是空的。 */
+const CROP_DECODE_MAX = 2048, CROP_OUT = 512;
+function openAvatarCrop(file, onDone) {
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onerror = function () { URL.revokeObjectURL(url); toast(t('profile.avatar.fail')); };
+  img.onload = function () {
+    /* 超大图先缩到长边 2048：既省内存，拖动也不卡 */
+    let src = img, W = img.naturalWidth, H = img.naturalHeight;
+    const k = Math.min(1, CROP_DECODE_MAX / Math.max(W, H));
+    if (k < 1) {
+      const c0 = document.createElement('canvas');
+      c0.width = Math.max(1, Math.round(W * k)); c0.height = Math.max(1, Math.round(H * k));
+      c0.getContext('2d').drawImage(img, 0, 0, c0.width, c0.height);
+      src = c0; W = c0.width; H = c0.height;
+    }
+    URL.revokeObjectURL(url);
+    buildCrop(src, W, H, onDone);
+  };
+  img.src = url;
+}
+function buildCrop(src, W, H, onDone) {
+  const m = document.createElement('div');
+  m.className = 'acrop';
+  m.innerHTML = `<canvas></canvas>
+    <div class="acrop-hint">${esc(t('avatar.crop.hint'))}</div>
+    <div class="acrop-btns"><button class="acrop-no">${esc(t('common.cancel'))}</button><button class="acrop-ok">${esc(t('avatar.crop.done'))}</button></div>`;
+  document.body.appendChild(m);
+  const cv = m.querySelector('canvas'), cx = cv.getContext('2d');
+  let vw = 0, vh = 0, zoom = 1, ox = 0, oy = 0;
+  const D = function () { return Math.max(160, Math.min(vw - 48, vh - 200, 360)); };
+  const scale = function () { return Math.max(D() / W, D() / H) * zoom; };
+  const clamp = function () {
+    const s = scale(), d = D();
+    const mx = Math.max(0, (W * s - d) / 2), my = Math.max(0, (H * s - d) / 2);
+    ox = Math.max(-mx, Math.min(mx, ox)); oy = Math.max(-my, Math.min(my, oy));
+  };
+  const draw = function () {
+    const dpr = window.devicePixelRatio || 1;
+    vw = m.clientWidth; vh = m.clientHeight;
+    if (cv.width !== Math.round(vw * dpr) || cv.height !== Math.round(vh * dpr)) {
+      cv.width = Math.round(vw * dpr); cv.height = Math.round(vh * dpr);
+    }
+    clamp();
+    const s = scale(), d = D();
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx.fillStyle = '#000'; cx.fillRect(0, 0, vw, vh);
+    cx.drawImage(src, vw / 2 + ox - W * s / 2, vh / 2 + oy - H * s / 2, W * s, H * s);
+    /* 圆框外压暗（整层 70% 黑，圆内挖空）+ 圆框白描边 */
+    cx.beginPath(); cx.rect(0, 0, vw, vh); cx.arc(vw / 2, vh / 2, d / 2, 0, Math.PI * 2, true);
+    cx.fillStyle = 'rgba(0,0,0,.7)'; cx.fill('evenodd');
+    cx.beginPath(); cx.arc(vw / 2, vh / 2, d / 2, 0, Math.PI * 2);
+    cx.strokeStyle = 'rgba(255,255,255,.9)'; cx.lineWidth = 1.5; cx.stroke();
+  };
+  /* 手势：一指拖动、两指缩放（以两指中点为基准的距离比） */
+  const pts = new Map();
+  let base = null;
+  const snap = function () {
+    const a = Array.from(pts.values());
+    base = { zoom: zoom, ox: ox, oy: oy, x: a[0].x, y: a[0].y,
+      dist: a.length > 1 ? Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y) : 0 };
+  };
+  cv.addEventListener('pointerdown', function (e) {
+    try { cv.setPointerCapture(e.pointerId); } catch (err) { /* 个别浏览器 / 合成事件不支持捕获：照样能拖 */ }
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); snap();
+  });
+  cv.addEventListener('pointermove', function (e) {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const a = Array.from(pts.values());
+    if (a.length > 1 && base.dist > 0) {
+      zoom = Math.max(1, Math.min(6, base.zoom * Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y) / base.dist));
+    } else {
+      ox = base.ox + a[0].x - base.x; oy = base.oy + a[0].y - base.y;
+    }
+    draw();
+  });
+  const up = function (e) { pts.delete(e.pointerId); if (pts.size) snap(); };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+  cv.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    zoom = Math.max(1, Math.min(6, zoom * Math.exp(-e.deltaY * 0.0015))); draw();
+  }, { passive: false });
+  const onResize = function () { draw(); };
+  window.addEventListener('resize', onResize);
+  const close = function () { window.removeEventListener('resize', onResize); m.remove(); };
+  m.querySelector('.acrop-no').onclick = close;
+  m.querySelector('.acrop-ok').onclick = function () {
+    const s = scale(), d = D();
+    const size = Math.min(W, H, d / s);
+    const sx = Math.max(0, Math.min(W - size, W / 2 + (-d / 2 - ox) / s));
+    const sy = Math.max(0, Math.min(H - size, H / 2 + (-d / 2 - oy) / s));
+    const out = document.createElement('canvas'); out.width = CROP_OUT; out.height = CROP_OUT;
+    out.getContext('2d').drawImage(src, sx, sy, size, size, 0, 0, CROP_OUT, CROP_OUT);
+    let data = '';
+    try { data = out.toDataURL('image/jpeg', 0.9); } catch (err) { data = ''; }
+    close();
+    if (!data) { toast(t('profile.avatar.fail')); return; }
+    onDone(data);
+  };
+  draw();
 }

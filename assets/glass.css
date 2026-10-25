@@ -110,7 +110,7 @@ html.glass .grouptitle{font-size:calc(21px / var(--tz,1)); font-weight:800; colo
 html.glass .pill,html.glass .orb,html.glass .dockfab{
   background:rgba(255,255,255,.16); -webkit-backdrop-filter:blur(30px); backdrop-filter:blur(30px);
   border:0; box-shadow:0 8px 24px rgba(0,0,0,.28)}
-html.glass .dockblob{display:none}
+html.glass .dockblob{background:radial-gradient(circle closest-side,rgba(255,255,255,.28) 0,rgba(255,255,255,.14) 45%,rgba(255,255,255,0) 100%)}
 html.glass .pill .ib .bg,html.glass .orb .circle{background:#fff}
 html.glass .pill img,html.glass .orb img{filter:brightness(0) invert(1); opacity:.78}
 html.glass .pill .it.on img,html.glass .orb.on img{filter:brightness(0); opacity:1}

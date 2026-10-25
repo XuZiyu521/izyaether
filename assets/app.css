@@ -522,8 +522,9 @@ html.dark .mcover .fade{background:linear-gradient(180deg,rgba(16,21,28,0),#1015
 .pill img{position:relative; width:26px; height:26px; display:block}
 .pill .lb{font-size:11px; line-height:12px; margin-top:2px; color:var(--text_sub)}   /* 38+2+12=52 = 药丸内高 */
 .pill .it.on .lb{color:var(--primary); font-weight:500}
-.dockblob{position:absolute; left:0; top:-26px; width:104px; height:104px; border-radius:50%;
-  background:rgba(255,255,255,.30); filter:blur(28px); pointer-events:none}
+.dockblob{position:absolute; left:0; top:-32px; width:120px; height:120px; border-radius:50%; pointer-events:none;
+  /* 2026-10-25 与 App 同步：径向渐变（中心亮、边缘慢慢化开），不用 blur —— blur 会被方形边界截断成亮方块 */
+  background:radial-gradient(circle closest-side,rgba(255,255,255,.45) 0,rgba(255,255,255,.22) 45%,rgba(255,255,255,0) 100%)}
 .orb{
   position:relative; width:62px; height:62px; flex:0 0 62px; border-radius:31px; cursor:pointer;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -1471,3 +1472,12 @@ html.glass .c2pick{background:rgba(255,255,255,.10)}
 html.glass .mstat{-webkit-backdrop-filter:var(--glass_blur); backdrop-filter:var(--glass_blur)}
 html.glass .mstat b{font-size:calc(22px / var(--tz,1))}
 html.glass .mstat i{font-size:calc(13px / var(--tz,1))}
+
+/* 头像框选（App AvatarCropPage）：全屏黑底，画布铺满；提示在上、按钮在下 */
+.acrop{position:fixed; left:0; top:0; width:100%; height:var(--app_h,100vh); background:#000; z-index:90; touch-action:none; user-select:none}
+.acrop canvas{position:absolute; inset:0; width:100%; height:100%; display:block; cursor:grab; touch-action:none}
+.acrop-hint{position:absolute; left:0; right:0; top:calc(20px + env(safe-area-inset-top,0px)); text-align:center; font-size:14px; color:rgba(255,255,255,.85); pointer-events:none}
+.acrop-btns{position:absolute; left:24px; right:24px; bottom:calc(20px + env(safe-area-inset-bottom,0px)); display:flex; gap:12px}
+.acrop-btns button{flex:1; height:46px; border:0; border-radius:23px; font-size:16px; font-family:inherit; cursor:pointer}
+.acrop-no{background:rgba(255,255,255,.2); color:#fff}
+.acrop-ok{background:#fff; color:#0B1220; font-weight:700}
