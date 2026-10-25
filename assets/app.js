@@ -348,7 +348,9 @@ function measureTone(url, bg) {
 function parseHash() {
   const h = location.hash.replace(/^#/, '');
   const parts = h.split('/');
-  return { main: parts[0] || 'library', sub: parts[1] || '', arg: parts.slice(2).join('/') };
+  /* 不认识的主页名（手打错的 #pricing 之类）回到锦囊，否则整页报错白屏 */
+  const main = ['library', 'quota', 'price', 'mine'].indexOf(parts[0]) >= 0 ? parts[0] : 'library';
+  return { main: main, sub: main === parts[0] ? (parts[1] || '') : '', arg: main === parts[0] ? parts.slice(2).join('/') : '' };
 }
 function goHash(h) { location.hash = h; }
 
