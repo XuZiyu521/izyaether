@@ -1,6 +1,6 @@
 {
  "meta": {
-  "priceUpdatedAt": "2026-10-25",
+  "priceUpdatedAt": "2026-10-26",
   "builtinVersion": 6
  },
  "vendorOrder": [
@@ -127,7 +127,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.deepseek.com",
-   "note": "高峰 ¥2/¥8 · 低谷半价 ¥1/¥4 · 缓存命中高峰 ¥0.04 · 视觉可用 · 最大输出 384K · 搜索/抓取工具 ¥5/千次"
+   "note": "高峰 ¥2/¥8 · 低谷半价 ¥1/¥4 · 缓存命中高峰 ¥0.04 · 视觉可用 · 最大输出 384K · 搜索/抓取工具 ¥5/千次（经 Claude Code/Codex 等调用 11-01 起计费）· 旧名 deepseek-v4-flash 自动路由至本模型"
   },
   {
    "id": "deepseek-v4-pro",
@@ -477,6 +477,26 @@
    "quality": 4,
    "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
    "note": "2026-10-21 开源 · 27B 原生视觉 Dense · 图/文/视频输入 · 思考模式 · 百炼北京区原价（不含限时优惠）"
+  },
+  {
+   "id": "qwen3-8-27b",
+   "vendor": "Qwen",
+   "name": "Qwen3.8-27B",
+   "priceIn": 3,
+   "priceOut": 12,
+   "contextK": 1000,
+   "caps": [
+    "fn",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "翻译"
+   ],
+   "quality": 4,
+   "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+   "note": "Qwen3.8 开源中杯 · 思考/非思考同价 · 1M 上下文 · 上下文缓存有折扣 · 百炼北京区价（2026-10-26 核对）"
   },
   {
    "id": "qwen3-8-max-prime",
@@ -1165,7 +1185,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.anthropic.com/v1",
-   "note": "2026-09-22 发布 · 较 Opus 5 降价 20% · $4/$20"
+   "note": "2026-09-22 发布 · 较 Opus 5 降价 20% · $4/$20 · 缓存命中 $0.20"
   },
   {
    "id": "claude-sonnet-5-5",
@@ -1186,7 +1206,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.anthropic.com/v1",
-   "note": "当前主力 · $2/$10 永久价"
+   "note": "当前主力 · $2/$10 永久价 · 缓存命中 $0.10"
   },
   {
    "id": "claude-haiku-5-5",
@@ -1206,7 +1226,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.anthropic.com/v1",
-   "note": "≤100K 提示 $0.1/$0.5 · 超长提示 $0.5/$2.5"
+   "note": "≤100K 提示 $0.1/$0.5 · 超长提示 $0.5/$2.5 · 缓存命中 $0.01"
   },
   {
    "id": "claude-fable-5-1",
@@ -1226,7 +1246,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.anthropic.com/v1",
-   "note": "创作/复杂任务旗舰 · $10/$50"
+   "note": "创作/复杂任务旗舰 · $10/$50 · 缓存命中 $0.25"
   },
   {
    "id": "gemini-3-1-pro",
@@ -1332,7 +1352,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
-   "note": "快速档 · 多步工作流 · $0.75/$3.75"
+   "note": "快速档 · 多步工作流 · 促销 $0.75/$3.75（至 2026-12-31）· 2027-01 起 $1.5/$7.5"
   },
   {
    "id": "gemini-3-5-flash-lite",
@@ -2910,25 +2930,25 @@
      "name": "Free",
      "month": "$0",
      "year": "",
-     "benefits": "月 2,000 次补全 + 50 次对话"
+     "benefits": "月 2,000 次补全 · 有限对话与 Agent · 入门模型"
     },
     {
      "name": "Pro",
      "month": "$10/月",
      "year": "$100/年",
-     "benefits": "补全 + Chat + 多模型切换"
+     "benefits": "补全不限 · 月含 $15 AI Credits（$10 基础 + $5 弹性）用于对话/Agent"
     },
     {
      "name": "Pro+",
      "month": "$39/月",
      "year": "$390/年",
-     "benefits": "更高额度 · 顶级模型优先"
+     "benefits": "补全不限 · 月含 $70 AI Credits（$39 + $31 弹性）"
     },
     {
      "name": "Max",
      "month": "$100/月",
      "year": "",
-     "benefits": "最高个人额度"
+     "benefits": "补全不限 · 月含 $200 AI Credits（$100 + $100 弹性）"
     },
     {
      "name": "Business",

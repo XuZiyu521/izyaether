@@ -1481,3 +1481,135 @@ html.glass .mstat i{font-size:calc(13px / var(--tz,1))}
 .acrop-btns button{flex:1; height:46px; border:0; border-radius:23px; font-size:16px; font-family:inherit; cursor:pointer}
 .acrop-no{background:rgba(255,255,255,.2); color:#fff}
 .acrop-ok{background:#fff; color:#0B1220; font-weight:700}
+
+/* ══ 比价长条 · 额度月消耗（2026-10-31，与 App 同一设计，配合 bars.js）══ */
+:root{--pbtrack:rgba(0,0,0,.08); --pbchip:rgba(0,0,0,.08); --pbon:var(--primary); --pbonfg:#fff}
+html.glass{--pbtrack:rgba(255,255,255,.15); --pbchip:rgba(255,255,255,.12); --pbon:#fff; --pbonfg:#16102C}
+.pbpage{position:relative; padding-left:0!important; padding-right:0!important}
+.pbsearch{position:absolute; right:16px; top:-74px; width:44px; height:44px; border-radius:22px; border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.22); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:3}
+.pbsearch svg{width:20px;height:20px}
+.pbseg{display:flex; height:40px; margin:0 20px; padding:3px; border-radius:20px; background:var(--pbchip)}
+.pbseg button{flex:1; border:0; border-radius:17px; background:none; color:var(--text_main); font:500 14px inherit; font-family:inherit; cursor:pointer}
+.pbseg button.on{background:#fff; color:#16102C}
+.pbwant{display:flex; align-items:center; gap:10px; width:calc(100% - 40px); margin:14px 20px 0; border:0; background:none; color:var(--text_main); font-family:inherit; cursor:pointer; padding:0}
+.pbwant b{font-size:20px; font-weight:500}
+.pbwant span{height:40px; line-height:40px; padding:0 16px; max-width:200px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; border-radius:20px; font-size:17px; font-weight:500; color:#fff; background:var(--primary)}
+html.glass .pbwant span{background:rgba(255,255,255,.22)}
+.pbbasis{margin:6px 20px 0; font-size:13px; color:var(--text_sub)}
+.pbfilter{display:flex; align-items:center; gap:8px; margin:10px 20px 8px}
+.pbfilter button{height:32px; padding:0 14px; border:0; border-radius:16px; background:var(--pbchip); color:var(--text_main); font:500 14px inherit; font-family:inherit; cursor:pointer}
+.pbfilter button.on{background:var(--pbon); color:var(--pbonfg)}
+.pbfilter i{flex:1}
+.pbfilter .pbsort{background:none; padding:0; font-size:13px}
+.pbunit{margin:0 20px 8px; text-align:right; font-size:12px; color:var(--text_sub)}
+.pblist{display:flex; flex-direction:column}
+.pbbar{display:flex; align-items:center; gap:12px; height:76px; flex:none; margin-top:-8px; padding:0 12px 0 20px; border-radius:0 24px 24px 0; box-shadow:0 10px 18px rgba(0,0,0,.42); cursor:pointer; user-select:none; -webkit-user-select:none; touch-action:pan-y; box-sizing:border-box}
+.pblist .pbbar:first-child{margin-top:0}
+.pbbar:nth-child(n){position:relative}
+.pbicon{border-radius:50%; flex:none; display:block}
+.pbtxt{display:flex; flex-direction:column; min-width:0; color:#fff}
+.pbtxt b{font-size:14px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.pbtxt strong{font-size:19px; font-weight:700; white-space:nowrap}
+.pbcmp{position:fixed; left:20px; right:20px; bottom:calc(96px + env(safe-area-inset-bottom,0px)); max-width:520px; margin:0 auto; height:48px; display:flex; align-items:center; justify-content:space-between; padding:0 6px 0 18px; border-radius:24px; background:rgba(36,28,68,.92); color:#fff; font-size:14px; z-index:40; cursor:pointer}
+.pbcmp button{height:36px; padding:0 18px; border:0; border-radius:18px; background:#fff; color:#16102C; font:500 14px inherit; font-family:inherit; cursor:pointer}
+.pblayer{position:fixed; inset:0; z-index:2000; color:#fff; font-family:inherit; display:flex; justify-content:center}
+.pblayer.center{align-items:center}
+.pblayer.bottom{align-items:flex-end}
+.pbshade{position:absolute; inset:0; background:rgba(5,3,14,.62); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px)}
+.pbwin{position:relative; width:91%; max-width:420px; max-height:84vh; display:flex; flex-direction:column; border-radius:30px; overflow:hidden; background:#17122F; box-shadow:0 20px 40px rgba(0,0,0,.65); animation:pbpop .28s ease-out}
+.pbwin.still{animation:none}
+@keyframes pbpop{from{opacity:0; transform:translateY(var(--oy)) scale(.72,.2)}to{opacity:1; transform:none}}
+.pbwh{position:relative; display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding:18px 20px}
+.pbwh span{display:flex; flex-direction:column; flex:1; min-width:0}
+.pbwh b{font-size:22px; font-weight:700}
+.pbwh i{font-style:normal; font-size:14px}
+.pbwh strong{width:100%; font-size:30px; font-weight:700}
+.pbx{position:absolute; right:14px; top:14px; width:40px; height:40px; border:0; border-radius:20px; background:rgba(0,0,0,.22); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center}
+.pbx svg{width:18px;height:18px}
+.pbrows{overflow:auto}
+.pbrow{padding:12px 20px; border-top:1px solid rgba(255,255,255,.08); cursor:pointer}
+.pbrh{display:flex; align-items:center; gap:10px}
+.pbrh span{flex:1; min-width:0; display:flex; flex-direction:column}
+.pbrh b{font-size:16px; font-weight:500}
+.pbrh i{font-style:normal; font-size:13px; color:rgba(255,255,255,.76)}
+.pbrh strong{font-size:16px; font-weight:600; white-space:nowrap}
+.pbpin{width:40px; height:40px; flex:none; border:0; border-radius:20px; background:rgba(255,255,255,.1); color:#fff; font-size:16px; cursor:pointer}
+.pbpin.on{background:#fff}
+.pbnote{margin-top:8px; font-size:13px; line-height:19px; color:rgba(255,255,255,.8)}
+.pbadd{margin-top:8px; height:36px; padding:0 16px; border:0; border-radius:18px; background:rgba(255,255,255,.12); color:#fff; font-size:14px; font-family:inherit; cursor:pointer}
+.pbadd.on{background:#fff; color:#14102A}
+.pbwf{padding:14px 20px; font-size:13px; color:rgba(255,255,255,.78)}
+.pbsr{position:absolute; inset:0; background:#14102A; overflow:auto; animation:pbfade .16s ease-out}
+@keyframes pbfade{from{opacity:0}to{opacity:1}}
+.pbsh{position:sticky; top:0; display:flex; align-items:center; gap:8px; padding:12px 16px 12px 8px; background:#14102A; z-index:1}
+.pbback{width:44px; height:44px; border:0; background:none; color:#fff; font-size:30px; cursor:pointer}
+.pbsh input{flex:1; min-width:0; height:44px; padding:0 18px; border:0; outline:0; border-radius:22px; background:rgba(255,255,255,.12); color:#fff; font-size:16px; font-family:inherit}
+.pbsh input::placeholder,.pbask input::placeholder,.pbask textarea::placeholder{color:rgba(255,255,255,.7)}
+.pbhot,.pbchips{display:flex; flex-wrap:wrap; gap:8px}
+.pbhot{padding:8px 20px}
+.pbhot button,.pbchips button{height:36px; padding:0 14px; border:0; border-radius:18px; background:rgba(255,255,255,.12); color:#fff; font-size:14px; font-family:inherit; cursor:pointer}
+.pbchips button.on{background:#fff; color:#16102C}
+.pbgl{padding:0 20px; margin:12px 0 10px; font-size:14px; font-weight:500}
+.pbnone{margin-top:48px; text-align:center; font-size:15px}
+.pbsheet,.pbask{position:relative; width:100%; max-width:560px; box-sizing:border-box; padding:18px 20px calc(18px + env(safe-area-inset-bottom,0px)); border-radius:30px 30px 0 0; background:#14102A; animation:pbup .22s ease-out}
+@keyframes pbup{from{transform:translateY(60%)}to{transform:none}}
+.pbsheet h3,.pbask h3{margin:0 0 12px; font-size:20px; font-weight:500}
+.pbsheet button{display:flex; justify-content:space-between; align-items:center; width:100%; height:52px; margin-bottom:6px; padding:0 16px; border:0; border-radius:18px; background:rgba(255,255,255,.08); color:#fff; font-size:15px; font-family:inherit; cursor:pointer}
+.pbsheet button.on{background:rgba(143,138,216,.24)}
+.pbsheet i{font-style:normal}
+.pbask{height:88vh; display:flex; flex-direction:column}
+.pbaskb{flex:1; overflow:auto; margin-top:12px}
+.pbask .pbseg{margin:0; background:rgba(255,255,255,.09)}
+.pbask .pbseg button{color:#fff}
+.pbask .pbseg button.on{color:#16102C}
+.pbask input:not([data-f]),.pbask textarea{width:100%; box-sizing:border-box; padding:14px 16px; border:0; outline:0; border-radius:18px; background:rgba(255,255,255,.1); color:#fff; font-size:16px; font-family:inherit}
+.pbask textarea{height:130px; resize:none}
+.pbfield{display:flex; align-items:center; height:52px; margin-bottom:8px; padding:0 16px; border-radius:18px; background:rgba(255,255,255,.1); font-size:15px}
+.pbfield span{flex:1}
+.pbfield input{width:100px; border:0; outline:0; background:none; color:#fff; text-align:right; font-size:16px; font-family:inherit}
+.pblb{margin:16px 0 8px; font-size:14px; color:rgba(255,255,255,.86)}
+.pbrec,.pbfail{margin-top:10px; padding:12px 14px; border-radius:14px; font-size:13px; line-height:19px; background:rgba(255,255,255,.08)}
+.pbfail{background:rgba(201,113,79,.2)}
+.pbgo{height:52px; flex:none; margin-top:12px; border:0; border-radius:26px; background:#fff; color:#16102C; font-size:16px; font-weight:500; font-family:inherit; cursor:pointer}
+.pbgo:disabled{background:rgba(255,255,255,.12); color:rgba(255,255,255,.6); cursor:default}
+.pbun{height:44px; flex:none; border:0; background:none; color:rgba(255,255,255,.76); font-size:14px; font-family:inherit; cursor:pointer}
+.spring{position:relative; width:220px; height:220px; margin:8px auto 0}
+.spring svg{width:100%;height:100%;display:block}
+.spring div{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--text_main)}
+.spring i{font-style:normal; font-size:12px}
+.spring b{font-size:21px; font-weight:700}
+.splg{display:flex; flex-wrap:wrap; justify-content:center; gap:6px 14px; margin-top:10px; font-size:13px; color:var(--text_main)}
+.splg span{display:flex; align-items:center; gap:6px}
+.splg i{width:10px; height:10px; border-radius:3px}
+.sptitle{margin:20px 0 10px; font-size:18px; font-weight:600; color:var(--text_main)}
+.sptk{display:flex; align-items:center; gap:12px; height:112px; margin-bottom:10px; padding:0 0 0 18px; border-radius:24px; color:#fff; box-shadow:0 10px 18px rgba(0,0,0,.35); user-select:none; -webkit-user-select:none; -webkit-mask:radial-gradient(circle 9px at calc(100% - 92px) 0,transparent 97%,#000) top/100% 51% no-repeat,radial-gradient(circle 9px at calc(100% - 92px) 100%,transparent 97%,#000) bottom/100% 51% no-repeat; mask:radial-gradient(circle 9px at calc(100% - 92px) 0,transparent 97%,#000) top/100% 51% no-repeat,radial-gradient(circle 9px at calc(100% - 92px) 100%,transparent 97%,#000) bottom/100% 51% no-repeat}
+.spti{flex:1; min-width:0; display:flex; flex-direction:column}
+.spti b{font-size:17px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.spti i{font-style:normal; font-size:13px}
+.spti strong{margin-top:4px; font-size:22px}
+.sptd{width:92px; height:88px; flex:none; display:flex; flex-direction:column; align-items:center; justify-content:center; border-left:2px dashed rgba(255,255,255,.55)}
+.sptd strong{font-size:30px}
+.sptd i{font-style:normal; font-size:13px}
+.sptd b{font-size:20px}
+.spadd{width:100%; height:64px; margin-bottom:12px; border:1px dashed var(--text_ter); border-radius:22px; background:var(--pbchip); color:var(--text_main); font-size:15px; font-family:inherit; cursor:pointer}
+.spcard{margin-bottom:14px; padding:16px; border-radius:24px; background:#17122F; color:#fff; touch-action:pan-y; user-select:none; -webkit-user-select:none}
+.sph{display:flex; justify-content:space-between; align-items:center}
+.sph b{font-size:18px; font-weight:500}
+.sph span{display:flex; align-items:center; font-size:13px}
+.sph i{width:10px; height:10px; margin:0 6px 0 12px; border-radius:3px}
+i.a,u.a{background:#8F8AD8} i.s,u.s{background:#E8E6F5}
+.spn{display:flex; justify-content:space-between; margin-top:8px}
+.spn em{display:block; font-style:normal; font-size:13px}
+.spn strong{font-size:26px}
+.spn p{display:flex; gap:18px; margin:0}
+.spn span{display:flex; flex-direction:column; font-size:13px}
+.spn p b{font-size:15px; font-weight:500}
+.spbars{display:flex; gap:6px; height:130px; margin-top:12px}
+.spbars button{flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; border:0; background:none; color:rgba(255,255,255,.7); font-size:12px; font-family:inherit; cursor:pointer}
+.spbars button.on{color:#fff; font-weight:600}
+.spbars i{flex:1; width:26px; display:flex; flex-direction:column-reverse; justify-content:flex-start; border-bottom:2px solid rgba(255,255,255,.12)}
+.spbars u{display:block; border-radius:5px; text-decoration:none}
+.cmphead:has(.pbcol),html.glass .cmphead:has(.pbcol){gap:6px; padding:0; margin-bottom:12px; background:none; border:0; box-shadow:none}
+.pbcol,html.glass .pbcol{height:104px; padding:12px 6px 0; border-radius:20px; box-shadow:0 8px 16px rgba(0,0,0,.35)}
+.pbcol b,html.glass .pbcol b{margin-top:8px; font-size:13px; color:#fff}
+html.glass .cmpprice,html.glass .cmpattr,html.glass .cmpsummary,html.glass .cmpnote{background:rgba(20,16,42,.7)}

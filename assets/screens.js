@@ -1507,7 +1507,7 @@ SCREENS.compare = function () {
   const ids = String(S.arg || '').split(',').filter(Boolean).slice(0, 4);
   const ms = (DATA.apiPrices || []).filter(function (m) { return ids.indexOf(m.id) >= 0; });
   if (ms.length < 2) {
-    return `<div class="subpage compare">${hdrBig(t('cmp.title'), t('cmp.sub', 0, PRICE_UPDATED_AT))}
+    return `<div class="subpage compare">${hdrBig(t('cmp.title'), t('cmp.sub', 0, (DATA.meta || {}).priceUpdatedAt || PRICE_UPDATED_AT))}
       <div class="cmpwrap"><div class="cmpempty">${esc(t('cmp.empty'))}</div></div></div>`;
   }
   const fieldOf = function (m, f) {
@@ -1524,13 +1524,19 @@ SCREENS.compare = function () {
     }
     return best;
   };
+  /* 并列第一都高亮；全部相同时没有差别，不标（与 App ComparePage.isTop 一致） */
+  const isTop = function (f, mi, lower) {
+    const best = fieldOf(ms[bestIdx(f, lower)], f);
+    return !ms.every(function (m) { return fieldOf(m, f) === best; }) && fieldOf(ms[mi], f) === best;
+  };
   const num = function (v) { return String(v); };
   const ctxText = function (k) { return k >= 1000 ? (k / 1000) + 'M' : k + 'K'; };
-  const bi = bestIdx('priceIn', true), bo = bestIdx('priceOut', true), bc = bestIdx('contextK', true), bq = bestIdx('quality', true);
+  const bi = bestIdx('priceIn', true), bo = bestIdx('priceOut', true), bc = bestIdx('contextK', false), bq = bestIdx('quality', false);
   const priceLine = function (labelKey, field, best) {
     return `<div class="cmpline"><span class="cmplabel">${esc(t(labelKey))}</span>
       ${ms.map(function (m, mi) {
-    return `<span class="cmpcell ${mi === best ? 'hl' : ''}"><b>¥${num(field === 'priceIn' ? m.priceIn : m.priceOut)}</b>${mi === best ? `<i>${esc(t('cmp.best'))}</i>` : ''}</span>`;
+    const top = isTop(field, mi, true);
+    return `<span class="cmpcell ${top ? 'hl' : ''}"><b>¥${num(field === 'priceIn' ? m.priceIn : m.priceOut)}</b>${top ? `<i>${esc(t('cmp.best'))}</i>` : ''}</span>`;
   }).join('')}</div>`;
   };
   const attrRow = function (labelKey, cellFn) {
@@ -1541,12 +1547,11 @@ SCREENS.compare = function () {
   }).join('')}</div>`;
   };
   return `<div class="subpage compare">
-    ${hdrBig(t('cmp.title'), t('cmp.sub', ms.length, PRICE_UPDATED_AT))}
+    ${hdrBig(t('cmp.title'), t('cmp.sub', ms.length, (DATA.meta || {}).priceUpdatedAt || PRICE_UPDATED_AT))}
     <div class="cmpwrap">
       <div class="cmphead">
-        <span class="cmpattrcol"></span>
         ${ms.map(function (m) {
-    return `<span class="cmpcol">${brandMark(m.vendor, 32)}<b>${esc(m.name || m.id)}</b><i>${esc(m.vendor)}</i></span>`;
+    return `<span class="cmpcol pbcol" style="background:${barColor(m.vendor)}">${barIcon(m.vendor, 34)}<b>${esc(m.name || m.id)}</b></span>`;
   }).join('')}
       </div>
       <div class="cmpprice">
@@ -1555,14 +1560,14 @@ SCREENS.compare = function () {
         ${priceLine('cmp.row.out', 'priceOut', bo)}
       </div>
       ${attrRow('cmp.row.ctx', function (m, mi) {
-    const isBest = mi === bc;
+    const isBest = isTop('contextK', mi, false);
     return { text: ctxText(Number(m.contextK) || 0), cls: isBest ? 'hl-blue' : '', mark: isBest ? t('cmp.longest') : '' };
   })}
       ${attrRow('cmp.row.caps', function (m) {
     return { text: (m.caps || []).map(capLabel).join(' / ') || '—', cls: 'sub' };
   })}
       ${attrRow('cmp.row.quality', function (m, mi) {
-    const isBest = mi === bq;
+    const isBest = isTop('quality', mi, false);
     return { text: stars(m.quality || 0), cls: isBest ? 'hl-star' : 'ter', mark: isBest ? t('cmp.top') : '' };
   })}
       ${attrRow('cmp.row.scenario', function (m) {
