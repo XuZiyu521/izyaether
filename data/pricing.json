@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updatedAt": "2026-10-26",
+ "updatedAt": "2026-11-02",
  "vendorOrder": [
   {
    "vendor": "DeepSeek",
@@ -772,7 +772,7 @@
    "name": "星火 Spark-X2.6",
    "priceIn": 0.9,
    "priceOut": 3.6,
-   "contextK": 256,
+   "contextK": 1000,
    "caps": [
     "fn",
     "reasoning"
@@ -784,7 +784,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://spark-api-open.xf-yun.com/v2",
-   "note": "2026-10-22 新旗舰（讯飞 1024 大会）· 端云一体 · 全国产算力 · 代码/Agent 增强 · 限时 6 折 · 缓存命中 ¥0.08 · 星辰 MaaS 实名送 10 亿 tokens（31 天）· 上下文官方未公布，暂按 X2.5"
+   "note": "2026-10-22 新旗舰（讯飞 1024 大会）· 云端 293B-A30B · 端云一体 · 全国产算力 · 代码/Agent 增强 · 限时 6 折 · 缓存命中 ¥0.08 · 1M 上下文 · 星辰 MaaS 实名送 10 亿 tokens（31 天）"
   },
   {
    "id": "spark-x2-5",
@@ -907,7 +907,29 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "最新一代主力 · 2026-10-01 发布 · $2/$10 · 缓存输入 $0.10 · 1.05M"
+   "note": "最新一代主力 · 2026-10-01 发布 · $2/$10 · 缓存输入 $0.10 · 超 272K 输入 $4/$15 · 1.05M"
+  },
+  {
+   "id": "gpt-6-1-terra",
+   "vendor": "GPT",
+   "name": "GPT-6.1 Terra",
+   "priceIn": 7.2,
+   "priceOut": 36,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "GPT-6.1 均衡档 · 2026-10-26 发布 · $1/$5 · 缓存输入 $0.05 · 超 272K 输入 $2/$7.5 · 1.05M"
   },
   {
    "id": "gpt-6-astra",
@@ -927,7 +949,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "超旗舰档 · $10/$50 · 缓存输入 $1 · 1.05M"
+   "note": "超旗舰档 · $10/$50 · 缓存输入 $1 · 超 272K 输入 $20/$75 · 1.05M"
   },
   {
    "id": "gpt-5-2",
@@ -988,7 +1010,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-6 轻量档 · $0.10/$0.50 · 缓存输入 $0.01"
+   "note": "GPT-6 轻量档 · $0.10/$0.50 · 缓存输入 $0.01 · 超 272K 输入 $0.20/$0.75"
   },
   {
    "id": "gpt-5-6-sol",
@@ -1011,7 +1033,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-5.6 旗舰 · $4/$20 促销价（发布价 $5/$30，促销至少至 2026-11-21）"
+   "note": "GPT-5.6 旗舰 · $4/$20 促销价（发布价 $5/$30，促销至少至 2026-11-21）· 超 272K 输入 $8/$30"
   },
   {
    "id": "gpt-5-6-terra",
@@ -1033,7 +1055,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-5.6 均衡档 · $2/$12"
+   "note": "GPT-5.6 均衡档 · $2/$12 · 超 272K 输入 $4/$18"
   },
   {
    "id": "gpt-5-6-luna",
@@ -1053,7 +1075,7 @@
    ],
    "quality": 3,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-5.6 低成本档 · $0.20/$1.20"
+   "note": "GPT-5.6 低成本档 · $0.20/$1.20 · 超 272K 输入 $0.40/$1.80"
   },
   {
    "id": "gpt-5-5",
@@ -1075,7 +1097,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "Agent 编程旗舰 · $5/$30 · 1.05M"
+   "note": "Agent 编程旗舰 · $5/$30 · 超 272K 输入 $10/$45 · 1.05M"
   },
   {
    "id": "gpt-5-5-pro",
@@ -1115,7 +1137,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "专业工作档 · $2.50/$15 · 缓存输入 $0.25"
+   "note": "专业工作档 · $2.50/$15 · 缓存输入 $0.25 · 超 272K 输入 $5/$22.5"
   },
   {
    "id": "gpt-5-4-mini",
@@ -1381,7 +1403,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.x.ai/v1",
-   "note": "2026-09-21 发布 · ≤200K $2/$6 · ≥200K $4/$12"
+   "note": "2026-09-21 发布 · ≤200K $2/$6 · ≥200K $4/$12 · 缓存输入 $0.50"
   },
   {
    "id": "grok-4-3",
@@ -1400,7 +1422,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.x.ai/v1",
-   "note": "上一代 · 1M 上下文 · $1.25/$2.5"
+   "note": "上一代 · 1M 上下文 · ≤200K $1.25/$2.5 · ≥200K $2.5/$5 · 缓存输入 $0.20"
   },
   {
    "id": "grok-4-6",
@@ -1422,7 +1444,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.x.ai/v1",
-   "note": "4.7 前一代 · ≤200K $2/$6 · ≥200K $4/$12 · 500K 上下文"
+   "note": "4.7 前一代 · ≤200K $2/$6 · ≥200K $4/$12 · 缓存输入 $0.50 · 500K 上下文"
   },
   {
    "id": "muse-wonder",
@@ -1876,8 +1898,8 @@
    "id": "mistral-large-4",
    "vendor": "Mistral",
    "name": "Mistral Large 4",
-   "priceIn": 4.9,
-   "priceOut": 15.05,
+   "priceIn": 5.04,
+   "priceOut": 15.12,
    "contextK": 1000,
    "caps": [
     "fn",
@@ -1891,7 +1913,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.mistral.ai/v1",
-   "note": "新旗舰 · 2026-10-06 公测 · 上市促销 $0.68/$2.09（原价 $1.36/$4.18，促销截止日未公布）· 缓存输入 $0.07 · 1M（EU 区 512K）"
+   "note": "新旗舰 · 2026-10-06 公测 · $0.7/$2.1 · 缓存输入 $0.07 · 1M（EU 区 512K）"
   },
   {
    "id": "mistral-large-3",
@@ -1913,7 +1935,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.mistral.ai/v1",
-   "note": "上一代旗舰 · Apache 2.0 开放权重 · 多模态 · $0.50/$1.50 · 256K"
+   "note": "上一代旗舰 · Apache 2.0 开放权重 · 多模态 · $0.50/$1.50 · 256K · 2026-10-31 弃用，2027-04-30 退役（官方建议迁 Large 4）"
   },
   {
    "id": "mistral-medium-3-5",
@@ -1934,7 +1956,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.mistral.ai/v1",
-   "note": "合并旗舰 · 128B dense · 256K · 多模态输入 · 开放权重 · $1.5/$7.5"
+   "note": "合并旗舰 · 128B dense · 256K · 多模态输入 · 开放权重 · $1.5/$7.5 · 2026-10-31 弃用，2027-04-30 退役（官方建议迁 Large 4）"
   },
   {
    "id": "mistral-small-4",
@@ -2440,25 +2462,25 @@
      "name": "会员 Lite",
      "month": "¥49/月",
      "year": "",
-     "benefits": "2,000 积分/月 · 2 并发"
+     "benefits": "2,000 积分/月 · 2 并发 · 连续包月 ¥45"
     },
     {
      "name": "会员 Pro",
      "month": "¥99/月",
      "year": "",
-     "benefits": "4,000 积分/月 · 10 并发 · Seed-Code 2.5 折"
+     "benefits": "4,000 积分/月 · 10 并发 · Seed-Code 2.5 折 · 连续包月 ¥89"
     },
     {
      "name": "会员 Pro+",
      "month": "¥239/月",
      "year": "",
-     "benefits": "12,000 积分/月 · 10 并发"
+     "benefits": "12,000 积分/月 · 10 并发 · 连续包月 ¥219"
     },
     {
      "name": "会员 Ultra",
      "month": "¥699/月",
      "year": "",
-     "benefits": "40,000 积分/月 · 20 并发 · 新模型优先"
+     "benefits": "40,000 积分/月 · 20 并发 · 新模型优先 · 连续包月 ¥629"
     }
    ]
   },
@@ -2971,16 +2993,16 @@
      "benefits": "Sonnet 5.5 标准额度 · Projects · 含 Claude Code（与 Claude 共用额度）"
     },
     {
-     "name": "Max 5x",
+     "name": "Max",
      "month": "$100/月",
      "year": "",
-     "benefits": "Pro 的 5 倍额度 · Opus 5.5 · 含 Claude Code · 仅月付"
+     "benefits": "Pro 的 5 倍额度 · Opus 5.5 · Fable 最多占周额度一半 · 含 Claude Code · 仅月付"
     },
     {
-     "name": "Max 20x",
+     "name": "Ultra",
      "month": "$200/月",
      "year": "",
-     "benefits": "Pro 的 20 倍额度 · 含 Claude Code · 仅月付"
+     "benefits": "Pro 的 10 倍周额度 · 无 5 小时限制 · 含 Claude Code · 仅月付"
     },
     {
      "name": "Team 标准席",
@@ -3017,7 +3039,7 @@
     {
      "name": "AI Pro",
      "month": "$19.99/月",
-     "year": "",
+     "year": "$199.99/年",
      "benefits": "Gemini 4 Argon / 3.1 Pro · 约 4 倍用量 · 5TB 存储 · NotebookLM"
     },
     {
@@ -3074,34 +3096,64 @@
      "benefits": "Grok 4.3 限量 · 含 Grok Build"
     },
     {
+     "name": "X Plus",
+     "month": "$8/月",
+     "year": "$80/年",
+     "benefits": "The X Subscription 基准额度 · Grok 与 Cursor 共用周额度 · 含 X Premium 权益（绑定 X 账号）"
+    },
+    {
+     "name": "X Premium",
+     "month": "$30/月",
+     "year": "$300/年",
+     "benefits": "Plus 的 4 倍额度 · 含 Grok Bot · Grok 与 Cursor 共用周额度"
+    },
+    {
+     "name": "X Super",
+     "month": "$100/月",
+     "year": "$1000/年",
+     "benefits": "Plus 的 15 倍额度 · 含 Grok Bot · Grok 与 Cursor 共用周额度"
+    },
+    {
+     "name": "X Ultra",
+     "month": "$200/月",
+     "year": "$2000/年",
+     "benefits": "Plus 的 50 倍额度 · 含 Grok Bot · Grok 与 Cursor 共用周额度"
+    },
+    {
+     "name": "X 团队席位",
+     "month": "$30/$100/$200/席/月",
+     "year": "",
+     "benefits": "对应 Premium / Super / Ultra · 同队可混用 · 无 Plus 席位"
+    },
+    {
      "name": "SuperGrok Lite",
      "month": "$10/月",
      "year": "$100/年",
-     "benefits": "入门档 · 含 Grok Build"
+     "benefits": "老用户存续档 · 入门档 · 含 Grok Build"
     },
     {
      "name": "SuperGrok",
      "month": "$30/月",
      "year": "$300/年",
-     "benefits": "Grok 4.7 高额度 · 深度思考 · 含 Grok Build（共用额度）"
+     "benefits": "老用户存续档 · Grok 4.7 高额度 · 深度思考 · 含 Grok Build（共用额度）"
     },
     {
      "name": "SuperGrok Plus",
      "month": "$100/月",
      "year": "$1000/年",
-     "benefits": "更高额度 · Grok 4.7 Fast 优先"
+     "benefits": "老用户存续档 · 更高额度 · Grok 4.7 Fast 优先"
     },
     {
      "name": "SuperGrok Heavy",
      "month": "$300/月",
      "year": "$3000/年",
-     "benefits": "最高额度 · 含 X Premium+"
+     "benefits": "老用户存续档 · 最高额度 · 含 X Premium+"
     },
     {
      "name": "Grok Business",
      "month": "$30/席/月",
      "year": "",
-     "benefits": "团队席位 · 管理后台 · API 额度"
+     "benefits": "老用户存续档 · 团队席位 · 管理后台 · API 额度"
     }
    ]
   },
@@ -3253,7 +3305,7 @@
      "name": "Plus",
      "month": "$8/月",
      "year": "",
-     "benefits": "共享用量池基准额度 · 月费内仅含 Grok 模型，其他模型按 API 价另计"
+     "benefits": "共享用量池基准额度 · 月费内仅含 Grok 模型，其他模型按 API 价另计 · 与 X Subscription 同档同池"
     },
     {
      "name": "Premium",
@@ -3380,7 +3432,7 @@
     {
      "name": "Core",
      "month": "$20/月",
-     "year": "$204/年",
+     "year": "$216/年",
      "benefits": "更多 Agent 用量 + $20 高级模型额度"
     },
     {
@@ -3426,20 +3478,20 @@
   {
    "vendor": "Tabnine",
    "product": "Tabnine",
-   "company": "Tabnine",
+   "company": "Tricentis",
    "cnAvailable": "需特殊网络",
    "tiers": [
     {
      "name": "Code Assistant",
      "month": "$39/席/月（年付）",
      "year": "",
-     "benefits": "代码补全与对话 · 已取消免费版与 Dev 档"
+     "benefits": "代码补全与对话 · 已取消免费版与 Dev 档 · 官网已不公开标价，以销售报价为准"
     },
     {
      "name": "Agentic",
      "month": "$59/席/月（年付）",
      "year": "",
-     "benefits": "Agent 工作流 · 自托管/气隙部署"
+     "benefits": "Agent 工作流 · 自托管/气隙部署 · 官网已不公开标价，以销售报价为准"
     }
    ]
   },
