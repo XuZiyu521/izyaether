@@ -142,6 +142,9 @@ function trialActive() {
 }
 function hasFullAccess() { return trialActive(); }
 function isPro() { return trialActive(); }
+/* 与 App data/BuiltinPrompts.ets FREE_SKILL_IDS 一致：Prompt 全免费，Skill 只这几条免费 */
+const FREE_SKILL_IDS = ['bi_sk_paper_read', 'bi_sk_learn_topic', 'bi_sk_skill_creator'];
+function isMemberItem(p) { return !!p && p.builtin === true && p.type === 'skill' && FREE_SKILL_IDS.indexOf(p.id) < 0; }
 function proStatus() { return proPurchased() ? 2 : (trialActive() ? 1 : 0); }
 function proIsFree() { return proPlan() === 'free' && !trialActive(); }
 function trialDaysLeft() {
@@ -932,7 +935,7 @@ function promptCard(p, sec) {
   const parts = [realCatLabel(p) + (p.targetModel && p.targetModel !== '通用' ? ' · ' + p.targetModel : '')];
   parts.push(p.builtin && srcShort(p) ? srcShort(p) : t('lib.used', p.useCount || 0) + ' · ' + daysAgoIn(p.lastUsedAt));
   if (vars.length) parts.push(t('lib.card.vars', vars.length));
-  const lock = PAYWALL_ENABLED && isSkill && p.builtin && proStatus() !== 2;
+  const lock = PAYWALL_ENABLED && isMemberItem(p) && proStatus() !== 2;
   return `<div class="pcard ${open ? 'open' : ''}" data-id="${esc(p.id)}" data-sec="${esc(sec)}">
     <div class="prow">
       <span class="pbadge ${isSkill ? 'skill' : ''}">${isSkill ? IC.zapW(14) : IC.promptW(14)}</span>

@@ -48,7 +48,7 @@ function findPrompt(id) {
 }
 /* App locked()：内置 Skill 且未解锁（试用中/已购都算解锁） */
 function detailLocked(p) {
-  return !!p && p.builtin === true && p.type === 'skill' && !isPro();
+  return isMemberItem(p) && !isPro();
 }
 SCREENS.detail = function () {
   const p = findPrompt(S.arg);

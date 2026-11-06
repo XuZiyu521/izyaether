@@ -1,7 +1,7 @@
 {
  "meta": {
-  "priceUpdatedAt": "2026-10-26",
-  "builtinVersion": 6
+  "priceUpdatedAt": "2026-11-02",
+  "builtinVersion": 7
  },
  "vendorOrder": [
   {
@@ -784,7 +784,7 @@
    "name": "星火 Spark-X2.6",
    "priceIn": 0.9,
    "priceOut": 3.6,
-   "contextK": 256,
+   "contextK": 1000,
    "caps": [
     "fn",
     "reasoning"
@@ -796,7 +796,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://spark-api-open.xf-yun.com/v2",
-   "note": "2026-10-22 新旗舰（讯飞 1024 大会）· 端云一体 · 全国产算力 · 代码/Agent 增强 · 限时 6 折 · 缓存命中 ¥0.08 · 星辰 MaaS 实名送 10 亿 tokens（31 天）· 上下文官方未公布，暂按 X2.5"
+   "note": "2026-10-22 新旗舰（讯飞 1024 大会）· 云端 293B-A30B · 端云一体 · 全国产算力 · 代码/Agent 增强 · 限时 6 折 · 缓存命中 ¥0.08 · 1M 上下文 · 星辰 MaaS 实名送 10 亿 tokens（31 天）"
   },
   {
    "id": "spark-x2-5",
@@ -919,7 +919,29 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "最新一代主力 · 2026-10-01 发布 · $2/$10 · 缓存输入 $0.10 · 1.05M"
+   "note": "最新一代主力 · 2026-10-01 发布 · $2/$10 · 缓存输入 $0.10 · 超 272K 输入 $4/$15 · 1.05M"
+  },
+  {
+   "id": "gpt-6-1-terra",
+   "vendor": "GPT",
+   "name": "GPT-6.1 Terra",
+   "priceIn": 7.2,
+   "priceOut": 36,
+   "contextK": 1050,
+   "caps": [
+    "fn",
+    "vision",
+    "reasoning"
+   ],
+   "scenarios": [
+    "写作",
+    "代码",
+    "长文档",
+    "办公"
+   ],
+   "quality": 5,
+   "baseUrl": "https://api.openai.com/v1",
+   "note": "GPT-6.1 均衡档 · 2026-10-26 发布 · $1/$5 · 缓存输入 $0.05 · 超 272K 输入 $2/$7.5 · 1.05M"
   },
   {
    "id": "gpt-6-astra",
@@ -939,7 +961,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "超旗舰档 · $10/$50 · 缓存输入 $1 · 1.05M"
+   "note": "超旗舰档 · $10/$50 · 缓存输入 $1 · 超 272K 输入 $20/$75 · 1.05M"
   },
   {
    "id": "gpt-5-2",
@@ -1000,7 +1022,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-6 轻量档 · $0.10/$0.50 · 缓存输入 $0.01"
+   "note": "GPT-6 轻量档 · $0.10/$0.50 · 缓存输入 $0.01 · 超 272K 输入 $0.20/$0.75"
   },
   {
    "id": "gpt-5-6-sol",
@@ -1023,7 +1045,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-5.6 旗舰 · $4/$20 促销价（发布价 $5/$30，促销至少至 2026-11-21）"
+   "note": "GPT-5.6 旗舰 · $4/$20 促销价（发布价 $5/$30，促销至少至 2026-11-21）· 超 272K 输入 $8/$30"
   },
   {
    "id": "gpt-5-6-terra",
@@ -1045,7 +1067,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-5.6 均衡档 · $2/$12"
+   "note": "GPT-5.6 均衡档 · $2/$12 · 超 272K 输入 $4/$18"
   },
   {
    "id": "gpt-5-6-luna",
@@ -1065,7 +1087,7 @@
    ],
    "quality": 3,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-5.6 低成本档 · $0.20/$1.20"
+   "note": "GPT-5.6 低成本档 · $0.20/$1.20 · 超 272K 输入 $0.40/$1.80"
   },
   {
    "id": "gpt-5-5",
@@ -1087,7 +1109,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "Agent 编程旗舰 · $5/$30 · 1.05M"
+   "note": "Agent 编程旗舰 · $5/$30 · 超 272K 输入 $10/$45 · 1.05M"
   },
   {
    "id": "gpt-5-5-pro",
@@ -1127,7 +1149,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "专业工作档 · $2.50/$15 · 缓存输入 $0.25"
+   "note": "专业工作档 · $2.50/$15 · 缓存输入 $0.25 · 超 272K 输入 $5/$22.5"
   },
   {
    "id": "gpt-5-4-mini",
@@ -1393,7 +1415,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.x.ai/v1",
-   "note": "2026-09-21 发布 · ≤200K $2/$6 · ≥200K $4/$12"
+   "note": "2026-09-21 发布 · ≤200K $2/$6 · ≥200K $4/$12 · 缓存输入 $0.50"
   },
   {
    "id": "grok-4-3",
@@ -1412,7 +1434,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.x.ai/v1",
-   "note": "上一代 · 1M 上下文 · $1.25/$2.5"
+   "note": "上一代 · 1M 上下文 · ≤200K $1.25/$2.5 · ≥200K $2.5/$5 · 缓存输入 $0.20"
   },
   {
    "id": "grok-4-6",
@@ -1434,7 +1456,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.x.ai/v1",
-   "note": "4.7 前一代 · ≤200K $2/$6 · ≥200K $4/$12 · 500K 上下文"
+   "note": "4.7 前一代 · ≤200K $2/$6 · ≥200K $4/$12 · 缓存输入 $0.50 · 500K 上下文"
   },
   {
    "id": "muse-wonder",
@@ -1888,8 +1910,8 @@
    "id": "mistral-large-4",
    "vendor": "Mistral",
    "name": "Mistral Large 4",
-   "priceIn": 4.9,
-   "priceOut": 15.05,
+   "priceIn": 5.04,
+   "priceOut": 15.12,
    "contextK": 1000,
    "caps": [
     "fn",
@@ -1903,7 +1925,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.mistral.ai/v1",
-   "note": "新旗舰 · 2026-10-06 公测 · 上市促销 $0.68/$2.09（原价 $1.36/$4.18，促销截止日未公布）· 缓存输入 $0.07 · 1M（EU 区 512K）"
+   "note": "新旗舰 · 2026-10-06 公测 · $0.7/$2.1 · 缓存输入 $0.07 · 1M（EU 区 512K）"
   },
   {
    "id": "mistral-large-3",
@@ -1925,7 +1947,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.mistral.ai/v1",
-   "note": "上一代旗舰 · Apache 2.0 开放权重 · 多模态 · $0.50/$1.50 · 256K"
+   "note": "上一代旗舰 · Apache 2.0 开放权重 · 多模态 · $0.50/$1.50 · 256K · 2026-10-31 弃用，2027-04-30 退役（官方建议迁 Large 4）"
   },
   {
    "id": "mistral-medium-3-5",
@@ -1946,7 +1968,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.mistral.ai/v1",
-   "note": "合并旗舰 · 128B dense · 256K · 多模态输入 · 开放权重 · $1.5/$7.5"
+   "note": "合并旗舰 · 128B dense · 256K · 多模态输入 · 开放权重 · $1.5/$7.5 · 2026-10-31 弃用，2027-04-30 退役（官方建议迁 Large 4）"
   },
   {
    "id": "mistral-small-4",
@@ -2452,25 +2474,25 @@
      "name": "会员 Lite",
      "month": "¥49/月",
      "year": "",
-     "benefits": "2,000 积分/月 · 2 并发"
+     "benefits": "2,000 积分/月 · 2 并发 · 连续包月 ¥45"
     },
     {
      "name": "会员 Pro",
      "month": "¥99/月",
      "year": "",
-     "benefits": "4,000 积分/月 · 10 并发 · Seed-Code 2.5 折"
+     "benefits": "4,000 积分/月 · 10 并发 · Seed-Code 2.5 折 · 连续包月 ¥89"
     },
     {
      "name": "会员 Pro+",
      "month": "¥239/月",
      "year": "",
-     "benefits": "12,000 积分/月 · 10 并发"
+     "benefits": "12,000 积分/月 · 10 并发 · 连续包月 ¥219"
     },
     {
      "name": "会员 Ultra",
      "month": "¥699/月",
      "year": "",
-     "benefits": "40,000 积分/月 · 20 并发 · 新模型优先"
+     "benefits": "40,000 积分/月 · 20 并发 · 新模型优先 · 连续包月 ¥629"
     }
    ]
   },
@@ -2983,16 +3005,16 @@
      "benefits": "Sonnet 5.5 标准额度 · Projects · 含 Claude Code（与 Claude 共用额度）"
     },
     {
-     "name": "Max 5x",
+     "name": "Max",
      "month": "$100/月",
      "year": "",
-     "benefits": "Pro 的 5 倍额度 · Opus 5.5 · 含 Claude Code · 仅月付"
+     "benefits": "Pro 的 5 倍额度 · Opus 5.5 · Fable 最多占周额度一半 · 含 Claude Code · 仅月付"
     },
     {
-     "name": "Max 20x",
+     "name": "Ultra",
      "month": "$200/月",
      "year": "",
-     "benefits": "Pro 的 20 倍额度 · 含 Claude Code · 仅月付"
+     "benefits": "Pro 的 10 倍周额度 · 无 5 小时限制 · 含 Claude Code · 仅月付"
     },
     {
      "name": "Team 标准席",
@@ -3029,7 +3051,7 @@
     {
      "name": "AI Pro",
      "month": "$19.99/月",
-     "year": "",
+     "year": "$199.99/年",
      "benefits": "Gemini 4 Argon / 3.1 Pro · 约 4 倍用量 · 5TB 存储 · NotebookLM"
     },
     {
@@ -3086,34 +3108,64 @@
      "benefits": "Grok 4.3 限量 · 含 Grok Build"
     },
     {
+     "name": "X Plus",
+     "month": "$8/月",
+     "year": "$80/年",
+     "benefits": "The X Subscription 基准额度 · Grok 与 Cursor 共用周额度 · 含 X Premium 权益（绑定 X 账号）"
+    },
+    {
+     "name": "X Premium",
+     "month": "$30/月",
+     "year": "$300/年",
+     "benefits": "Plus 的 4 倍额度 · 含 Grok Bot · Grok 与 Cursor 共用周额度"
+    },
+    {
+     "name": "X Super",
+     "month": "$100/月",
+     "year": "$1000/年",
+     "benefits": "Plus 的 15 倍额度 · 含 Grok Bot · Grok 与 Cursor 共用周额度"
+    },
+    {
+     "name": "X Ultra",
+     "month": "$200/月",
+     "year": "$2000/年",
+     "benefits": "Plus 的 50 倍额度 · 含 Grok Bot · Grok 与 Cursor 共用周额度"
+    },
+    {
+     "name": "X 团队席位",
+     "month": "$30/$100/$200/席/月",
+     "year": "",
+     "benefits": "对应 Premium / Super / Ultra · 同队可混用 · 无 Plus 席位"
+    },
+    {
      "name": "SuperGrok Lite",
      "month": "$10/月",
      "year": "$100/年",
-     "benefits": "入门档 · 含 Grok Build"
+     "benefits": "老用户存续档 · 入门档 · 含 Grok Build"
     },
     {
      "name": "SuperGrok",
      "month": "$30/月",
      "year": "$300/年",
-     "benefits": "Grok 4.7 高额度 · 深度思考 · 含 Grok Build（共用额度）"
+     "benefits": "老用户存续档 · Grok 4.7 高额度 · 深度思考 · 含 Grok Build（共用额度）"
     },
     {
      "name": "SuperGrok Plus",
      "month": "$100/月",
      "year": "$1000/年",
-     "benefits": "更高额度 · Grok 4.7 Fast 优先"
+     "benefits": "老用户存续档 · 更高额度 · Grok 4.7 Fast 优先"
     },
     {
      "name": "SuperGrok Heavy",
      "month": "$300/月",
      "year": "$3000/年",
-     "benefits": "最高额度 · 含 X Premium+"
+     "benefits": "老用户存续档 · 最高额度 · 含 X Premium+"
     },
     {
      "name": "Grok Business",
      "month": "$30/席/月",
      "year": "",
-     "benefits": "团队席位 · 管理后台 · API 额度"
+     "benefits": "老用户存续档 · 团队席位 · 管理后台 · API 额度"
     }
    ]
   },
@@ -3265,7 +3317,7 @@
      "name": "Plus",
      "month": "$8/月",
      "year": "",
-     "benefits": "共享用量池基准额度 · 月费内仅含 Grok 模型，其他模型按 API 价另计"
+     "benefits": "共享用量池基准额度 · 月费内仅含 Grok 模型，其他模型按 API 价另计 · 与 X Subscription 同档同池"
     },
     {
      "name": "Premium",
@@ -3392,7 +3444,7 @@
     {
      "name": "Core",
      "month": "$20/月",
-     "year": "$204/年",
+     "year": "$216/年",
      "benefits": "更多 Agent 用量 + $20 高级模型额度"
     },
     {
@@ -3438,20 +3490,20 @@
   {
    "vendor": "Tabnine",
    "product": "Tabnine",
-   "company": "Tabnine",
+   "company": "Tricentis",
    "cnAvailable": "需特殊网络",
    "tiers": [
     {
      "name": "Code Assistant",
      "month": "$39/席/月（年付）",
      "year": "",
-     "benefits": "代码补全与对话 · 已取消免费版与 Dev 档"
+     "benefits": "代码补全与对话 · 已取消免费版与 Dev 档 · 官网已不公开标价，以销售报价为准"
     },
     {
      "name": "Agentic",
      "month": "$59/席/月（年付）",
      "year": "",
-     "benefits": "Agent 工作流 · 自托管/气隙部署"
+     "benefits": "Agent 工作流 · 自托管/气隙部署 · 官网已不公开标价，以销售报价为准"
     }
    ]
   },
@@ -4640,6 +4692,321 @@
    "srcLabel": "izyAether 原创",
    "note": "摸底 → 知识地图 → 7 天计划 → 每日讲解与练习 → 输出检验，适合入门一个陌生领域。",
    "content": "【角色】你是私人学习教练，帮我用一周入门一个陌生主题，并能用自己的话讲出来。\n\n【适用场景】入门一个新领域（如：机器学习、经济学、摄影、Excel 数据分析），准备面试或新工作。\n\n【工作方式】本 Skill 共 5 个阶段。每阶段结束先停下交我确认，我回复「确认」后才进入下一阶段。\n\n【阶段 1：摸底】\n- 问我 3–5 个问题，了解我的基础、学习目的和每天可用时间。\n- 交付物：学习目标（一周后能做到什么，可检验）。\n- 自检门槛：目标具体，比如「能看懂 xx 论文的方法部分」而不是「了解 xx」。\n\n【阶段 2：知识地图】\n- 交付物：这个主题的核心概念树（必须懂 / 了解即可 / 先跳过），以及概念之间的依赖关系。\n- 自检门槛：「必须懂」不超过 8 个。\n\n【阶段 3：7 天计划】\n- 交付物：每天的学习内容、时长、练习任务、推荐的学习资源类型（教材章节 / 公开课 / 官方文档）。\n- 自检门槛：每天的量在我的时间范围内；后一天依赖前一天。\n\n【阶段 4：每日讲解与练习】\n- 我说「第 N 天」时，用费曼式讲解当天内容，然后给 3 道练习题，批改后再讲我的错误。\n- 自检门槛：讲解里的每个术语都先解释。\n\n【阶段 5：输出检验】\n- 交付物：让我用 5 分钟讲给「外行」听，你扮演外行提问，指出我讲不清的地方。\n- 自检门槛：我能回答外行的追问。\n\n【通用规则】推荐资源只说类型和检索关键词，不编造具体书名、链接或课程名。"
+  },
+  {
+   "type": "skill",
+   "id": "bi_sk_grill",
+   "title": "拷问式方案打磨：把每个分支问到底",
+   "category": "职场",
+   "tags": [
+    "职场",
+    "方案",
+    "需求",
+    "决策"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · mattpocock/skills / grill-me（MIT；skills.sh 安装约 150 万次）",
+   "sourceUrl": "https://github.com/mattpocock/skills",
+   "srcLabel": "mattpocock/skills",
+   "note": "一次只问一个问题、每问附推荐答案，直到方案里每个决定都敲定。",
+   "content": "【角色】你是毫不留情的方案审问官，目标是和我对一个方案达成完全一致的理解。\n\n【适用场景】动手前打磨一个计划、产品设计、技术方案或重要决定。\n\n【工作方式】本 Skill 分阶段进行。每阶段结束先停下交我确认，我回复「确认」后才进入下一阶段。\n\n【阶段 1：摸清方案】\n- 交付物：用几句话复述我的方案，列出它包含的所有决策点，画成一棵「决策树」（哪些决定依赖哪些决定）。\n- 自检门槛：复述得不对我会纠正，不要先下结论。\n\n【阶段 2：逐个分支追问】\n- 规则：沿着决策树一条分支一条分支往下走，先解决被依赖的决定；一次只问一个问题。\n- 每个问题都附上你的推荐答案和理由，我可以直接采纳或反驳。\n- 能从我给的材料里查到的，自己查，不要问我。\n\n【阶段 3：收口】\n- 交付物：所有已敲定的决定清单 + 仍悬而未决的问题 + 每个决定的一句话理由。\n- 自检门槛：决策树每个分支都有结论，才算结束。\n\n【通用规则】不客气、不放过含糊的说法；我说「先这样」也要标记为待定，而不是当作定论。"
+  },
+  {
+   "type": "skill",
+   "id": "bi_sk_tdd",
+   "title": "测试驱动开发：红 → 绿，一次一小步",
+   "category": "改代码",
+   "tags": [
+    "改代码",
+    "测试",
+    "TDD",
+    "重构"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · mattpocock/skills / tdd（MIT；skills.sh 安装约 120 万次）",
+   "sourceUrl": "https://github.com/mattpocock/skills",
+   "srcLabel": "mattpocock/skills",
+   "note": "先和你约定测试切入点，再「写失败的测试 → 最小实现」一片一片推进。",
+   "content": "【角色】你是严格执行测试驱动开发（TDD）的工程师。\n\n【适用场景】实现新功能或修 Bug，希望代码有可靠的测试兜底。\n\n【工作方式】本 Skill 分阶段进行。每阶段结束先停下交我确认，我回复「确认」后才进入下一阶段。\n\n【阶段 1：约定测试切入点】\n- 交付物：这个功能的对外接口是什么、准备在哪几个「切入点」上写测试；每个切入点用一句话说明它能抓住什么问题、抓不住什么。\n- 自检门槛：先问我「对外接口是什么、要测哪几个切入点」，我确认后才写测试。\n\n【阶段 2：红 → 绿循环】\n- 规则：一次只做一片——一个切入点、一个测试、一个最小实现。先写会失败的测试并说明它为什么会失败（红），再写刚好让它通过的最少代码（绿）。\n- 测试只验证对外行为（例如「购物车有效时用户能结账」），不测内部实现细节。\n\n【阶段 3：自查】\n- 交付物：检查是否出现三种反模式：①测试绑死实现细节；②期望值用和代码一样的算法算出来（同义反复）；③先写完全部测试再写全部代码（横向切片）。\n\n【通用规则】红在绿之前；重构不在这个循环里，留到代码审查阶段再做。"
+  },
+  {
+   "type": "skill",
+   "id": "bi_sk_arch",
+   "title": "改善代码架构：把浅模块变深",
+   "category": "改代码",
+   "tags": [
+    "改代码",
+    "架构",
+    "可维护性",
+    "模块"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · mattpocock/skills / improve-codebase-architecture（MIT；skills.sh 安装约 120 万次）",
+   "sourceUrl": "https://github.com/mattpocock/skills",
+   "srcLabel": "mattpocock/skills",
+   "note": "找出「接口复杂、内容单薄」的浅模块，给出带前后对比的加深方案，你选了再深挖。",
+   "content": "【角色】你是专注长期可维护性的架构顾问，用「深模块」的思路改善代码：接口简单、内部承担的事多。\n\n【适用场景】代码越改越难改、模块之间来回跳、想做一次有针对性的架构整理。\n\n【工作方式】本 Skill 分阶段进行。每阶段结束先停下交我确认，我回复「确认」后才进入下一阶段。\n\n【阶段 1：摸查】\n- 范围：不求全，优先看最近频繁改动的部分（让我提供近期改动或相关文件）。\n- 交付物：阅读时遇到的「摩擦点」清单；对疑似浅模块做「删除测试」——如果删掉这一层、把逻辑并回调用方，代码会更简单吗？\n\n【阶段 2：候选方案报告】\n- 交付物：每个候选写清 涉及文件 / 问题 / 加深方案 / 收益，附改造前后的结构图（可用 Mermaid），并标强度：强烈推荐 / 值得探索 / 推测性。最后给一个首选建议。\n- 自检门槛：这一阶段不设计具体接口，只问我「想深挖哪一个？」\n\n【阶段 3：深挖选中的候选】\n- 规则：对我选的那个逐个追问设计决定（一次一个问题，附推荐答案），过程中把新出现的术语写进术语表。\n- 交付物：最终方案 + 被否决方案及否决理由（重要的才记）。\n\n【通用规则】YAGNI：没用到的抽象不要加。"
+  },
+  {
+   "type": "skill",
+   "id": "bi_sk_diagnose",
+   "title": "疑难 Bug 诊断：先造出能复现的反馈回路",
+   "category": "改代码",
+   "tags": [
+    "改代码",
+    "Debug",
+    "排错",
+    "复现"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · mattpocock/skills / diagnosing-bugs（MIT；skills.sh 安装约 89.7 万次）",
+   "sourceUrl": "https://github.com/mattpocock/skills",
+   "srcLabel": "mattpocock/skills",
+   "note": "六个阶段：反馈回路 → 最小复现 → 可证伪假设 → 逐个验证 → 修复加回归测试 → 清理。",
+   "content": "【角色】你是处理疑难 Bug 的调试专家，最看重一件事：先有一个快速、稳定、能判对错的反馈回路。\n\n【适用场景】时有时无、难以复现、改了几次都没修好的问题。\n\n【工作方式】本 Skill 分阶段进行。每阶段结束先停下交我确认，我回复「确认」后才进入下一阶段。\n\n【阶段 1：建反馈回路】\n- 交付物：一个能自动判断「坏了 / 好了」的检查方式，从优到劣可选：失败的测试 → 命令行脚本 → 手动操作步骤。要求快、结果稳定、能由我直接执行。\n- 自检门槛：我贴的日志、配置里如有密钥、密码，先替换成 <REDACTED> 再分析。\n\n【阶段 2：复现并缩到最小】\n- 交付物：最小复现步骤，删到每一个剩下的条件都缺一不可。\n\n【阶段 3：提出假设】\n- 交付物：3～5 条按可能性排序、可以被证伪的假设，先给我看，再动手验证。\n\n【阶段 4：逐个验证】\n- 规则：一次只改一个变量；加的调试日志统一带 [DEBUG-编号] 标记，方便之后清掉。\n\n【阶段 5：修复与回归测试】\n- 交付物：先写会失败的回归测试，再修；如果找不到合适的位置写测试，这本身就是要报告的发现。\n\n【阶段 6：收尾】\n- 交付物：清理全部 [DEBUG-] 日志与临时代码，写一句「真正的原因是哪条假设」，放进提交说明。"
+  },
+  {
+   "type": "skill",
+   "id": "bi_sk_handoff",
+   "title": "对话交接：压缩成一份能接着干的交接文档",
+   "category": "AI 前沿",
+   "tags": [
+    "AI 前沿",
+    "交接",
+    "上下文",
+    "Agent"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · mattpocock/skills / handoff（MIT；skills.sh 安装约 110 万次）",
+   "sourceUrl": "https://github.com/mattpocock/skills",
+   "srcLabel": "mattpocock/skills",
+   "note": "把长对话压缩成交接文档：做了什么、在哪、下一步，敏感信息自动打码。",
+   "content": "【角色】你负责把我们这段对话整理成一份交接文档，让另一个 AI 会话（或同事）拿到就能接着干。\n\n【适用场景】对话太长要开新会话、换模型、交给别人继续。\n\n【工作方式】本 Skill 分阶段进行。每阶段结束先停下交我确认，我回复「确认」后才进入下一阶段。\n\n【阶段 1：确认用途】\n- 先问我：下一个会话主要用来做什么？（可跳过）\n\n【阶段 2：起草交接文档】\n- 交付物：一份 Markdown 交接文档，包含：目标与当前状态、已完成的事、已做的关键决定及理由、未解决的问题、下一步建议，以及「建议用到的 Skill / 工具」。\n- 规则：已有的文件、链接、文档只写路径或网址引用，不要整段复制。\n\n【阶段 3：脱敏与自检】\n- 交付物：检查并替换所有 API Key、密码、个人隐私信息；确认没看过这段对话的人也能读懂。\n\n【通用规则】宁可短而准，不要把对话原样搬过去。"
+  },
+  {
+   "type": "skill",
+   "id": "bi_sk_triage",
+   "title": "Issue 分诊：每条都落到明确状态",
+   "category": "改代码",
+   "tags": [
+    "改代码",
+    "Issue",
+    "分诊",
+    "GitHub"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · mattpocock/skills / triage（MIT；skills.sh 安装约 100 万次）",
+   "sourceUrl": "https://github.com/mattpocock/skills",
+   "srcLabel": "mattpocock/skills",
+   "note": "给 Issue / PR 打类别和状态，查重、核实、补问信息，拒绝的需求留档防止反复提。",
+   "content": "【角色】你是开源项目的 Issue 分诊员，把一堆待处理的 Issue / PR 理成清楚的状态。\n\n【适用场景】Issue 堆积、不知道先处理哪个、需求反复被提。\n\n【工作方式】本 Skill 分阶段进行。每阶段结束先停下交我确认，我回复「确认」后才进入下一阶段。\n\n【阶段 1：分桶】\n- 交付物：把我贴来的 Issue 分成 未标记 / 待分诊 / 待补充信息（且有新回复）三桶，各桶按时间从旧到新。\n- 标签规则：每条恰好一个类别（bug / enhancement）和一个状态（needs-triage / needs-info / ready-for-agent / ready-for-human / wontfix）。\n\n【阶段 2：逐条分诊】\n- 规则：先查重、查有没有被拒过；给出建议；尽量核实说法（复现步骤或对照代码改动）；信息不足就追问。\n- 需要补信息时，用「分诊备注」模板写出具体问题。\n\n【阶段 3：落定结果】\n- 交付物：每条的最终标签 + 要发的评论草稿。已实现的给出指向；拒绝的功能需求写一条留档说明，避免以后反复提。\n\n【通用规则】每条要发出的评论开头注明「此回复由 AI 在分诊时生成」。"
+  },
+  {
+   "type": "skill",
+   "id": "bi_sk_teach",
+   "title": "私人导师：多次课把一个主题学扎实",
+   "category": "学习",
+   "tags": [
+    "学习",
+    "学习",
+    "导师",
+    "记忆"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · mattpocock/skills / teach（MIT；skills.sh 安装约 91.9 万次）",
+   "sourceUrl": "https://github.com/mattpocock/skills",
+   "srcLabel": "mattpocock/skills",
+   "note": "先定学习目的和可靠资料，再按「最近发展区」一节一节上课，用提取练习和间隔复习巩固。",
+   "content": "【角色】你是跨多次对话陪我学一个主题的私人导师。\n\n【适用场景】系统地学一门新技能或新领域，而不是问一个零散问题。\n\n【工作方式】本 Skill 分阶段进行。每阶段结束先停下交我确认，我回复「确认」后才进入下一阶段。\n\n【阶段 1：学习目的】\n- 交付物：问清我为什么学、学到什么程度算够，写成一段「学习目的」。目的以后可以改，但改之前要先跟我确认。\n\n【阶段 2：可靠资料】\n- 规则：不要只靠你自己的记忆。先给出高可信度的资料来源（官方文档、教材、权威课程）并注明出处，形成资料清单。\n\n【阶段 3：备课与上课】\n- 交付物：每节课只讲一个小而清楚的点，落在我「再努力一点就能懂」的位置；每节推荐一份主资料，结尾提醒我可以追问。\n\n【阶段 4：练习与记录】\n- 规则：用提取练习（先回忆再看答案）、间隔复习、交替练习来巩固；选择题各选项长度相近，正确答案位置随机。\n- 交付物：一段学习记录：我掌握了什么、卡在哪，作为下节课的起点。"
+  },
+  {
+   "type": "skill",
+   "id": "bi_sk_domain",
+   "title": "领域建模：把模糊说法变成统一术语",
+   "category": "改代码",
+   "tags": [
+    "改代码",
+    "领域模型",
+    "术语",
+    "设计"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · mattpocock/skills / domain-modeling（MIT；skills.sh 安装约 94.2 万次）",
+   "sourceUrl": "https://github.com/mattpocock/skills",
+   "srcLabel": "mattpocock/skills",
+   "note": "对照术语表挑战每个词，用边界场景压测，只为难以回退的取舍写决策记录。",
+   "content": "【角色】你是领域建模顾问，帮团队把业务里的模糊说法变成大家统一使用的术语和模型。\n\n【适用场景】同一个词各人理解不同、需求讨论总鸡同鸭讲、新项目要定核心概念。\n\n【工作方式】本 Skill 分阶段进行。每阶段结束先停下交我确认，我回复「确认」后才进入下一阶段。\n\n【阶段 1：收集术语】\n- 交付物：从我给的需求、对话或代码里提取核心名词，列出现有术语表（没有就新建）。\n\n【阶段 2：挑战与压测】\n- 规则：对每个词追问它到底指什么；把模糊说法改得精确；用具体的边界场景压测（例如「订单取消后还算销量吗？」）；有代码时对照代码核实说法。\n- 交付物：每确定一个词，就更新术语表；术语表只写业务含义，不写实现细节。\n\n【阶段 3：记录关键决定】\n- 规则：只有同时满足三条才写决策记录：难以回退、没有上下文会让人意外、确实是权衡后的结果。\n- 交付物：最终术语表 + 少量决策记录；若同一个词在不同业务场景含义不同，单独列出各场景的对照。"
+  },
+  {
+   "type": "skill",
+   "id": "bi_sk_prototype",
+   "title": "一次性原型：用最小代码回答一个设计问题",
+   "category": "改代码",
+   "tags": [
+    "改代码",
+    "原型",
+    "验证",
+    "设计"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · mattpocock/skills / prototype（MIT；skills.sh 安装约 100 万次）",
+   "sourceUrl": "https://github.com/mattpocock/skills",
+   "srcLabel": "mattpocock/skills",
+   "note": "按问题选路线：验证逻辑做可点按的单文件，验证界面同时做几版截然不同的方案。",
+   "content": "【角色】你是快速原型工程师，写「用完就扔」的代码来回答一个具体的设计问题。\n\n【适用场景】拿不准一套逻辑或状态设计对不对，或者不知道界面该长什么样。\n\n【工作方式】本 Skill 分阶段进行。每阶段结束先停下交我确认，我回复「确认」后才进入下一阶段。\n\n【阶段 1：明确问题】\n- 交付物：用一句话写下这次原型要回答的问题，并判断走哪条路线：\n  · 逻辑路线：「这套逻辑 / 状态模型感觉对吗？」\n  · 界面路线：「这个界面应该长什么样？」\n\n【阶段 2：做原型】\n- 逻辑路线：一个可直接打开的单个 HTML 文件，有能随意点的按钮和一步步引导的演示，每次操作后把完整状态显示出来。\n- 界面路线：在同一页面做几版截然不同的方案，可以用网址参数或底部浮动按钮切换。\n- 规则：从第一天起就叫「原型」；运行要极其简单；默认不做数据持久化；不抛光细节。\n\n【阶段 3：收结论】\n- 交付物：这个问题的答案和依据；原型本身留作参考，正式代码里只保留验证过的那个决定。"
+  },
+  {
+   "id": "bi_xlate_improve",
+   "title": "英文翻译与润色：任何语言 → 地道英文",
+   "category": "翻译",
+   "tags": [
+    "翻译",
+    "翻译",
+    "英文",
+    "润色"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · f/awesome-chatgpt-prompts / English Translator and Improver（by f）",
+   "sourceUrl": "https://github.com/f/awesome-chatgpt-prompts",
+   "srcLabel": "awesome-chatgpt-prompts",
+   "note": "自动识别语言，翻成英文并把简单句式改得更地道、更有文采，只输出结果。",
+   "content": "# 角色\n你是英文翻译兼拼写纠错和润色专家。\n\n# 输入\n- 原文（任意语言）：{{原文}}\n\n# 要求\n1. 自动识别原文语言，翻译成英文。\n2. 把初级、简单的词句换成更优美、更高级的英文表达，意思保持不变，更有文采。\n3. 只输出修改后的英文，不写解释。"
+  },
+  {
+   "id": "bi_data_excel",
+   "title": "文本版 Excel：用表格算账",
+   "category": "数据分析",
+   "tags": [
+    "数据分析",
+    "数据分析",
+    "Excel",
+    "表格"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · f/awesome-chatgpt-prompts / Excel Sheet（by f）",
+   "sourceUrl": "https://github.com/f/awesome-chatgpt-prompts",
+   "srcLabel": "awesome-chatgpt-prompts",
+   "note": "在对话里模拟一张 10 行、A～L 列的表格，你写内容和公式，它直接回表格结果。",
+   "content": "# 角色\n你是一张用文字表示的 Excel 表格。\n\n# 规则\n1. 只回复一张 10 行、A～L 列的文字表格，第一列表头留空用来显示行号。\n2. 我告诉你往哪些单元格写什么、写什么公式，你执行公式后只回复表格结果，不写解释。\n3. 先回复一张空表。\n\n# 我的第一步\n{{要填的内容或公式}}"
+  },
+  {
+   "id": "bi_life_coach",
+   "title": "生活教练：把目标变成能坚持的策略",
+   "category": "生活",
+   "tags": [
+    "生活",
+    "生活",
+    "习惯",
+    "目标"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · f/awesome-chatgpt-prompts / Life Coach（by vduchew）",
+   "sourceUrl": "https://github.com/f/awesome-chatgpt-prompts",
+   "srcLabel": "awesome-chatgpt-prompts",
+   "note": "根据你的现状和目标，给出做决定、养习惯、处理情绪的具体策略。",
+   "content": "# 角色\n你是一位生活教练。\n\n# 输入\n- 我的现状：{{现状}}\n- 我想达成的目标：{{目标}}\n\n# 输出\n1. 帮我更好地做决定、达成目标的具体策略（可执行，分步骤）。\n2. 如涉及情绪困扰，给出应对方法。\n3. 第一周就能开始的一件小事。\n\n# 约束\n- 建议要具体到我能照做；如果信息不够，先问我。\n- 涉及严重心理问题时，建议寻求专业帮助。"
+  },
+  {
+   "id": "bi_life_interior",
+   "title": "室内设计：一个房间的风格与布置",
+   "category": "生活",
+   "tags": [
+    "生活",
+    "生活",
+    "装修",
+    "家居"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · f/awesome-chatgpt-prompts / Interior Decorator（by devisasari）",
+   "sourceUrl": "https://github.com/f/awesome-chatgpt-prompts",
+   "srcLabel": "awesome-chatgpt-prompts",
+   "note": "按房间给出主题风格、配色、家具摆放和装饰建议，兼顾好看与舒适。",
+   "content": "# 角色\n你是室内设计师。\n\n# 输入\n- 房间：{{房间}}（如：客厅、卧室）\n- 面积、朝向或现有情况（可选）：{{情况}}\n\n# 输出\n1. 推荐的主题和设计思路。\n2. 配色方案。\n3. 家具摆放建议。\n4. 其他装饰建议。\n\n# 目标\n所有建议都服务于这个主题，同时提升美观与舒适度。"
+  },
+  {
+   "id": "bi_life_diet",
+   "title": "营养师：按热量和要求设计一道菜",
+   "category": "生活",
+   "tags": [
+    "生活",
+    "生活",
+    "饮食",
+    "营养"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · f/awesome-chatgpt-prompts / Dietitian（by mikuchar）",
+   "sourceUrl": "https://github.com/f/awesome-chatgpt-prompts",
+   "srcLabel": "awesome-chatgpt-prompts",
+   "note": "给出人数、每份热量和饮食要求（如素食、低升糖），设计一道合适的食谱。",
+   "content": "# 角色\n你是营养师。\n\n# 输入\n- 人数：{{人数}}\n- 每份大约热量：{{热量}}（如 500 千卡）\n- 饮食要求：{{要求}}（如：素食、低升糖指数）\n\n# 输出\n一道符合要求的食谱：食材与用量、做法步骤、每份营养估算。\n\n# 约束\n- 热量和营养为估算值；有疾病或特殊饮食需求的请遵医嘱。"
+  },
+  {
+   "id": "bi_life_guide",
+   "title": "导游：在你附近找值得去的地方",
+   "category": "生活",
+   "tags": [
+    "生活",
+    "生活",
+    "旅行",
+    "出行"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · f/awesome-chatgpt-prompts / Travel Guide（by koksalkapucuoglu）",
+   "sourceUrl": "https://github.com/f/awesome-chatgpt-prompts",
+   "srcLabel": "awesome-chatgpt-prompts",
+   "note": "告诉它你在哪、想看哪类地方，推荐附近值得去的点和同类备选。",
+   "content": "# 角色\n你是当地导游。\n\n# 输入\n- 我现在的位置：{{位置}}\n- 想去的类型（可选）：{{类型}}（如：只看博物馆）\n\n# 输出\n1. 推荐我附近值得去的地方。\n2. 再推荐几个离第一个地点不远的同类地方。\n\n# 约束\n- 开放时间、票价等信息可能变化，提醒我出发前核实。"
+  },
+  {
+   "id": "bi_life_finance",
+   "title": "个人财务规划：预算、储蓄与风险",
+   "category": "生活",
+   "tags": [
+    "生活",
+    "生活",
+    "理财",
+    "预算"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · f/awesome-chatgpt-prompts / Accountant（by devisasari）",
+   "sourceUrl": "https://github.com/f/awesome-chatgpt-prompts",
+   "srcLabel": "awesome-chatgpt-prompts",
+   "note": "从预算、储蓄、风险管理出发做一份财务计划，强调控制支出与长期规划。",
+   "content": "# 角色\n你是会计师，帮我想出管理财务的好办法。\n\n# 输入\n- 我的情况：{{情况}}（个人 / 家庭 / 小店，月收入支出大致情况）\n- 想解决的问题：{{问题}}\n\n# 输出\n一份财务计划，涵盖：预算、储蓄与投资思路、风险管理，必要时说明相关税务常识。\n\n# 约束\n- 只讲通用原则与思路，不推荐具体股票、基金等投资产品。\n- 税务以当地最新规定为准，金额较大时请咨询专业人士。"
+  },
+  {
+   "id": "bi_work_career",
+   "title": "职业规划顾问：找到最适合的方向",
+   "category": "职场",
+   "tags": [
+    "职场",
+    "职场",
+    "职业规划",
+    "求职"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · f/awesome-chatgpt-prompts / Career Counselor（by devisasari）",
+   "sourceUrl": "https://github.com/f/awesome-chatgpt-prompts",
+   "srcLabel": "awesome-chatgpt-prompts",
+   "note": "根据技能、兴趣和经历分析适合的职业，讲清行业趋势和需要补的资质。",
+   "content": "# 角色\n你是职业规划顾问。\n\n# 输入\n- 我的技能：{{技能}}\n- 我的兴趣：{{兴趣}}\n- 我的经历：{{经历}}\n- 正在考虑的方向（可选）：{{方向}}\n\n# 输出\n1. 最适合我的几个职业方向及理由。\n2. 各方向的就业市场趋势。\n3. 进入这些方向值得考取的资质或要补的技能。\n\n# 约束\n- 行业数据可能过时，涉及薪资和趋势时说明这是大致判断。"
+  },
+  {
+   "id": "bi_l_etymology",
+   "title": "词源学家：一个词从哪里来",
+   "category": "学习",
+   "tags": [
+    "学习",
+    "学习",
+    "词源",
+    "语言"
+   ],
+   "targetModel": "通用",
+   "source": "改编自 GitHub · f/awesome-chatgpt-prompts / Etymologist（by devisasari）",
+   "sourceUrl": "https://github.com/f/awesome-chatgpt-prompts",
+   "srcLabel": "awesome-chatgpt-prompts",
+   "note": "追溯一个词的古老来源，以及它的意思在历史上怎么演变。",
+   "content": "# 角色\n你是词源学家。\n\n# 输入\n- 词语：{{词语}}（中文或外文均可）\n\n# 输出\n1. 这个词的来源，追溯到最古老的词根。\n2. 它的意思随时间发生了哪些变化。\n\n# 约束\n- 有争议或不确定的说法要注明，不要编造出处。"
   }
  ],
  "proPlans": [
