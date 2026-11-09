@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updatedAt": "2026-11-02",
+ "updatedAt": "2026-11-09",
  "vendorOrder": [
   {
    "vendor": "DeepSeek",
@@ -843,7 +843,7 @@
     "长文档"
    ],
    "quality": 5,
-   "baseUrl": "https://api.open.xiaomi.com/v1",
+   "baseUrl": "https://api.xiaomimimo.com/v1",
    "note": "旗舰 · 1.02T-A42B · MIT 开源 · 全模态 · 1M 上下文 · 缓存命中 ¥0.025"
   },
   {
@@ -864,7 +864,7 @@
     "长文档"
    ],
    "quality": 4,
-   "baseUrl": "https://api.open.xiaomi.com/v1",
+   "baseUrl": "https://api.xiaomimimo.com/v1",
    "note": "高性价比款 · MIT 开源 · 全模态 · 1M 上下文 · 缓存命中 ¥0.02 · 批量推理半价"
   },
   {
@@ -883,7 +883,7 @@
     "代码"
    ],
    "quality": 5,
-   "baseUrl": "https://api.open.xiaomi.com/v1",
+   "baseUrl": "https://api.xiaomimimo.com/v1",
    "note": "UltraSpeed · 输出速度最高 20 倍 · 缓存命中 ¥0.25"
   },
   {
@@ -1033,7 +1033,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-5.6 旗舰 · $4/$20 促销价（发布价 $5/$30，促销至少至 2026-11-21）· 超 272K 输入 $8/$30"
+   "note": "GPT-5.6 旗舰 · $4/$20 促销价（发布价 $5/$30，官方写促销至 2026-11-30）· 缓存输入 $0.40 · 超 272K 输入 $8/$30"
   },
   {
    "id": "gpt-5-6-terra",
@@ -1055,7 +1055,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-5.6 均衡档 · $2/$12 · 超 272K 输入 $4/$18"
+   "note": "GPT-5.6 均衡档 · $2/$12 · 缓存输入 $0.20 · 超 272K 输入 $4/$18"
   },
   {
    "id": "gpt-5-6-luna",
@@ -1075,7 +1075,7 @@
    ],
    "quality": 3,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "GPT-5.6 低成本档 · $0.20/$1.20 · 超 272K 输入 $0.40/$1.80"
+   "note": "GPT-5.6 低成本档 · $0.20/$1.20 · 缓存输入 $0.02 · 超 272K 输入 $0.40/$1.80"
   },
   {
    "id": "gpt-5-5",
@@ -1097,7 +1097,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://api.openai.com/v1",
-   "note": "Agent 编程旗舰 · $5/$30 · 超 272K 输入 $10/$45 · 1.05M"
+   "note": "Agent 编程旗舰 · $5/$30 · 缓存输入 $0.50 · 超 272K 输入 $10/$45 · 1.05M"
   },
   {
    "id": "gpt-5-5-pro",
@@ -1875,7 +1875,7 @@
    ],
    "quality": 4,
    "baseUrl": "https://api.x.ai/v1",
-   "note": "编码专用 · $1/$2 · 缓存输入 $0.20 · 超 200K 上下文档位加价 · 旧别名 grok-code-fast-1 自动路由至本模型"
+   "note": "编码专用 · $1/$2 · 缓存输入 $0.20 · ≥200K 上下文 $2/$4（缓存 $0.40）· 旧别名 grok-code-fast-1 自动路由至本模型"
   },
   {
    "id": "codestral",
@@ -2132,7 +2132,7 @@
    ],
    "quality": 5,
    "baseUrl": "https://bedrock-runtime.us-east-1.amazonaws.com",
-   "note": "Nova 2 高阶 · Preview · 多数来源 $1.25/$10 · Preview 价格以 Bedrock 控制台为准"
+   "note": "Nova 2 高阶 · Preview · $1.25/$10（Bedrock 官方价目，美东）"
   },
   {
    "id": "nova-2-omni",
@@ -2462,25 +2462,25 @@
      "name": "会员 Lite",
      "month": "¥49/月",
      "year": "",
-     "benefits": "2,000 积分/月 · 2 并发 · 连续包月 ¥45"
+     "benefits": "2,000 积分/月 · 2 并发 · Seed-2.1-Turbo / Seed-Code 2.5 折 · 连续包月 ¥45"
     },
     {
      "name": "会员 Pro",
      "month": "¥99/月",
      "year": "",
-     "benefits": "4,000 积分/月 · 10 并发 · Seed-Code 2.5 折 · 连续包月 ¥89"
+     "benefits": "4,000 积分/月 · 10 并发 · Seed-2.1-Turbo / Seed-Code 2.5 折 · 连续包月 ¥89"
     },
     {
      "name": "会员 Pro+",
      "month": "¥239/月",
      "year": "",
-     "benefits": "12,000 积分/月 · 10 并发 · 连续包月 ¥219"
+     "benefits": "12,000 积分/月 · 10 并发 · Seed-2.1-Turbo / Seed-Code 2.5 折 · 连续包月 ¥219"
     },
     {
      "name": "会员 Ultra",
      "month": "¥699/月",
      "year": "",
-     "benefits": "40,000 积分/月 · 20 并发 · 新模型优先 · 连续包月 ¥629"
+     "benefits": "40,000 积分/月 · 20 并发 · 新模型优先 · Seed-2.1-Turbo / Seed-Code 2.5 折 · 连续包月 ¥629"
     }
    ]
   },
@@ -2673,28 +2673,28 @@
   },
   {
    "vendor": "MiniMax",
-   "product": "MiniMax Token Plan",
+   "product": "MiniMax M Plan（含 MiniMax Code，原 Token Plan）",
    "company": "稀宇科技",
    "engine": "底层 MiniMax",
    "cnAvailable": "直连",
    "tiers": [
     {
-     "name": "Plus",
+     "name": "Go",
      "month": "¥49/月",
      "year": "¥490/年",
-     "benefits": "M3 全系 · 编程与 Agent 共用额度 · 支持 3–4 个 Agent"
+     "benefits": "M3.1 Flash 文本 + 图像/音频生成 · 不含视频 · 含 MiniMax Code（共用额度）· 原 Plus 档"
     },
     {
-     "name": "Max",
+     "name": "Explore",
      "month": "¥119/月",
      "year": "¥1190/年",
-     "benefits": "更高额度 · 4–5 个 Agent"
+     "benefits": "Go 的 3 倍额度 · 含 H3 视频 · 含 MiniMax Code（共用额度）· 原 Max 档"
     },
     {
-     "name": "Ultra",
+     "name": "Build",
      "month": "¥469/月",
      "year": "¥4690/年",
-     "benefits": "最高额度 · 6–7 个 Agent"
+     "benefits": "Go 的 12 倍额度 · 含 H3 视频 · 含 MiniMax Code（共用额度）· 原 Ultra 档"
     }
    ]
   },
@@ -2877,13 +2877,13 @@
      "name": "Free",
      "month": "$0",
      "year": "",
-     "benefits": "GPT-6.1 Sol 限量 · 联网"
+     "benefits": "GPT-6 文字对话不限（防滥用限制）· 不含 GPT-6.1 Sol · 上传/生图/深度研究/Codex 有限"
     },
     {
      "name": "Go",
      "month": "$8/月",
      "year": "",
-     "benefits": "GPT-6.1 基础额度 · Codex 仅轻量任务"
+     "benefits": "Free 全部 + 更多工具消息/上传/生图/语音 · 更长记忆 · 不含 GPT-6.1 Sol · 可能含广告"
     },
     {
      "name": "Plus",
@@ -2996,19 +2996,19 @@
      "name": "Max",
      "month": "$100/月",
      "year": "",
-     "benefits": "Pro 的 5 倍额度 · Opus 5.5 · Fable 最多占周额度一半 · 含 Claude Code · 仅月付"
+     "benefits": "Pro 的 5 倍额度 · Opus 5.5 · Fable 最多占周额度一半 · 每月 $100 API 额度 · 含 Claude Code · 仅月付"
     },
     {
      "name": "Ultra",
      "month": "$200/月",
      "year": "",
-     "benefits": "Pro 的 10 倍周额度 · 无 5 小时限制 · 含 Claude Code · 仅月付"
+     "benefits": "Pro 的 10 倍周额度 · 无 5 小时限制 · Fable 最多占周额度一半 · 每月 $200 API 额度 · 含 Claude Code · 仅月付"
     },
     {
      "name": "Team 标准席",
      "month": "$25/席/月",
      "year": "$240/席/年",
-     "benefits": "团队协作 · 用量看板 · 含 Claude Code"
+     "benefits": "团队协作 · 用量看板 · 团队最多 $500/月共享 API 额度 · 含 Claude Code"
     },
     {
      "name": "Team 高级席",
@@ -3586,22 +3586,22 @@
    "cnAvailable": "需特殊网络",
    "tiers": [
     {
-     "name": "Pro Team 2,500",
+     "name": "Pro Team 2,000",
      "month": "$30/月",
      "year": "",
-     "benefits": "约 18 次评审/月 · 团队共享积分池"
+     "benefits": "2,000 积分 · 约 14 次评审/月 · 团队共享积分池（$0.015/积分）"
     },
     {
-     "name": "Pro Team 5,000",
+     "name": "Pro Team 4,000",
      "month": "$60/月",
      "year": "",
-     "benefits": "约 36 次评审/月"
+     "benefits": "4,000 积分 · 约 29 次评审/月"
     },
     {
-     "name": "Pro Team 20,000",
+     "name": "Pro Team 16,000",
      "month": "$240/月",
      "year": "",
-     "benefits": "约 144 次评审/月"
+     "benefits": "16,000 积分 · 约 114 次评审/月"
     },
     {
      "name": "Enterprise",
